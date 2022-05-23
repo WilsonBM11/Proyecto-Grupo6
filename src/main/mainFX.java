@@ -14,6 +14,7 @@ import javafx.stage.Stage;
  *
  * @author Profesor Gilberth Chaves A <gchavesav@ucr.ac.cr>
  */
+
 //MARIANO WILSON Y KEVIN GRUPO 6
 public class mainFX extends Application {
     
