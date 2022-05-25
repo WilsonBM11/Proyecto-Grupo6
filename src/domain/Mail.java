@@ -26,7 +26,7 @@ public class Mail {
         private final String username = "proyectogrupo06.algoritmos@gmail.com";//
         private final String password = "contrasenagrupo06";
         
-	public void sendEmail(String destinationEmail) throws AddressException, MessagingException{
+	public void sendEmail(String destinationEmail, String subjectEmail, String textEmail) throws AddressException, MessagingException{
           
             final String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
             // Get a Properties object
@@ -58,8 +58,8 @@ public class Mail {
                 msg.setFrom(new InternetAddress(username));
                 msg.setRecipients(Message.RecipientType.TO,
                         InternetAddress.parse(destinationEmail, false));
-                msg.setSubject("Hello Wilson");
-                msg.setText("Esta es la prueba de enviar Email a travez de Java");
+                msg.setSubject(subjectEmail);
+                msg.setText(textEmail);
                 msg.setSentDate(new Date());
                 Transport.send(msg);
                 System.out.println("Message sent");

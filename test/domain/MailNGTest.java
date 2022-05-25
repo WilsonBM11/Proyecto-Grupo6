@@ -24,7 +24,7 @@ public class MailNGTest {
     public void testSomeMethod() {
         try {
             Mail m = new Mail();
-            m.sendEmail("wilsonbm11@gmail.com");
+            m.sendEmail("wilsonbm11@gmail.com","","");
         } catch (MessagingException ex) {
             Logger.getLogger(MailNGTest.class.getName()).log(Level.SEVERE, null, ex);
         }
