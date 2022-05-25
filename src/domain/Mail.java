@@ -5,9 +5,12 @@
  */
 package domain;
 
+import java.util.Date;
 import java.util.Properties;
+import javax.mail.Authenticator;
 import javax.mail.Message;
 import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.AddressException;
@@ -20,38 +23,49 @@ import javax.mail.internet.MimeMessage;
  */
 public class Mail {
    
-        private Properties properties = new Properties();
-	
-        private String email = "proyectogrupo06.algoritmos@gmail.com";
-	private String password = "laqodsemtcijbmbw";
- 
-	private Session session;
- 
-	private void init() {
-            
-            properties.setProperty("mai.smtp.host", "smtp.gmail.com");
-            properties.setProperty("mai.smtp.starttls.enable", "true");
-            properties.setProperty("mai.smtp.port", "587");
-            properties.setProperty("mai.smtp.auth", "true");
-            
-            session = Session.getDefaultInstance(properties);
-            
-	}
- 
+        private final String username = "proyectogrupo06.algoritmos@gmail.com";//
+        private final String password = "contrasenagrupo06";
+        
 	public void sendEmail(String destinationEmail) throws AddressException, MessagingException{
+          
+            final String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
+            // Get a Properties object
+            Properties props = System.getProperties();
+            props.setProperty("mail.smtp.host", "smtp.gmail.com");
+            props.setProperty("mail.smtp.socketFactory.class", SSL_FACTORY);
+            props.setProperty("mail.smtp.socketFactory.fallback", "false");
+            props.setProperty("mail.smtp.port", "465");
+            props.setProperty("mail.smtp.socketFactory.port", "465");
+            props.setProperty("mail.smtp.ssl.protocols", "TLSv1.2");
+            props.put("mail.smtp.auth", "true");
+            props.put("mail.debug", "true");
+            props.put("mail.store.protocol", "pop3");
+            props.put("mail.transport.protocol", "smtp");
             
-            init();
-            MimeMessage mail = new MimeMessage(session);
-            mail.setFrom(new InternetAddress(email));
-            mail.addRecipient(Message.RecipientType.TO, new InternetAddress(destinationEmail));
-            mail.setSubject("Prueba Java");
-            mail.setText("Hola Wilson");
-            
-            Transport transport = session.getTransport("smtp");
-            transport.connect(email,password);
-            transport.sendMessage(mail, mail.getRecipients(Message.RecipientType.TO));
-            transport.close();
-            
+            try {
+                Session session = Session.getDefaultInstance(props,
+                        new Authenticator() {
+                    @Override
+                    protected PasswordAuthentication getPasswordAuthentication() {
+                        return new PasswordAuthentication(username, password);
+                    }
+                });
+
+                // -- Create a new message --
+                Message msg = new MimeMessage(session);
+
+                // -- Set the FROM and TO fields --
+                msg.setFrom(new InternetAddress(username));
+                msg.setRecipients(Message.RecipientType.TO,
+                        InternetAddress.parse(destinationEmail, false));
+                msg.setSubject("Hello Wilson");
+                msg.setText("Esta es la prueba de enviar Email a travez de Java");
+                msg.setSentDate(new Date());
+                Transport.send(msg);
+                System.out.println("Message sent");
+            } catch (MessagingException e) {
+                System.out.println("Error al enviar el mensaje. Razon: " + e);
+            }
             
 	}
     
