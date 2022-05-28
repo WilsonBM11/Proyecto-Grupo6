@@ -86,7 +86,7 @@ public class FXMLMainMenuController implements Initializable {
 
     @FXML
     private void BTN_PriorityOnAction(ActionEvent event) {
-        
+        loadPage(getClass().getResource("FXMLPatientRegister.fxml"), bp);
     }
 
     @FXML

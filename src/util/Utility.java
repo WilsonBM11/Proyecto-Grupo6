@@ -6,6 +6,7 @@
 package util;
 
 
+import domain.CircularLinkedList;
 import java.text.DecimalFormat;
 import java.util.Random;
 
@@ -14,6 +15,8 @@ import java.util.Random;
  * @author Profesor Lic. Gilberth Chaves Avila
  */
 public class Utility {
+    
+    private CircularLinkedList patientsList;
 
     public static int random(){
         return 1+(int) Math.floor(Math.random()*99); 
@@ -134,6 +137,20 @@ public class Utility {
     
     public static boolean isNumber(char value){
         return Character.isDigit(value);
+    }
+
+    /**
+     * @return the patientsList
+     */
+    public CircularLinkedList getPatientsList() {
+        return patientsList;
+    }
+
+    /**
+     * @param patientsList the patientsList to set
+     */
+    public void setPatientsList(CircularLinkedList patientsList) {
+        this.patientsList = patientsList;
     }
 
      

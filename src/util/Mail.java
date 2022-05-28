@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package domain;
+package util;
 
 import java.util.Date;
 import java.util.Properties;
@@ -64,7 +64,7 @@ public class Mail {
                 Transport.send(msg);
                 System.out.println("Message sent");
             } catch (MessagingException e) {
-                System.out.println("Error al enviar el mensaje. Razon: " + e);
+                System.out.println("Error sending mail. Reason: " + e);
             }
             
 	}
