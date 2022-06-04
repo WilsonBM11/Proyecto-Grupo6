@@ -14,19 +14,18 @@ import javafx.stage.Stage;
  *
  * @author Profesor Gilberth Chaves A <gchavesav@ucr.ac.cr>
  */
-
-//MARIANO WILSON Y KEVIN GRUPO 6
+//MARIANO DURAN  WILSON BONILLA Y KEVIN BRENES 
 public class mainFX extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("FXMLLogin.fxml"));
+       Parent root = FXMLLoader.load(getClass().getResource("FXMLMainMenu.fxml"));
         
         Scene scene = new Scene(root);
         String css = mainFX.class.getResource("MyStyle.css").toExternalForm();
         scene.getStylesheets().add(css);
         stage.setScene(scene);
-        stage.setTitle("Laboratory No. 7 - 2022");
+        stage.setTitle("Laboratory No. 5 - 2022");
         stage.setResizable(false);
         stage.show();
     }
