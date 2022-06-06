@@ -13,7 +13,7 @@ import java.util.Date;
  */
 public class Patient {
     
-    private String id;
+    private int id;
     private String lastname;
     private String firstname;
     private Date birthday;
@@ -21,7 +21,7 @@ public class Patient {
     private String email;
     private String address;
 
-    public Patient(String id, String lastname, String firstname, Date birthday, String phoneNumber, String email, String address) {
+    public Patient(int id, String lastname, String firstname, Date birthday, String phoneNumber, String email, String address) {
         this.id = id;
         this.lastname = lastname;
         this.firstname = firstname;
@@ -34,14 +34,14 @@ public class Patient {
     /**
      * @return the id
      */
-    public String getId() {
+    public int getId() {
         return id;
     }
 
     /**
      * @param id the id to set
      */
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

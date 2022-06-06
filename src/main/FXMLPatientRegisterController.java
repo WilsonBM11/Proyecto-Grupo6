@@ -57,7 +57,7 @@ public class FXMLPatientRegisterController implements Initializable {
         Calendar date = Calendar.getInstance();
         date.set(birthdayDatePicker.getValue().getYear(),birthdayDatePicker.getValue().getMonthValue(), birthdayDatePicker.getValue().getDayOfMonth());
 
-        patientRegisterList.add(new Patient(idTextField.getText(), lastNameTextField.getText(), firstNameTextField.getText()
+        patientRegisterList.add(new Patient(Integer.parseInt(idTextField.getText()), lastNameTextField.getText(), firstNameTextField.getText()
         , date.getTime(), phoneNumberTextField.getText(), emailTextField.getText(), addressTextField.getText()));
         
     }

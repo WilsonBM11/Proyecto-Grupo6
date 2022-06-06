@@ -11,12 +11,15 @@ import domain.Doctor;
 import domain.DoublyLinkedList;
 import domain.SinglyLinkedList;
 import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -251,6 +254,16 @@ public class Utility {
     public static String dateFormat(Date value) {
         return new SimpleDateFormat("dd/MM/yyyy")
                 .format(value);
+    }
+    
+    public static Date stringToDate(String value) {
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        try {
+            return format.parse(value);
+        } catch (ParseException ex) {
+            Logger.getLogger(Utility.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 
 }

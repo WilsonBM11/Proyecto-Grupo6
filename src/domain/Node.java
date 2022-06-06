@@ -10,12 +10,27 @@ package domain;
  */
 public class Node {
     public Object data;
+    public Integer priority; //1=low, 2=medium, 3=high
     public Node next; //apuntador al sgte node
-    public Node prev; //apuntador al nodo anterior
+    public Node prev;
     
     //Constructor
     public Node(Object data){
         this.data = data;
-        this.prev = this.next = null;
+        this.next = null;
+        this.prev = null;
     }
+
+    //Constructor sobrecargado
+    public Node() {
+        this.next = null;
+    }
+    
+    //Constructor sobrecargado
+    public Node(Object data, Integer priority) {
+        this.data = data;
+        this.priority = priority;
+        this.next = null;
+    }
+    
 }
