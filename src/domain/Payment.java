@@ -13,21 +13,21 @@ import java.util.Date;
  */
 public class Payment {
     
-    
     private int id;
+    private static int consecutivo = 1;
     private int patientID;
     private String paymentMode;
     private double serviceCharge;
     private Date billingDate;
     private double totalCharge;
 
-    public Payment(int id, int patientID, String paymentMode, double serviceCharge, Date billingDate, double totalCharge) {
-        this.id = id;
+    public Payment(int patientID, String paymentMode, double serviceCharge, Date billingDate, double totalCharge) {
+        this.id = consecutivo++;
         this.patientID = patientID;
         this.paymentMode = paymentMode;
         this.serviceCharge = serviceCharge;
         this.billingDate = billingDate;
-        this.totalCharge = serviceCharge * (1 + 0.3);
+        this.totalCharge = totalCharge;
     }
 
     /**
@@ -105,6 +105,27 @@ public class Payment {
      */
     public void setTotalCharge(double totalCharge) {
         this.totalCharge = totalCharge;
+    }
+
+    /**
+     * @return the consecutivo
+     */
+    public static int getConsecutivo() {
+        return consecutivo;
+    }
+
+    /**
+     * @param aConsecutivo the consecutivo to set
+     */
+    public static void setConsecutivo(int aConsecutivo) {
+        consecutivo = aConsecutivo;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(int id) {
+        this.id = id;
     }
     
     

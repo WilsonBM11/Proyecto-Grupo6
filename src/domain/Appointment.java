@@ -17,13 +17,14 @@ import javafx.util.converter.LocalDateTimeStringConverter;
 public class Appointment {
    
     private int id;
+    private static int consecutivo = 1;
     private int patientID;
     private int doctorID;
     private LocalDateTime dateTime;
     private String remarks;
 
-    public Appointment(int id, int patientID, int doctorID, LocalDate date,LocalTime time, String remarks) {
-        this.id = id;
+    public Appointment(int patientID, int doctorID, LocalDate date,LocalTime time, String remarks) {
+        this.id = consecutivo++;
         this.patientID = patientID;
         this.doctorID = doctorID;
         this.dateTime = LocalDateTime.of(date,time);
@@ -78,7 +79,8 @@ public class Appointment {
     public void setDateTime(LocalDateTime dateTime) {
         this.dateTime = dateTime;
     }
-
+    
+    
     /**
      * @return the remarks
      */
@@ -91,6 +93,27 @@ public class Appointment {
      */
     public void setRemarks(String remarks) {
         this.remarks = remarks;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    /**
+     * @return the consecutivo
+     */
+    public static int getConsecutivo() {
+        return consecutivo;
+    }
+
+    /**
+     * @param aConsecutivo the consecutivo to set
+     */
+    public static void setConsecutivo(int aConsecutivo) {
+        consecutivo = aConsecutivo;
     }
     
     

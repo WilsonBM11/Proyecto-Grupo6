@@ -17,16 +17,17 @@ public class MedicalCare {
     
    
     private int id;
+    private static int consecutivo = 1;
     private int doctorID;
-    private int patienteID;
+    private int patientID;
     private LocalDateTime dateTime;
     private int sicknessID;
     private String annotations;
 
-    public MedicalCare(int id, int doctorID, int patienteID, LocalDate date,LocalTime time, int sicknessID, String annotations) {
-        this.id = id;
+    public MedicalCare(int doctorID, int patientID, LocalDate date,LocalTime time, int sicknessID, String annotations) {
+        this.id = consecutivo++;
         this.doctorID = doctorID;
-        this.patienteID = patienteID;
+        this.patientID = patientID;
         this.dateTime = LocalDateTime.of(date, time);
         this.sicknessID = sicknessID;
         this.annotations = annotations;
@@ -56,15 +57,15 @@ public class MedicalCare {
     /**
      * @return the patienteID
      */
-    public int getPatienteID() {
-        return patienteID;
+    public int getPatientID() {
+        return patientID;
     }
 
     /**
      * @param patienteID the patienteID to set
      */
-    public void setPatienteID(int patienteID) {
-        this.patienteID = patienteID;
+    public void setPatientID(int patienteID) {
+        this.patientID = patienteID;
     }
 
     /**
@@ -107,6 +108,32 @@ public class MedicalCare {
      */
     public void setAnnotations(String annotations) {
         this.annotations = annotations;
+    }
+
+    /**
+     * @return the consecutivo
+     */
+    public static int getConsecutivo() {
+        return consecutivo;
+    }
+
+    /**
+     * @param aConsecutivo the consecutivo to set
+     */
+    public static void setConsecutivo(int aConsecutivo) {
+        consecutivo = aConsecutivo;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return "MedicalCare{" + "id=" + id + ", doctorID=" + doctorID + ", patientID=" + patientID + ", dateTime=" + dateTime + ", sicknessID=" + sicknessID + ", annotations=" + annotations + '}';
     }
 
     

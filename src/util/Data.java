@@ -49,7 +49,7 @@ public class Data {
         File file = new File(fileName + ".txt");
         try {
 
-            FileOutputStream fos = new FileOutputStream(file, true);
+            FileOutputStream fos = new FileOutputStream(file, false);
             ps = new PrintStream(fos);
         } catch (FileNotFoundException ex) {
             JOptionPane.showMessageDialog(null, "Error " + ex);
@@ -72,13 +72,8 @@ public class Data {
         return bfr;
     }
 
-    private static void deleteFile(String fileName) {
-        File file = new File(fileName + ".txt");
-        file.delete();
-    }
 
-    public static void setDataFile(String fileName, Object TDA) throws QueueException, ListException {
-        deleteFile(fileName);
+    public static void setDataFile(String fileName, Object TDA) throws QueueException, ListException, IOException {
         PrintStream ps = getPrintStream(fileName);
         switch (instanceOf(TDA)) {
             case "Queue":
@@ -147,17 +142,29 @@ public class Data {
                 return new Doctor(Integer.parseInt(aux.get(0)), aux.get(1), aux.get(2), aux.get(3),
                         aux.get(4), aux.get(5), util.Utility.stringToDate(aux.get(6)));
             case "appointment":
-                return new Appointment(Integer.parseInt(aux.get(0)), Integer.parseInt(aux.get(1)),
-                        Integer.parseInt(aux.get(2)), LocalDate.parse(aux.get(3)), LocalTime.parse(aux.get(4)), aux.get(5));
+                Appointment a = new Appointment(Integer.parseInt(aux.get(1)),
+                            Integer.parseInt(aux.get(2)), LocalDate.parse(aux.get(3)), LocalTime.parse(aux.get(4)), aux.get(5));
+                a.setId(Integer.parseInt(aux.get(0)));
+                Appointment.setConsecutivo(a.getId()+1);
+                return a;
             case "sickness":
-                return new Sickness(aux.get(0));
+                Sickness s = new Sickness(aux.get(1));
+                s.setId(Integer.parseInt(aux.get(0)));
+                Sickness.setConsecutivo(s.getId()+1);
+                return s;
             case "medicalcare":
-                return new MedicalCare(Integer.parseInt(aux.get(0)), Integer.parseInt(aux.get(1)),
+                MedicalCare mc = new MedicalCare(Integer.parseInt(aux.get(1)),
                         Integer.parseInt(aux.get(2)), LocalDate.parse(aux.get(3)), LocalTime.parse(aux.get(4)),
                         Integer.parseInt(aux.get(5)), aux.get(6));
+                mc.setId(Integer.parseInt(aux.get(0)));
+                MedicalCare.setConsecutivo(mc.getId()+1);
+                return mc;
             case "payments":
-                return new Payment(Integer.parseInt(aux.get(0)), Integer.parseInt(aux.get(1)), aux.get(2), Double.parseDouble(aux.get(3)),
+                Payment pay = new Payment(Integer.parseInt(aux.get(1)), aux.get(2), Double.parseDouble(aux.get(3)),
                         util.Utility.stringToDate(aux.get(4)), Double.parseDouble(aux.get(5)));
+                pay.setId(Integer.parseInt(aux.get(0)));
+                Payment.setConsecutivo(pay.getId()+1);
+                return pay;
         }
         return null;
     }
@@ -170,15 +177,22 @@ public class Data {
                 return p.getId()+";"+p.getLastname()+";"+p.getFirstname()+";"+util.Utility.dateFormat(p.getBirthday())+";"+p.getPhoneNumber()+";"+p.getEmail()+";"+p.getAddress();
             case "doctors":
                 Doctor d = (Doctor) data;
+                return d.getId()+";"+d.getFirstName()+";"+d.getLasName()+";"+d.getPhoneNumber()+";"+d.getEmail()+";"+d.getAddress()+";"+util.Utility.dateFormat(d.getBirthday());
             case "appointment":
                 Appointment a = (Appointment) data;
+                return a.getId()+";"+a.getPatientID()+";"+a.getDoctorID()+";"+a.getDateTime().toLocalDate().toString()+";"+
+                a.getDateTime().toLocalTime().toString()+";"+a.getRemarks();
             case "sickness":
                 Sickness s = (Sickness) data;
+                return s.getId()+";"+s.getDescription();
             case "medicalcare":
                 MedicalCare mc = (MedicalCare) data;
+                return mc.getId()+";"+mc.getDoctorID()+";"+mc.getPatientID()+";"+mc.getDateTime().toLocalDate().toString()+";"+
+                       mc.getDateTime().toLocalTime().toString()+";"+mc.getSicknessID()+";"+mc.getAnnotations();
             case "payments":
                 Payment pay = (Payment) data;
-               
+                return pay.getId()+";"+pay.getPatientID()+";"+pay.getPaymentMode()+";"+pay.getServiceCharge()+";"+
+                       util.Utility.dateFormat(pay.getBillingDate())+";"+pay.getTotalCharge();
         }
         return null;
     }

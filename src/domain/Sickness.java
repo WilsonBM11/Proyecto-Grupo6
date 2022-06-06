@@ -11,7 +11,7 @@ package domain;
 public class Sickness {
     private int id;
     private String description;
-    int consecutivo;
+    private static int consecutivo = 1;
 
     public Sickness(String description) {
         this.id = consecutivo++;
@@ -37,6 +37,20 @@ public class Sickness {
     @Override
     public String toString() {
         return "Sickness " + "id = " + id + ", description = " + description;
+    }
+
+    /**
+     * @return the consecutivo
+     */
+    public static int getConsecutivo() {
+        return consecutivo;
+    }
+
+    /**
+     * @param aConsecutivo the consecutivo to set
+     */
+    public static void setConsecutivo(int aConsecutivo) {
+        consecutivo = aConsecutivo;
     }
     
     
