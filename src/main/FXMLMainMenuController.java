@@ -37,6 +37,8 @@ public class FXMLMainMenuController implements Initializable {
     private Button btnExit;
     @FXML
     private Text txtMessage;
+    @FXML
+    private Button patientsControl;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -82,11 +84,6 @@ public class FXMLMainMenuController implements Initializable {
     }
 
     @FXML
-    private void PascientesCode(ActionEvent event) {
-        loadPage(getClass().getResource("FXMLPatientRegister.fxml"), bp);
-    }
-
-    @FXML
     private void DoctoresCode(ActionEvent event) {
         loadPage(getClass().getResource("FXMLMantenimientoDoctores.fxml"), bp);
     }
@@ -94,6 +91,11 @@ public class FXMLMainMenuController implements Initializable {
     @FXML
     private void EnfermedadesCode(ActionEvent event) {
         loadPage(getClass().getResource("FXMLMantenimientoEnfermedadesPadecimientos.fxml"), bp);
+    }
+
+    @FXML
+    private void PatientsControl(ActionEvent event) {
+        loadPage(getClass().getResource("FXMLPatientRegister.fxml"),bp);
     }
    
     

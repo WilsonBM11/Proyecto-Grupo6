@@ -16,9 +16,9 @@
                   <Font name="Arial" size="40.0" />
                </font>
             </Button>
-            <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#PascientesCode" prefHeight="91.0" prefWidth="334.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 0px 0px 2px 0px;" text="Pascientes" textFill="WHITE">
+            <Button fx:id="patientsControl" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#PatientsControl" prefHeight="91.0" prefWidth="334.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 0px 0px 2px 0px;" text="Control Pacientes" textFill="WHITE">
                <font>
-                  <Font name="Arial" size="40.0" />
+                  <Font name="Arial" size="36.0" />
                </font>
             </Button>
             <Button layoutX="10.0" layoutY="101.0" mnemonicParsing="false" onAction="#DoctoresCode" prefHeight="91.0" prefWidth="334.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 0px 0px 2px 0px;" text="Doctores" textFill="WHITE">
