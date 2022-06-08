@@ -48,6 +48,15 @@ public class FXMLPatientRegisterController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
+        while(true){
+            if(lastNameTextField.getText() != "" && idTextField.getText() != "" && firstNameTextField.getText() != "" 
+                    && phoneNumberTextField.getText() != "" && birthdayDatePicker.getValue() != null
+                    && emailTextField.getText() != "" && addressTextField.getText() !=""){
+                registerButton.setDisable(false);
+            }
+                    
+        }
+            
         
         
     }    

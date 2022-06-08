@@ -17,26 +17,26 @@
                <children>
                   <Label layoutX="217.0" layoutY="11.0" prefHeight="45.0" prefWidth="211.0" text="Patient Register">
                      <font>
-                        <Font name="Times New Roman" size="32.0" />
+                        <Font name="Calibri Light" size="32.0" />
                      </font>
                   </Label>
                </children>
             </Pane>
-            <TextField fx:id="lastNameTextField" layoutX="236.0" layoutY="158.0" prefHeight="25.0" prefWidth="171.0" promptText="Lastname" />
-            <Label layoutX="193.0" layoutY="87.0" prefHeight="23.0" prefWidth="259.0" text="Enter the information requested">
+            <TextField fx:id="lastNameTextField" layoutX="216.0" layoutY="159.0" prefHeight="25.0" prefWidth="211.0" promptText="Lastname" />
+            <Label layoutX="189.0" layoutY="85.0" prefHeight="23.0" prefWidth="267.0" text="Enter the information requested">
                <font>
-                  <Font name="Times New Roman" size="20.0" />
+                  <Font name="Calibri Light" size="20.0" />
                </font>
             </Label>
-            <TextField fx:id="idTextField" layoutX="237.0" layoutY="123.0" prefHeight="25.0" prefWidth="169.0" promptText="Identity Card" />
-            <TextField fx:id="firstNameTextField" layoutX="236.0" layoutY="193.0" prefHeight="25.0" prefWidth="171.0" promptText="First Name" />
-            <TextField fx:id="phoneNumberTextField" layoutX="236.0" layoutY="288.0" prefHeight="25.0" prefWidth="171.0" promptText="Phone Number" />
+            <TextField fx:id="idTextField" layoutX="216.0" layoutY="121.0" prefHeight="25.0" prefWidth="212.0" promptText="Identity Card" />
+            <TextField fx:id="firstNameTextField" layoutX="217.0" layoutY="195.0" prefHeight="25.0" prefWidth="211.0" promptText="First Name" />
+            <TextField fx:id="phoneNumberTextField" layoutX="216.0" layoutY="289.0" prefHeight="25.0" prefWidth="213.0" promptText="Phone Number" />
             <DatePicker fx:id="birthdayDatePicker" layoutX="236.0" layoutY="243.0" prefHeight="25.0" prefWidth="174.0" promptText="Birthday" />
-            <TextField fx:id="emailTextField" layoutX="236.0" layoutY="329.0" prefHeight="25.0" prefWidth="171.0" promptText="Email" />
-            <TextField fx:id="addressTextField" layoutX="236.0" layoutY="369.0" prefHeight="25.0" prefWidth="171.0" promptText="Address" />
-            <Button fx:id="registerButton" layoutX="249.0" layoutY="414.0" mnemonicParsing="false" onAction="#registerOnAction" prefHeight="31.0" prefWidth="147.0" style="-fx-background-color: #0174DF;" text="Register">
+            <TextField fx:id="emailTextField" layoutX="216.0" layoutY="331.0" prefHeight="25.0" prefWidth="213.0" promptText="Email" />
+            <TextField fx:id="addressTextField" layoutX="216.0" layoutY="369.0" prefHeight="25.0" prefWidth="213.0" promptText="Address" />
+            <Button fx:id="registerButton" disable="true" layoutX="258.0" layoutY="417.0" mnemonicParsing="false" onAction="#registerOnAction" prefHeight="27.0" prefWidth="128.0" style="-fx-background-color: #0174DF;" text="Register">
                <font>
-                  <Font name="Times New Roman" size="12.0" />
+                  <Font name="Calibri Light" size="21.0" />
                </font>
             </Button>
          </children>

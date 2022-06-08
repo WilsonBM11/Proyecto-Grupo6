@@ -43,17 +43,28 @@ public class FXMLMainMenuController implements Initializable {
         // TODO
     }   
     
-    public static void loadPage(URL ui, BorderPane bp){
+    private void loadPage(String page) {
         Parent root = null;
         try {
-            root = FXMLLoader.load(ui); 
+            root = FXMLLoader.load(getClass().getResource(page + ".fxml"));
         } catch (IOException ex) {
             Logger.getLogger(FXMLMainMenuController.class.getName());
         }
-        //cleaning nodes
-        bp.setTop(null); bp.setCenter(null); bp.setBottom(null); 
-        //bp.setLeft(null);
+        bp.setCenter(root);
+    }
+
+    public static void loadPage(URL ui, BorderPane bp) {
+        Parent root = null;
+        try {
+            root = FXMLLoader.load(ui);
+        } catch (IOException ex) {
+            Logger.getLogger(FXMLMainMenuController.class.getName());
+        }
+
+        bp.setCenter(null);
         bp.setRight(null);
+        bp.setBottom(null);
+        bp.setTop(null);
         bp.setCenter(root);
     }
 
