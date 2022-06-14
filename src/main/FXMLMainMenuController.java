@@ -60,7 +60,7 @@ public class FXMLMainMenuController implements Initializable {
 
     @FXML
     private void Home(MouseEvent event) {
-        this.txtMessage.setText("Laboratory No. 5");
+        this.txtMessage.setText("Proyecto Clinica de Salud Mental");
         this.bp.setCenter(ap);
     }
 

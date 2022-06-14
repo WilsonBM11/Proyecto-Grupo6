@@ -25,7 +25,7 @@ public class mainFX extends Application {
         String css = mainFX.class.getResource("MyStyle.css").toExternalForm();
         scene.getStylesheets().add(css);
         stage.setScene(scene);
-        stage.setTitle("Laboratory No. 5 - 2022");
+        stage.setTitle("Proyecto Clinica Salud Mental");
         stage.setResizable(false);
         stage.show();
     }
