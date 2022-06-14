@@ -185,6 +185,10 @@ public class FXMLMantenimientoDoctoresController implements Initializable {
         }
 
         try {
+            if(DoctorList.size()==1){
+                DoctorList.clear();
+                TableView.getItems().clear();
+            } else {
             DoctorList.remove(new Doctor(Integer.parseInt(id.get()), "", "", "", "", "", null));
             util.Utility.setCircularDoublyLinkedList(DoctorList);
             TableView.getItems().clear();
@@ -194,6 +198,7 @@ public class FXMLMantenimientoDoctoresController implements Initializable {
             alert.setTitle("Doctor - Remove");
             alert.setHeaderText("The element was removed");
             alert.show();
+            }
         } catch (ListException ex) {
             alert = new Alert(Alert.AlertType.NONE);
             alert.setAlertType(Alert.AlertType.ERROR);
