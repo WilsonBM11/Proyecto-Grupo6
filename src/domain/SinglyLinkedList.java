@@ -45,8 +45,9 @@ public class SinglyLinkedList implements List {
             throw new ListException("Singly Linked List is empty");
         Node aux = first;
         while(aux!=null){
-            if(util.Utility.equals(aux.data, element))
+            if(util.Utility.equals(aux.data, element)){
                 return true;
+            }
            aux = aux.next;
         }
         return false;
@@ -189,7 +190,15 @@ public class SinglyLinkedList implements List {
         }
         return null; //el elemento no existe
     }
-
+ public void modificar (Object element1, Object element2) throws ListException{
+          Node aux = first;
+          while (aux!= null){
+              if(util.Utility.equals(aux.data, element1)){
+                  aux.data = element2;
+              }
+              aux = aux.next;
+          }
+      }
     @Override
     public String toString() {
         String result = "Singly Linked List Content\n";

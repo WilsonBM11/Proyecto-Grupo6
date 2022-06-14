@@ -9,7 +9,11 @@ import domain.CircularLinkedList;
 import domain.Doctor;
 import domain.ListException;
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -57,7 +61,7 @@ public class FXMLAddDoctorController implements Initializable {
     }
 
     @FXML
-    private void registerOnAction(ActionEvent event) {
+    private void registerOnAction(ActionEvent event) throws ParseException {
          if (doctorlist == null && util.Utility.getCircularDoublyLinkedList().isEmpty()) {
             if ("".equals(firstNTextField.getText()) || "".equals(lastNTextField.getText())
                     || "".equals(calendarChoice) || "".equals(PhoneTextField.getText())
@@ -71,9 +75,8 @@ public class FXMLAddDoctorController implements Initializable {
                 alert.show();
 
             } else {
-                Calendar date = Calendar.getInstance();
-                date.set(calendarChoice.getValue().getYear(), calendarChoice.getValue().getMonthValue(), calendarChoice.getValue().getDayOfMonth());
-
+                 Calendar date = Calendar.getInstance();
+                date.set(calendarChoice.getValue().getYear(),calendarChoice.getValue().getMonthValue(), calendarChoice.getValue().getDayOfMonth());
                 Doctor doctor = new Doctor(Integer.parseInt(idTextField.getText()), firstNTextField.getText(),
                         lastNTextField.getText(), PhoneTextField.getText(),TF_Email.getText(),TF_Address.getText(), date.getTime());
                 doctorlist = new CircularDoublyLinkedList();

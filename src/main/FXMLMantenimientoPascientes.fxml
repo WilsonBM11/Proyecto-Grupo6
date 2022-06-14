@@ -8,13 +8,13 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="bp" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="605.0" prefWidth="1008.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.FXMLMantenimientoDoctoresController">
+<BorderPane fx:id="bp" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="605.0" prefWidth="1008.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.FXMLMantenimientoPascientesController">
    <center>
       <AnchorPane prefHeight="570.0" prefWidth="1008.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
          <children>
             <AnchorPane layoutY="-8.0" prefHeight="93.0" prefWidth="1008.0" style="-fx-background-color: #0174DF;">
                <children>
-                  <Label layoutX="258.0" layoutY="32.0" text=" Mantenimiento de Doctores y Especialistas ">
+                  <Label layoutX="258.0" layoutY="32.0" text=" Mantenimiento de Pascientes ">
                      <font>
                         <Font name="Arial" size="25.0" />
                      </font>

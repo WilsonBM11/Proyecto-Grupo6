@@ -4,17 +4,21 @@
  */
 package domain;
 
+import java.util.Date;
+
 /**
  *
  * @author Duran Family
  */
 public class Sickness {
+
+    
     private int id;
     private String description;
     private static int consecutivo = 1;
-
+    
     public Sickness(String description) {
-        this.id = consecutivo++;
+       this.id = consecutivo++;
         this.description = description;
     }
 
@@ -34,25 +38,24 @@ public class Sickness {
         this.description = description;
     }
 
+    public static int getConsecutivo() {
+        return consecutivo;
+    }
+
+    public static void setConsecutivo(int consecutivo) {
+        Sickness.consecutivo = consecutivo;
+    }
+
     @Override
     public String toString() {
         return "Sickness " + "id = " + id + ", description = " + description;
     }
 
-    /**
-     * @return the consecutivo
-     */
-    public static int getConsecutivo() {
-        return consecutivo;
-    }
+  
 
-    /**
-     * @param aConsecutivo the consecutivo to set
-     */
-    public static void setConsecutivo(int aConsecutivo) {
-        consecutivo = aConsecutivo;
-    }
+  
+
     
-    
-    
+   
+
 }

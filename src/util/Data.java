@@ -137,7 +137,7 @@ public class Data {
         switch (fileName) {
             case "patients":
                 return new Patient(Integer.parseInt(aux.get(0)), aux.get(1), aux.get(2),
-                        util.Utility.stringToDate(aux.get(3)), aux.get(4), aux.get(5), aux.get(6));
+                        aux.get(3), aux.get(4), aux.get(5),util.Utility.stringToDate(aux.get(6)));
             case "doctors":
                 return new Doctor(Integer.parseInt(aux.get(0)), aux.get(1), aux.get(2), aux.get(3),
                         aux.get(4), aux.get(5), util.Utility.stringToDate(aux.get(6)));

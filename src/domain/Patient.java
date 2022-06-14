@@ -21,7 +21,7 @@ public class Patient {
     private String email;
     private String address;
 
-    public Patient(int id, String lastname, String firstname, Date birthday, String phoneNumber, String email, String address) {
+    public Patient(int id,String firstname, String lastname,String phoneNumber,String email, String address,Date birthday) {
         this.id = id;
         this.lastname = lastname;
         this.firstname = firstname;
@@ -127,6 +127,11 @@ public class Patient {
      */
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    @Override
+    public String toString() {
+        return "Patient " + "id = " + id +  ", firstname = " + firstname + ", lastname = " + lastname  + ", phoneNumber = " + phoneNumber + ", email = " + email + ", address = " + address + ", birthday = " + birthday ;
     }
     
     

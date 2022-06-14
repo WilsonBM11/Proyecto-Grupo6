@@ -9,6 +9,8 @@ import domain.CircularDoublyLinkedList;
 import domain.CircularLinkedList;
 import domain.Doctor;
 import domain.DoublyLinkedList;
+import domain.Patient;
+import domain.Sickness;
 import domain.SinglyLinkedList;
 import java.text.DecimalFormat;
 import java.text.ParseException;
@@ -142,6 +144,8 @@ public class Utility {
         if(a instanceof String && b instanceof String) return "String";
         if(a instanceof Character && b instanceof Character) return "Character";
         if(a instanceof Doctor && b instanceof Doctor) return "Doctor";
+        if(a instanceof Sickness  && b instanceof Sickness)return "Sickness";
+         if(a instanceof Patient  && b instanceof Patient)return "Patient";
         return "unknown";
     }
 
@@ -164,6 +168,14 @@ public class Utility {
                 Doctor a5 = (Doctor) a;
                 Doctor b5 = (Doctor) b;
                 return a5.getId() == b5.getId();
+            case "Sickness":
+                Sickness a6 = (Sickness) a;
+                Sickness b6 = (Sickness) b;
+                 return a6.getDescription().equalsIgnoreCase(b6.getDescription());
+           case "Patient":
+                Patient a7 = (Patient) a;
+                Patient b7 = (Patient) b;
+                return a7.getId() == b7.getId();
         }
         return false;
     }
@@ -252,8 +264,7 @@ public class Utility {
     }
 
     public static String dateFormat(Date value) {
-        return new SimpleDateFormat("dd/MM/yyyy")
-                .format(value);
+        return new SimpleDateFormat("dd/MM/yyyy").format(value);
     }
     
     public static Date stringToDate(String value) {

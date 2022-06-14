@@ -72,7 +72,7 @@ public class FXMLMainMenuController implements Initializable {
 
     @FXML
     private void PascientesCode(ActionEvent event) {
-        loadPage(getClass().getResource("FXMLPatientRegister.fxml"), bp);
+        loadPage(getClass().getResource("FXMLMantenimientoPascientes.fxml"), bp);
     }
 
     @FXML
@@ -82,7 +82,7 @@ public class FXMLMainMenuController implements Initializable {
 
     @FXML
     private void EnfermedadesCode(ActionEvent event) {
-        loadPage(getClass().getResource("FXMLMantenimientoEnfermedadesPadecimientos.fxml"), bp);
+        loadPage(getClass().getResource("FXMLMantenimientoEnfermedades.fxml"), bp);
     }
    
     

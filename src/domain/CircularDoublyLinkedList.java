@@ -317,8 +317,23 @@ public class CircularDoublyLinkedList implements List {
             return aux.data;
         }
         return null; //el elemento no existe
-    }
 
+      }
+      
+    public void modificar (Object element1, Object element2) throws ListException{
+          if(isEmpty())
+              throw new ListException("Doubly Linked list is empty");
+          Node aux = first;
+          while (aux!= last){
+              if(util.Utility.equals(aux.data, element1)){
+                  aux.data = element2;
+              }
+              aux = aux.next;
+          }
+           if(aux == last && util.Utility.equals(last.data, element1)) {
+                  last.data = element2;
+} 
+      }
     @Override
     public String toString() {
         String result = "Circular Doubly Linked List Content\n";

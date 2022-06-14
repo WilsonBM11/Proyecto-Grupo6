@@ -4,6 +4,7 @@
  */
 package main;
 
+import domain.ListException;
 import domain.Sickness;
 import domain.SinglyLinkedList;
 import java.net.URL;
@@ -14,90 +15,77 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
-import javafx.scene.layout.BorderPane;
 
 /**
  * FXML Controller class
  *
  * @author Duran Family
  */
-public class FXMLAddSicknessController implements Initializable {
+public class FXMLAddSickController implements Initializable {
 
-    private SinglyLinkedList sicknesslist;
+    SinglyLinkedList sicknesslist;
     Alert alert;
-    @FXML
-    private BorderPane bp;
-    @FXML
-    private Button btnAdd;
-    @FXML
-    private Button btnClose;
-    @FXML
-    private TextArea TA_Description;
 
-    /**
-     * Initializes the controller class.
-     */
+    @FXML
+    private Button registerButton;
+    @FXML
+    private TextArea TF_Description;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+
     }
 
     @FXML
-    private void btnAddOnAction(ActionEvent event) {
+    private void registerOnAction(ActionEvent event) throws ListException {
         if (sicknesslist == null && util.Utility.getSinglyLinkedList().isEmpty()) {
-            if (TA_Description.getText().equals("")) {
+            if (TF_Description.getText().equals("")) {
 
                 alert = new Alert(Alert.AlertType.NONE);
                 alert.setAlertType(Alert.AlertType.ERROR);
-                alert.setTitle("Add Doctor");
+                alert.setTitle("Add Employee");
                 alert.setHeaderText("ERROR");
                 alert.setContentText("Fill all the spaces");
                 alert.show();
 
             } else {
-                Sickness sickness = new Sickness(TA_Description.getText());
+
+                Sickness sick = new Sickness(TF_Description.getText());
                 sicknesslist = new SinglyLinkedList();
-                sicknesslist.add(sickness);
+                sicknesslist.add(sick);
                 util.Utility.setSinglyLinkedList(sicknesslist);
-                TA_Description.setText("");
+                TF_Description.setText("");
 
                 alert = new Alert(Alert.AlertType.NONE);
                 alert.setAlertType(Alert.AlertType.INFORMATION);
-                alert.setTitle("Sickness added");
+                alert.setTitle("Employee added");
                 alert.show();
 
             }
         } else {
-            if (TA_Description.getText().equals("")) {
+            if ("".equals(TF_Description.getText())) {
 
                 alert = new Alert(Alert.AlertType.NONE);
                 alert.setAlertType(Alert.AlertType.ERROR);
-                alert.setTitle("Add Sickness");
+                alert.setTitle("Add Employee");
                 alert.setHeaderText("ERROR");
                 alert.setContentText("Fill all the spaces");
                 alert.show();
 
             } else {
 
-                Sickness sickness = new Sickness(TA_Description.getText());
-                sicknesslist = new SinglyLinkedList();
-                sicknesslist.add(sickness);
-                util.Utility.setSinglyLinkedList(sicknesslist);
-                TA_Description.setText("");
+                Sickness S = new Sickness(TF_Description.getText());
+                util.Utility.getSinglyLinkedList().add(S);
+                util.Utility.setSinglyLinkedList(util.Utility.getSinglyLinkedList());
+                TF_Description.setText("");
 
                 alert = new Alert(Alert.AlertType.NONE);
                 alert.setAlertType(Alert.AlertType.INFORMATION);
-                alert.setTitle("Add Sickness");
-                alert.setHeaderText("Sickness added Succesfully");
+                alert.setTitle("Add Sick");
+                alert.setHeaderText("Sickness added");
                 alert.show();
 
             }
         }
     }
-
-    @FXML
-    private void bntCloseOnAction(ActionEvent event) {
-        FXMLMainMenuController.loadPage(getClass().getResource("FXMLMantemimientodeEnfermedadesPadecimientos.fxml"), bp);
-    }
-
 }
