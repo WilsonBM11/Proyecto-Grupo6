@@ -6,6 +6,7 @@
 package util;
 
 import domain.Appointment;
+import domain.BTreeNode;
 import domain.Doctor;
 import domain.Queue;
 import domain.List;
@@ -15,6 +16,7 @@ import domain.Patient;
 import domain.Payment;
 import domain.QueueException;
 import domain.Sickness;
+import domain.Tree;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -86,6 +88,17 @@ public class Data {
                 for (int i = 1; i <= list.size(); i++) {
                     ps.println(getString(fileName, list.getNode(i).data));
                 }
+            case "Tree":
+                Tree tree = (Tree) TDA;
+                setTreeDataFile(tree.getRoot(),fileName,ps);
+        }
+    }
+    
+    private static void setTreeDataFile(BTreeNode node, String fileName, PrintStream ps) {
+        if(node != null){
+            ps.println(getString(fileName, node.data));
+            setTreeDataFile(node.left, fileName, ps);
+            setTreeDataFile(node.right, fileName, ps);
         }
     }
 
@@ -111,6 +124,14 @@ public class Data {
                     lineRegister = br.readLine();
                 }
                 return list;
+            case "Tree":
+                Tree tree = (Tree) TDA;
+                lineRegister = br.readLine();
+                while (lineRegister != null) {
+                    tree.add(getObject(fileName, lineRegister));
+                    lineRegister = br.readLine();
+                }
+                return tree;
         }
 
         return null;
@@ -122,6 +143,9 @@ public class Data {
         }
         if (a instanceof List) {
             return "List";
+        }
+        if(a instanceof Tree){
+            return "Tree";
         }
         return "unknown";
     }
@@ -165,6 +189,8 @@ public class Data {
                 pay.setId(Integer.parseInt(aux.get(0)));
                 Payment.setConsecutivo(pay.getId()+1);
                 return pay;
+            case "numbers":
+                return Integer.parseInt(aux.get(0));
         }
         return null;
     }
@@ -193,7 +219,11 @@ public class Data {
                 Payment pay = (Payment) data;
                 return pay.getId()+";"+pay.getPatientID()+";"+pay.getPaymentMode()+";"+pay.getServiceCharge()+";"+
                        util.Utility.dateFormat(pay.getBillingDate())+";"+pay.getTotalCharge();
+            case "numbers":
+                return String.valueOf(data);
         }
         return null;
     }
+
+    
 }

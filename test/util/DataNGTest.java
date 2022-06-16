@@ -5,6 +5,7 @@
  */
 package util;
 
+import domain.BST;
 import domain.ListException;
 import domain.MedicalCare;
 import domain.Patient;
@@ -28,16 +29,17 @@ public class DataNGTest {
 
     @Test
     public void testSomeMethod() throws QueueException, ListException, IOException {
-        SinglyLinkedList s = new SinglyLinkedList();
-        if (util.Data.fileExists("medicalcare")) {
-            s = (SinglyLinkedList) util.Data.getDataFile("medicalcare", s);
+        BST bst = new BST();
+        if (util.Data.fileExists("numbers")) {
+            bst = (BST) util.Data.getDataFile("numbers", bst);
         }
 
-        s.add(new MedicalCare(3020, 30680, LocalDate.of(2022, 6, 6), LocalTime.of(11, 30), 1, "Nada que agregar"));
-        s.add(new MedicalCare(3045, 30102, LocalDate.of(2022, 6, 6), LocalTime.of(10, 30), 2, "Nada que agregar"));
+        for (int i = 0; i < 5; i++) {
+            bst.add(util.Utility.random(25));
+        }
         
-        System.out.println(s.toString());
-        util.Data.setDataFile("medicalcare", s);
+        System.out.println(bst.toString());
+        util.Data.setDataFile("numbers", bst);
     }
 
 }

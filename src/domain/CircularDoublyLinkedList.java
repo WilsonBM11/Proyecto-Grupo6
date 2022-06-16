@@ -97,14 +97,14 @@ public class CircularDoublyLinkedList implements List {
         if(isEmpty())
             first = last = newNode;    
             else{
-                if(util.Utility.lessT(newNode.data, first.data,util.Utility.getCriterioOrdenamiento()))
+                if(util.Utility.lessT(newNode.data, first.data))
                     addFirst(element);
-                else if(util.Utility.greaterT(newNode.data, last.data,util.Utility.getCriterioOrdenamiento()))
+                else if(util.Utility.greaterT(newNode.data, last.data))
                     addLast(element);
                 else{
                 Node prev = first;
                 Node aux = first.next;
-                while(aux != last && util.Utility.greaterT(newNode.data, aux.data,util.Utility.getCriterioOrdenamiento())){
+                while(aux != last && util.Utility.greaterT(newNode.data, aux.data)){
                     prev = aux;
                     aux = aux.next;
                 }
@@ -200,7 +200,7 @@ public class CircularDoublyLinkedList implements List {
             throw new ListException("Circular Doubly Linked List is empty");
         for(int i=1;i<=size();i++){
     	     for(int j=i+1;j<=size();j++){
-    		if(util.Utility.lessT(getNode(j).data, getNode(i).data,util.Utility.getCriterioOrdenamiento())){
+    		if(util.Utility.lessT(getNode(j).data, getNode(i).data)){
     		   Object aux=getNode(i).data;
                     getNode(i).data=getNode(j).data;
     		    getNode(j).data=aux;

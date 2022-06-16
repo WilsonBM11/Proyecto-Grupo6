@@ -181,7 +181,7 @@ public class Utility {
     }
 
     //less than (menorQ)
-    public static boolean lessT(Object a, Object b, String criterio) {
+    public static boolean lessT(Object a, Object b) {
         switch (instanceOf(a, b)) {
             case "Integer":
                 Integer a1 = (Integer) a;
@@ -195,20 +195,20 @@ public class Utility {
                 Character a3 = (Character) a;
                 Character b3 = (Character) b;
                 return a3.compareTo(a3) < 0;
-            case "Doctor":
-                Doctor a4 = (Doctor) a;
-                Doctor b4 = (Doctor) b;
-                switch (criterio) {
-                    case "id":
-                        return a4.getId() < b4.getId();
-                }
+//            case "Doctor":
+//                Doctor a4 = (Doctor) a;
+//                Doctor b4 = (Doctor) b;
+//                switch (criterio) {
+//                    case "id":
+//                        return a4.getId() < b4.getId();
+//                }
 
         }
         return false;
     }
     //greater than (mayorQ)
 
-    public static boolean greaterT(Object a, Object b, String criterio) {
+    public static boolean greaterT(Object a, Object b) {
         switch (instanceOf(a, b)) {
             case "Integer":
                 Integer a1 = (Integer) a;
@@ -222,13 +222,13 @@ public class Utility {
                 Character a3 = (Character) a;
                 Character b3 = (Character) b;
                 return a3.compareTo(a3) > 0;
-            case "Doctor":
-                Doctor a4 = (Doctor) a;
-                Doctor b4 = (Doctor) b;
-                switch (criterio) {
-                    case "id":
-                        return a4.getId() > b4.getId();
-                }
+//            case "Doctor":
+//                Doctor a4 = (Doctor) a;
+//                Doctor b4 = (Doctor) b;
+//                switch (criterio) {
+//                    case "id":
+//                        return a4.getId() > b4.getId();
+//                }
         }
 
         return false;
