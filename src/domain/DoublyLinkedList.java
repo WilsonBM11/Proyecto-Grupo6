@@ -85,12 +85,6 @@ public class DoublyLinkedList implements List {
     public void addLast(Object element) {
         add(element);
     }
-
-    @Override
-    public void addInSortedList(Object element) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
     @Override
     public void remove(Object element) throws ListException {
         if(isEmpty())
@@ -133,13 +127,13 @@ public class DoublyLinkedList implements List {
 
     @Override
     public Object removeLast() throws ListException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        if(isEmpty())
+            throw new ListException("Doubly Linked List is empty");
+        Object element = getLast();
+        remove(element);
+        return element;
     }
 
-    @Override
-    public void sort() throws ListException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
 
     @Override
     public int indexOf(Object element) throws ListException {
@@ -179,12 +173,32 @@ public class DoublyLinkedList implements List {
 
     @Override
     public Object getPrev(Object element) throws ListException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        if(isEmpty())
+            throw new ListException("Doubly Linked List is empty");
+        Node aux = first;
+        while(aux!=null&&!util.Utility.equals(aux.data, element)){
+            aux = aux.next;
+        }
+        //sale cuando aux==null o encontro el elemento
+        if(aux!=null&&util.Utility.equals(aux.data, element)){
+            return aux.prev.data;
+        }
+        return null; //el elemento no existe
     }
 
     @Override
     public Object getNext(Object element) throws ListException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        if(isEmpty())
+            throw new ListException("Doubly Linked List is empty");
+        Node aux = first;
+        while(aux!=null&&!util.Utility.equals(aux.data, element)){
+            aux = aux.next;
+        }
+        //sale cuando aux==null o encontro el elemento
+        if(aux!=null&&util.Utility.equals(aux.data, element)){
+            return aux.next.data;
+        }
+        return null; //el elemento no existe
     }
 
     @Override
@@ -209,10 +223,33 @@ public class DoublyLinkedList implements List {
         String result = "Doubly Linked List Content\n";
         Node aux = first;
         while(aux!=null){
-           result+=aux.data+" ";
+           result+=aux.data+"\n";
            aux = aux.next;
         }
         return result;
+    }
+     public Object getNodeById(Object element) throws ListException{
+        if(isEmpty())
+            throw new ListException("Doubly Linked List is empty");
+        Node aux = first;
+        while(aux!=null&&!util.Utility.equals(aux.data, element)){
+            aux = aux.next;
+        }
+        //sale cuando aux==null o encontro el elemento
+        if(aux!=null&&util.Utility.equals(aux.data, element)){
+            return aux.data;
+        }
+        return null; //el elemento no existe
+    }
+
+    @Override
+    public void addInSortedList(Object element) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void sort() throws ListException {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
     

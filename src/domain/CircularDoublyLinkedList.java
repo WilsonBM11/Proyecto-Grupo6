@@ -334,6 +334,9 @@ public class CircularDoublyLinkedList implements List {
                   last.data = element2;
 } 
       }
+    
+    
+  
     @Override
     public String toString() {
         String result = "Circular Doubly Linked List Content\n";

@@ -147,7 +147,6 @@ public class FXMLMantenimientoPascientesController implements Initializable {
                     arrayList.add(P.getPhoneNumber());
                     arrayList.add(P.getEmail());
                     arrayList.add(P.getAddress());
-                    SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
                     arrayList.add(String.valueOf(P.getBirthday()));
 
                     //Agrego el arrayList a ObservableList<List<String>> data
@@ -162,7 +161,7 @@ public class FXMLMantenimientoPascientesController implements Initializable {
 
     @FXML
     private void AddCode(ActionEvent event) {
-        FXMLMainMenuController.loadPage(getClass().getResource("FXMLPatientRegister.fxml"), bp);
+        FXMLMainMenuController.loadPage(getClass().getResource("FXMLAddPatient.fxml"), bp);
     }
 
     @FXML
@@ -207,7 +206,7 @@ public class FXMLMantenimientoPascientesController implements Initializable {
         dialog.setTitle("Doctor Position Contains");
         dialog.setHeaderText("Enter the id: ");
         Optional<String> id = dialog.showAndWait();
-
+      Patient patient =  new Patient(Integer.parseInt(id.get()), "", "", "", "", "", null);
         if (!id.isPresent() || id.get().compareTo("") == 0) {
             alert = new Alert(Alert.AlertType.NONE);
             alert.setAlertType(Alert.AlertType.ERROR);
@@ -218,12 +217,13 @@ public class FXMLMantenimientoPascientesController implements Initializable {
         } else {
 
             try {
-                if (util.Utility.getCircularLinkedList().contains(new Patient(Integer.parseInt(id.get()), "", "", "", "", "", null))) {
+                if (util.Utility.getCircularLinkedList().contains(patient)) {
+                    Object foundElement = util.Utility.getCircularLinkedList().getNodeById(patient);  
                     alert = new Alert(Alert.AlertType.NONE);
                     alert.setAlertType(Alert.AlertType.INFORMATION);
                     alert.setTitle("Patient Contains");
                     alert.setHeaderText("The list contains: ");
-                    alert.setContentText(String.valueOf((new Patient(Integer.parseInt(id.get()), "", "", "", "", "", null))));
+                    alert.setContentText(foundElement.toString());
                     alert.show();
                 } else {
                     alert = new Alert(Alert.AlertType.NONE);

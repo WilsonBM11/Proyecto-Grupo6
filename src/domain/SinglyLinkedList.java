@@ -83,10 +83,8 @@ public class SinglyLinkedList implements List {
         add(element);
     }
 
-    @Override
-    public void addInSortedList(Object element) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+    
+
 
     @Override
     public void remove(Object element) throws ListException {
@@ -123,10 +121,16 @@ public class SinglyLinkedList implements List {
         return element;
     }
 
-    @Override
+  @Override
     public Object removeLast() throws ListException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        if(isEmpty())
+            throw new ListException("Singly Linked List is empty");
+        Object element = getLast();
+        remove(element);
+        return element;
+        
     }
+    
 
     @Override
     public int indexOf(Object element) throws ListException {
@@ -163,15 +167,36 @@ public class SinglyLinkedList implements List {
         //cuando sale del while es porque esta en el ult nodo
         return aux.data;
     }
-
-    @Override
+@Override
     public Object getPrev(Object element) throws ListException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        if(isEmpty())
+            throw new ListException("Singly Linked List is empty");
+        Node prev = first; //elemento anterior
+        Node aux = first.next; //elemento sgte
+        while(aux!=null&&!util.Utility.equals(aux.data, element)){
+            prev = aux; //actualizo anterior
+            aux = aux.next;
+            }
+        if(aux!=null && util.Utility.equals(aux.data, element)){
+                return prev.data; 
+        }
+        return null;
     }
 
     @Override
     public Object getNext(Object element) throws ListException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        if(isEmpty())
+            throw new ListException("Singly Linked List is empty");
+        Node prev = first; //elemento anterior
+        Node aux = first.next; //elemento sgte
+        while(aux!=null&&!util.Utility.equals(prev.data, element)){
+            prev = aux; //actualizo anterior
+            aux = aux.next;
+            }
+        if(aux != null && util.Utility.equals(prev.data, element)){
+                return aux.data; 
+        }
+        return null;
     }
 
     @Override
@@ -211,9 +236,15 @@ public class SinglyLinkedList implements List {
     }
 
     @Override
+    public void addInSortedList(Object element) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
     public void sort() throws ListException {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+
     
     
     

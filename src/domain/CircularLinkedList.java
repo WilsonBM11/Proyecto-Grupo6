@@ -304,6 +304,20 @@ public class CircularLinkedList implements List {
                   last.data = element2;
 } 
         }
+        public Object getNodeById(Object element) throws ListException{
+        if(isEmpty())
+            throw new ListException("Doubly Linked List is empty");
+        Node aux = first;
+        while(aux!=null&&!util.Utility.equals(aux.data, element)){
+            aux = aux.next;
+        }
+        //sale cuando aux==null o encontro el elemento
+        if(aux!=null&&util.Utility.equals(aux.data, element)){
+            return aux.data;
+        }
+        return null; //el elemento no existe
+
+      }
         
 
     @Override

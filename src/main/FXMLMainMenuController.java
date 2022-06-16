@@ -84,6 +84,11 @@ public class FXMLMainMenuController implements Initializable {
     private void EnfermedadesCode(ActionEvent event) {
         loadPage(getClass().getResource("FXMLMantenimientoEnfermedades.fxml"), bp);
     }
+
+    @FXML
+    private void CitasCode(ActionEvent event) {
+        loadPage(getClass().getResource("FXMLCitas.fxml"), bp);
+    }
    
     
 }

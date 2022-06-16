@@ -214,6 +214,7 @@ public class FXMLMantenimientoDoctoresController implements Initializable {
         dialog.setTitle("Doctor Position Contains");
         dialog.setHeaderText("Enter the id: ");
         Optional<String> id = dialog.showAndWait();
+        Doctor doctor = new Doctor(Integer.parseInt(id.get()), "", "", "", "", "", null);
 
         if (!id.isPresent() || id.get().compareTo("") == 0) {
             alert = new Alert(Alert.AlertType.NONE);
@@ -225,12 +226,13 @@ public class FXMLMantenimientoDoctoresController implements Initializable {
         } else {
 
             try {
-                if (util.Utility.getCircularDoublyLinkedList().contains(new Doctor(Integer.parseInt(id.get()), "", "", "", "", "", null))) {
+                if (util.Utility.getCircularDoublyLinkedList().contains(doctor)) {
+                   Object foundElement = util.Utility.getCircularDoublyLinkedList().getNodeById(doctor);  
                     alert = new Alert(Alert.AlertType.NONE);
                     alert.setAlertType(Alert.AlertType.INFORMATION);
                     alert.setTitle("Job Position Contains");
                     alert.setHeaderText("The list contains: ");
-                    alert.setContentText(String.valueOf((new Doctor(Integer.parseInt(id.get()), "", "", "", "", "", null))));
+                    alert.setContentText(foundElement.toString());
                     alert.show();
                 } else {
                     alert = new Alert(Alert.AlertType.NONE);

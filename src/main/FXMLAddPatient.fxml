@@ -15,7 +15,7 @@
          <children>
             <Pane prefHeight="66.0" prefWidth="644.0" style="-fx-background-color: #0174DF;">
                <children>
-                  <Label layoutX="217.0" layoutY="11.0" prefHeight="45.0" prefWidth="211.0" text="Doctor Register">
+                  <Label layoutX="217.0" layoutY="11.0" prefHeight="45.0" prefWidth="211.0" text="Patient Register">
                      <font>
                         <Font name="Times New Roman" size="32.0" />
                      </font>
