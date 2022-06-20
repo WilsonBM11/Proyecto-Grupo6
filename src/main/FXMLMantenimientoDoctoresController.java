@@ -146,12 +146,12 @@ public class FXMLMantenimientoDoctoresController implements Initializable {
                     List<String> arrayList = new ArrayList<>();
                     arrayList.add(String.valueOf(D.getId()));
                     arrayList.add(D.getFirstName());
-                    arrayList.add(D.getLasName());
+                    arrayList.add(D.getLastName());
                     arrayList.add(D.getPhoneNumber());
                     arrayList.add(D.getEmail());
                     arrayList.add(D.getAddress());
                     SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-                    arrayList.add(String.valueOf(D.getBirthday()));
+                    arrayList.add(String.valueOf(format.format(D.getBirthday())));
 
                     //Agrego el arrayList a ObservableList<List<String>> data
                     data.add(arrayList);
@@ -185,19 +185,36 @@ public class FXMLMantenimientoDoctoresController implements Initializable {
         }
 
         try {
-            if(DoctorList.size()==1){
-                DoctorList.clear();
-                TableView.getItems().clear();
+            if (DoctorList.size() == 1) {
+                if (DoctorList.contains(new Doctor(Integer.parseInt(id.get()), "", "", "", "", "", null))) {
+                    DoctorList.clear();
+                    TableView.getItems().clear();
+                } else {
+                    alert = new Alert(Alert.AlertType.NONE);
+                    alert.setAlertType(Alert.AlertType.ERROR);
+                    alert.setTitle("Doctor Remove");
+                    alert.setHeaderText("The list dont have the element");
+                    alert.show();
+                }
             } else {
-            DoctorList.remove(new Doctor(Integer.parseInt(id.get()), "", "", "", "", "", null));
-            util.Utility.setCircularDoublyLinkedList(DoctorList);
-            TableView.getItems().clear();
-            TableView.getItems().addAll(getData());
-            alert = new Alert(Alert.AlertType.NONE);
-            alert.setAlertType(Alert.AlertType.INFORMATION);
-            alert.setTitle("Doctor - Remove");
-            alert.setHeaderText("The element was removed");
-            alert.show();
+                if (DoctorList.contains(new Doctor(Integer.parseInt(id.get()), "", "", "", "", "", null))) {
+                    DoctorList.remove(new Doctor(Integer.parseInt(id.get()), "", "", "", "", "", null));
+                    util.Utility.setCircularDoublyLinkedList(DoctorList);
+                    TableView.getItems().clear();
+                    TableView.getItems().addAll(getData());
+                    alert = new Alert(Alert.AlertType.NONE);
+                    alert.setAlertType(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Doctor - Remove");
+                    alert.setHeaderText("The element was removed");
+                    alert.show();
+                } else {
+                    alert = new Alert(Alert.AlertType.NONE);
+                    alert.setAlertType(Alert.AlertType.ERROR);
+                    alert.setTitle("Doctor Remove");
+                    alert.setHeaderText("The list dont have the element");
+                    alert.show();
+
+                }
             }
         } catch (ListException ex) {
             alert = new Alert(Alert.AlertType.NONE);
@@ -227,7 +244,7 @@ public class FXMLMantenimientoDoctoresController implements Initializable {
 
             try {
                 if (util.Utility.getCircularDoublyLinkedList().contains(doctor)) {
-                   Object foundElement = util.Utility.getCircularDoublyLinkedList().getNodeById(doctor);  
+                    Object foundElement = util.Utility.getCircularDoublyLinkedList().getNodeById(doctor);
                     alert = new Alert(Alert.AlertType.NONE);
                     alert.setAlertType(Alert.AlertType.INFORMATION);
                     alert.setTitle("Job Position Contains");
@@ -257,81 +274,100 @@ public class FXMLMantenimientoDoctoresController implements Initializable {
         try {
             DoctorList = util.Utility.getCircularDoublyLinkedList();
             String FirstName = event.getRowValue().get(1);
-            String date = event.getRowValue().get(6);
-            Date date1 = new SimpleDateFormat("dd/MM/yyyy").parse(date);
+            String sDate1 = event.getRowValue().get(6);
+            Date date1 = new SimpleDateFormat("dd/MM/yyyy").parse(sDate1);
             Doctor oldDoctor = new Doctor(Integer.parseInt(event.getRowValue().get(0)), FirstName, event.getRowValue().get(2), event.getRowValue().get(3), event.getRowValue().get(4), event.getRowValue().get(5), date1);
             Doctor newDoctor = new Doctor(Integer.parseInt(event.getRowValue().get(0)), event.getNewValue(), event.getRowValue().get(2), event.getRowValue().get(3), event.getRowValue().get(4), event.getRowValue().get(5), date1);
             this.DoctorList.modificar(oldDoctor, newDoctor);
             util.Utility.setCircularDoublyLinkedList(DoctorList);
-            if(this.DoctorList!=null && !this.DoctorList.isEmpty()){
+            if (this.DoctorList != null && !this.DoctorList.isEmpty()) {
                 this.TableView.setItems(getData());
             }
-        }catch (ParseException ex) {
-            System.err.println("ERROR " + ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(FXMLMantenimientoDoctoresController.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-    @FXML
-    private void LastNameCommit(TableColumn.CellEditEvent<List<String>, String> event) throws ListException {
-       DoctorList = util.Utility.getCircularDoublyLinkedList();
-        String lastName = event.getRowValue().get(2);
-        Doctor oldDoctor = new Doctor(Integer.parseInt(event.getRowValue().get(0)), event.getRowValue().get(1), lastName, event.getRowValue().get(3), event.getRowValue().get(4), event.getRowValue().get(5), null);
-        Doctor newDoctor = new Doctor(Integer.parseInt(event.getRowValue().get(0)), event.getRowValue().get(1), event.getNewValue(), event.getRowValue().get(3), event.getRowValue().get(4), event.getRowValue().get(5), null);
-        this.DoctorList.modificar(oldDoctor, newDoctor);
-        util.Utility.setCircularDoublyLinkedList(DoctorList);
-        System.out.println(DoctorList.toString());
-        //String actualizar = String.valueOf(event.getNewValue());
-        //String set = event.getRowValue().set(1, actualizar);
-        if(this.DoctorList!=null && !this.DoctorList.isEmpty()){
-           this.TableView.setItems(getData());
-       }
     }
 
     @FXML
-    private void PhoneNumberCommit(TableColumn.CellEditEvent<List<String>, String> event) throws ListException{
-    
-       DoctorList = util.Utility.getCircularDoublyLinkedList();
-        String PhoneNumber = event.getRowValue().get(3);
-        Doctor oldDoctor = new Doctor(Integer.parseInt(event.getRowValue().get(0)), event.getRowValue().get(1), event.getRowValue().get(2), PhoneNumber, event.getRowValue().get(4), event.getRowValue().get(5), null);
-        Doctor newDoctor = new Doctor(Integer.parseInt(event.getRowValue().get(0)), event.getRowValue().get(1), event.getRowValue().get(2), event.getNewValue(), event.getRowValue().get(4), event.getRowValue().get(5), null);
-        this.DoctorList.modificar(oldDoctor, newDoctor);
-        util.Utility.setCircularDoublyLinkedList(DoctorList);
-        System.out.println(DoctorList.toString());
-        //String actualizar = String.valueOf(event.getNewValue());
-        //String set = event.getRowValue().set(1, actualizar);
-        if(this.DoctorList!=null && !this.DoctorList.isEmpty()){
-           this.TableView.setItems(getData());
-       }
+    private void LastNameCommit(TableColumn.CellEditEvent<List<String>, String> event) throws ListException {
+        try {
+            DoctorList = util.Utility.getCircularDoublyLinkedList();
+            String lastName = event.getRowValue().get(2);
+            String sDate1 = event.getRowValue().get(6);
+            Date date1 = new SimpleDateFormat("dd/MM/yyyy").parse(sDate1);
+            Doctor oldDoctor = new Doctor(Integer.parseInt(event.getRowValue().get(0)), event.getRowValue().get(1), lastName, event.getRowValue().get(3), event.getRowValue().get(4), event.getRowValue().get(5), date1);
+            Doctor newDoctor = new Doctor(Integer.parseInt(event.getRowValue().get(0)), event.getRowValue().get(1), event.getNewValue(), event.getRowValue().get(3), event.getRowValue().get(4), event.getRowValue().get(5), date1);
+            this.DoctorList.modificar(oldDoctor, newDoctor);
+            util.Utility.setCircularDoublyLinkedList(DoctorList);
+            System.out.println(DoctorList.toString());
+            if (this.DoctorList != null && !this.DoctorList.isEmpty()) {
+                this.TableView.setItems(getData());
+            }
+        } catch (ParseException ex) {
+            Logger.getLogger(FXMLMantenimientoDoctoresController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
+
+    @FXML
+    private void PhoneNumberCommit(TableColumn.CellEditEvent<List<String>, String> event) throws ListException {
+
+        try {
+            DoctorList = util.Utility.getCircularDoublyLinkedList();
+            String PhoneNumber = event.getRowValue().get(3);
+            String sDate1 = event.getRowValue().get(6);
+            Date date1 = new SimpleDateFormat("dd/MM/yyyy").parse(sDate1);
+            Doctor oldDoctor = new Doctor(Integer.parseInt(event.getRowValue().get(0)), event.getRowValue().get(1), event.getRowValue().get(2), PhoneNumber, event.getRowValue().get(4), event.getRowValue().get(5), date1);
+            Doctor newDoctor = new Doctor(Integer.parseInt(event.getRowValue().get(0)), event.getRowValue().get(1), event.getRowValue().get(2), event.getNewValue(), event.getRowValue().get(4), event.getRowValue().get(5), date1);
+            this.DoctorList.modificar(oldDoctor, newDoctor);
+            util.Utility.setCircularDoublyLinkedList(DoctorList);
+            System.out.println(DoctorList.toString());
+            if (this.DoctorList != null && !this.DoctorList.isEmpty()) {
+                this.TableView.setItems(getData());
+            }
+        } catch (ParseException ex) {
+            Logger.getLogger(FXMLMantenimientoDoctoresController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     @FXML
     private void EmailCommit(TableColumn.CellEditEvent<List<String>, String> event) throws ListException {
-     DoctorList = util.Utility.getCircularDoublyLinkedList();
-        String Email = event.getRowValue().get(4);
-        Doctor oldDoctor = new Doctor(Integer.parseInt(event.getRowValue().get(0)), event.getRowValue().get(1), event.getRowValue().get(2), event.getRowValue().get(3), Email, event.getRowValue().get(5), null);
-        Doctor newDoctor = new Doctor(Integer.parseInt(event.getRowValue().get(0)), event.getRowValue().get(1), event.getRowValue().get(2), event.getRowValue().get(3), event.getNewValue(), event.getRowValue().get(5), null);
-        this.DoctorList.modificar(oldDoctor, newDoctor);
-        util.Utility.setCircularDoublyLinkedList(DoctorList);
-        System.out.println(DoctorList.toString());
-        //String actualizar = String.valueOf(event.getNewValue());
-        //String set = event.getRowValue().set(1, actualizar);
-        if(this.DoctorList!=null && !this.DoctorList.isEmpty()){
-           this.TableView.setItems(getData());
-       }
+        try {
+            DoctorList = util.Utility.getCircularDoublyLinkedList();
+            String Email = event.getRowValue().get(4);
+            String sDate1 = event.getRowValue().get(6);
+            Date date1 = new SimpleDateFormat("dd/MM/yyyy").parse(sDate1);
+            Doctor oldDoctor = new Doctor(Integer.parseInt(event.getRowValue().get(0)), event.getRowValue().get(1), event.getRowValue().get(2), event.getRowValue().get(3), Email, event.getRowValue().get(5), date1);
+            Doctor newDoctor = new Doctor(Integer.parseInt(event.getRowValue().get(0)), event.getRowValue().get(1), event.getRowValue().get(2), event.getRowValue().get(3), event.getNewValue(), event.getRowValue().get(5), date1);
+            this.DoctorList.modificar(oldDoctor, newDoctor);
+            util.Utility.setCircularDoublyLinkedList(DoctorList);
+            System.out.println(DoctorList.toString());
+            if (this.DoctorList != null && !this.DoctorList.isEmpty()) {
+                this.TableView.setItems(getData());
+            }
+        } catch (ParseException ex) {
+            Logger.getLogger(FXMLMantenimientoDoctoresController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
+
     @FXML
     private void AddressCommit(TableColumn.CellEditEvent<List<String>, String> event) throws ListException {
-    
-        DoctorList = util.Utility.getCircularDoublyLinkedList();
-        String Address = event.getRowValue().get(5);
-        Doctor oldDoctor = new Doctor(Integer.parseInt(event.getRowValue().get(0)), event.getRowValue().get(1), event.getRowValue().get(2), event.getRowValue().get(3), event.getRowValue().get(4), Address, null);
-        Doctor newDoctor = new Doctor(Integer.parseInt(event.getRowValue().get(0)), event.getRowValue().get(1), event.getRowValue().get(2), event.getRowValue().get(3), event.getRowValue().get(4), event.getNewValue(), null);
-        this.DoctorList.modificar(oldDoctor, newDoctor);
-        util.Utility.setCircularDoublyLinkedList(DoctorList);
-        System.out.println(DoctorList.toString());
-        //String actualizar = String.valueOf(event.getNewValue());
-        //String set = event.getRowValue().set(1, actualizar);
-        if(this.DoctorList!=null && !this.DoctorList.isEmpty()){
-           this.TableView.setItems(getData());
-       }
+
+        try {
+            DoctorList = util.Utility.getCircularDoublyLinkedList();
+            String Address = event.getRowValue().get(5);
+            String sDate1= event.getRowValue().get(6);
+            Date date1 = new SimpleDateFormat("dd/MM/yyyy").parse(sDate1);
+            Doctor oldDoctor = new Doctor(Integer.parseInt(event.getRowValue().get(0)), event.getRowValue().get(1), event.getRowValue().get(2), event.getRowValue().get(3), event.getRowValue().get(4), Address, date1);
+            Doctor newDoctor = new Doctor(Integer.parseInt(event.getRowValue().get(0)), event.getRowValue().get(1), event.getRowValue().get(2), event.getRowValue().get(3), event.getRowValue().get(4), event.getNewValue(), date1);
+            this.DoctorList.modificar(oldDoctor, newDoctor);
+            util.Utility.setCircularDoublyLinkedList(DoctorList);
+            System.out.println(DoctorList.toString());
+            if (this.DoctorList != null && !this.DoctorList.isEmpty()) {
+                this.TableView.setItems(getData());
+            }
+        } catch (ParseException ex) {
+            Logger.getLogger(FXMLMantenimientoDoctoresController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
-   
+
 }

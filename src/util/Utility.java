@@ -195,13 +195,6 @@ public class Utility {
                 Character a3 = (Character) a;
                 Character b3 = (Character) b;
                 return a3.compareTo(a3) < 0;
-//            case "Doctor":
-//                Doctor a4 = (Doctor) a;
-//                Doctor b4 = (Doctor) b;
-//                switch (criterio) {
-//                    case "id":
-//                        return a4.getId() < b4.getId();
-//                }
 
         }
         return false;
@@ -222,13 +215,6 @@ public class Utility {
                 Character a3 = (Character) a;
                 Character b3 = (Character) b;
                 return a3.compareTo(a3) > 0;
-//            case "Doctor":
-//                Doctor a4 = (Doctor) a;
-//                Doctor b4 = (Doctor) b;
-//                switch (criterio) {
-//                    case "id":
-//                        return a4.getId() > b4.getId();
-//                }
         }
 
         return false;

@@ -15,6 +15,8 @@ import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -61,39 +63,48 @@ public class FXMLAddDoctorController implements Initializable {
     }
 
     @FXML
-    private void registerOnAction(ActionEvent event) throws ParseException {
-         if (doctorlist == null && util.Utility.getCircularDoublyLinkedList().isEmpty()) {
+    private void registerOnAction(ActionEvent event) throws ParseException, ListException {
+        if (doctorlist == null && util.Utility.getCircularDoublyLinkedList().isEmpty()) {
             if ("".equals(firstNTextField.getText()) || "".equals(lastNTextField.getText())
                     || "".equals(calendarChoice) || "".equals(PhoneTextField.getText())
                     || "".equals(idTextField.getText())) {
 
                 alert = new Alert(Alert.AlertType.NONE);
                 alert.setAlertType(Alert.AlertType.ERROR);
-                alert.setTitle("Add Employee");
+                alert.setTitle("Add Doctor");
                 alert.setHeaderText("ERROR");
                 alert.setContentText("Fill all the spaces");
                 alert.show();
 
             } else {
-                 Calendar date = Calendar.getInstance();
-                date.set(calendarChoice.getValue().getYear(),calendarChoice.getValue().getMonthValue(), calendarChoice.getValue().getDayOfMonth());
-                Doctor doctor = new Doctor(Integer.parseInt(idTextField.getText()), firstNTextField.getText(),
-                        lastNTextField.getText(), PhoneTextField.getText(),TF_Email.getText(),TF_Address.getText(), date.getTime());
-                doctorlist = new CircularDoublyLinkedList();
-                doctorlist.add(doctor);
-                util.Utility.setCircularDoublyLinkedList(doctorlist);
-                idTextField.setText("");
-                lastNTextField.setText("");
-                firstNTextField.setText("");
-                PhoneTextField.setText("");
-                TF_Address.setText("");
-                TF_Email.setText("");
-                calendarChoice.getEditor().clear();
+                try {
+                    Calendar date = Calendar.getInstance();
+                    date.set(calendarChoice.getValue().getYear(), calendarChoice.getValue().getMonthValue(), calendarChoice.getValue().getDayOfMonth());
+                    Doctor doctor = new Doctor(Integer.parseInt(idTextField.getText()), firstNTextField.getText(),
+                            lastNTextField.getText(), PhoneTextField.getText(), TF_Email.getText(), TF_Address.getText(), date.getTime());
+                    doctorlist = new CircularDoublyLinkedList();
+                    doctorlist.add(doctor);
+                    util.Utility.setCircularDoublyLinkedList(doctorlist);
+                    idTextField.setText("");
+                    lastNTextField.setText("");
+                    firstNTextField.setText("");
+                    PhoneTextField.setText("");
+                    TF_Address.setText("");
+                    TF_Email.setText("");
+                    calendarChoice.getEditor().clear();
 
-                alert = new Alert(Alert.AlertType.NONE);
-                alert.setAlertType(Alert.AlertType.INFORMATION);
-                alert.setTitle("Employee added");
-                alert.show();
+                    alert = new Alert(Alert.AlertType.NONE);
+                    alert.setAlertType(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Doctor added");
+                    alert.show();
+                } catch (NumberFormatException ex) {
+                    alert = new Alert(Alert.AlertType.NONE);
+                    alert.setAlertType(Alert.AlertType.ERROR);
+                    alert.setTitle("Add Doctor");
+                    alert.setHeaderText("ERROR");
+                    alert.setContentText("Wrong character, fill again the space");
+                    alert.show();
+                }
 
             }
         } else {
@@ -109,29 +120,37 @@ public class FXMLAddDoctorController implements Initializable {
                 alert.show();
 
             } else {
+                try {
+                    Calendar date = Calendar.getInstance();
+                    date.set(calendarChoice.getValue().getYear(), calendarChoice.getValue().getMonthValue(), calendarChoice.getValue().getDayOfMonth());
 
-                Calendar date = Calendar.getInstance();
-                date.set(calendarChoice.getValue().getYear(), calendarChoice.getValue().getMonthValue(), calendarChoice.getValue().getDayOfMonth());
+                    Doctor d = new Doctor(Integer.parseInt(idTextField.getText()), firstNTextField.getText(),
+                            lastNTextField.getText(), PhoneTextField.getText(), TF_Email.getText(), TF_Address.getText(), date.getTime());
+                    util.Utility.getCircularDoublyLinkedList().add(d);
+                    util.Utility.setCircularDoublyLinkedList(util.Utility.getCircularDoublyLinkedList());
+                    idTextField.setText("");
+                    lastNTextField.setText("");
+                    firstNTextField.setText("");
+                    PhoneTextField.setText("");
+                    calendarChoice.getEditor().clear();
+                    TF_Address.setText("");
+                    TF_Email.setText("");
 
-                Doctor d = new Doctor(Integer.parseInt(idTextField.getText()), firstNTextField.getText(),
-                        lastNTextField.getText(), PhoneTextField.getText(),TF_Email.getText(),TF_Address.getText(), date.getTime());
-                util.Utility.getCircularDoublyLinkedList().add(d);
-                util.Utility.setCircularDoublyLinkedList(util.Utility.getCircularDoublyLinkedList());
-                idTextField.setText("");
-                lastNTextField.setText("");
-                firstNTextField.setText("");
-                PhoneTextField.setText("");
-                calendarChoice.getEditor().clear();
-                TF_Address.setText("");
-                TF_Email.setText("");
+                    alert = new Alert(Alert.AlertType.NONE);
+                    alert.setAlertType(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Add Doctor");
+                    alert.setHeaderText("Doctor added");
+                    alert.show();
+                } catch (NumberFormatException ex) {
+                    alert = new Alert(Alert.AlertType.NONE);
+                    alert.setAlertType(Alert.AlertType.ERROR);
+                    alert.setTitle("Add Doctor");
+                    alert.setHeaderText("ERROR");
+                    alert.setContentText("Wrong character, fill again the space");
+                    alert.show();
 
-                alert = new Alert(Alert.AlertType.NONE);
-                alert.setAlertType(Alert.AlertType.INFORMATION);
-                alert.setTitle("Add Employee");
-                alert.setHeaderText("Employee added");
-                alert.show();
-
+                }
             }
         }
     }
-    }
+}

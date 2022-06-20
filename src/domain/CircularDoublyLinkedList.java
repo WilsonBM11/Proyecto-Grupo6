@@ -335,7 +335,6 @@ public class CircularDoublyLinkedList implements List {
 } 
       }
     
-    
   
     @Override
     public String toString() {

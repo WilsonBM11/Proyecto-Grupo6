@@ -16,16 +16,16 @@ public class Doctor {
     //phoneNumber(String), email(String), address(String))
     private int id;
     private String firstName;
-    private String lasName;
+    private String lastName;
     private String phoneNumber;
     private String email;
     private String address;
     private Date birthday;
 
-    public Doctor(int id, String firstName, String lasName, String phoneNumber, String email, String address, Date birthday) {
+    public Doctor(int id, String firstName, String lastName, String phoneNumber, String email, String address, Date birthday) {
         this.id = id;
         this.firstName = firstName;
-        this.lasName = lasName;
+        this.lastName = lastName;
         this.phoneNumber = phoneNumber;
         this.email = email;
         this.address = address;
@@ -36,8 +36,8 @@ public class Doctor {
         return firstName;
     }
 
-    public String getLasName() {
-        return lasName;
+    public String getLastName() {
+        return lastName;
     }
 
     public String getPhoneNumber() {
@@ -65,8 +65,8 @@ public class Doctor {
         this.firstName = firstName;
     }
 
-    public void setLasName(String lasName) {
-        this.lasName = lasName;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public void setPhoneNumber(String phoneNumber) {
@@ -96,7 +96,7 @@ public class Doctor {
 
     @Override
     public String toString() {
-        return "Doctor " + "id = " + id + ", firstName = " + firstName + ", lasName = " + lasName + ", phoneNumber = " + phoneNumber + ", email = " + email + ", address = " + address + ", birthday = " + birthday;
+        return "Doctor " + "id = " + id + ", firstName = " + firstName + ", lasName = " + lastName + ", phoneNumber = " + phoneNumber + ", email = " + email + ", address = " + address + ", birthday = " + birthday;
     }
 
 }

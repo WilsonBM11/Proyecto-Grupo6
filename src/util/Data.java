@@ -203,7 +203,7 @@ public class Data {
                 return p.getId()+";"+p.getLastname()+";"+p.getFirstname()+";"+util.Utility.dateFormat(p.getBirthday())+";"+p.getPhoneNumber()+";"+p.getEmail()+";"+p.getAddress();
             case "doctors":
                 Doctor d = (Doctor) data;
-                return d.getId()+";"+d.getFirstName()+";"+d.getLasName()+";"+d.getPhoneNumber()+";"+d.getEmail()+";"+d.getAddress()+";"+util.Utility.dateFormat(d.getBirthday());
+                return d.getId()+";"+d.getFirstName()+";"+d.getLastName()+";"+d.getPhoneNumber()+";"+d.getEmail()+";"+d.getAddress()+";"+util.Utility.dateFormat(d.getBirthday());
             case "appointment":
                 Appointment a = (Appointment) data;
                 return a.getId()+";"+a.getPatientID()+";"+a.getDoctorID()+";"+a.getDateTime().toLocalDate().toString()+";"+

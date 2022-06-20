@@ -193,8 +193,10 @@ public class FXMLMantenimientoEnfermedadesController implements Initializable {
         SicknessList = util.Utility.getSinglyLinkedList();
         String Description = event.getRowValue().get(1);
         Sickness oldSick = new Sickness(Description);
+        int id = oldSick.getId();
         Sickness newSick = new Sickness(event.getNewValue());
-        newSick.setId(Integer.parseInt(event.getRowValue().get(0)));
+        newSick.setId(id-1);
+        Sickness.setConsecutivo(id);
         this.SicknessList.modificar(oldSick, newSick);
         util.Utility.setSinglyLinkedList(SicknessList);
         System.out.println(SicknessList.toString());
