@@ -7,6 +7,7 @@ package util;
 
 import domain.Appointment;
 import domain.BTreeNode;
+import domain.CircularDoublyLinkedList;
 import domain.Doctor;
 import domain.Queue;
 import domain.List;
@@ -83,14 +84,17 @@ public class Data {
                 while (!queue.isEmpty()) {
                     ps.println(getString(fileName, queue.deQueue()));
                 }
+                break;
             case "List":
                 List list = (List) TDA;
                 for (int i = 1; i <= list.size(); i++) {
                     ps.println(getString(fileName, list.getNode(i).data));
                 }
+                break;
             case "Tree":
                 Tree tree = (Tree) TDA;
                 setTreeDataFile(tree.getRoot(),fileName,ps);
+                break;
         }
     }
     
@@ -138,15 +142,10 @@ public class Data {
     }
 
     private static String instanceOf(Object a) {
-        if (a instanceof Queue) {
-            return "Queue";
-        }
-        if (a instanceof List) {
-            return "List";
-        }
-        if(a instanceof Tree){
-            return "Tree";
-        }
+        if(a instanceof List) return "List";
+        if(a instanceof Queue) return "Queue";
+        if(a instanceof Tree) return "Tree";
+
         return "unknown";
     }
 

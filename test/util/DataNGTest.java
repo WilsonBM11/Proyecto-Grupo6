@@ -6,6 +6,8 @@
 package util;
 
 import domain.BST;
+import domain.CircularDoublyLinkedList;
+import domain.LinkedQueue;
 import domain.ListException;
 import domain.MedicalCare;
 import domain.Patient;
@@ -29,13 +31,13 @@ public class DataNGTest {
 
     @Test
     public void testSomeMethod() throws QueueException, ListException, IOException {
-        BST bst = new BST();
+        LinkedQueue bst = new LinkedQueue();
         if (util.Data.fileExists("numbers")) {
-            bst = (BST) util.Data.getDataFile("numbers", bst);
+            bst = (LinkedQueue) util.Data.getDataFile("numbers", bst);
         }
 
         for (int i = 0; i < 5; i++) {
-            bst.add(util.Utility.random(25));
+            bst.enQueue(util.Utility.random(25));
         }
         
         System.out.println(bst.toString());

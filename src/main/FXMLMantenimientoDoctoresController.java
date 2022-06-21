@@ -11,6 +11,7 @@ import domain.ListException;
 import domain.Queue;
 import domain.QueueException;
 import domain.SinglyLinkedList;
+import java.io.IOException;
 import java.net.URL;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -70,7 +71,15 @@ public class FXMLMantenimientoDoctoresController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        this.DoctorList = util.Utility.getCircularDoublyLinkedList();
+        DoctorList = new CircularDoublyLinkedList();
+        if(util.Data.fileExists("doctors")){
+            try {
+                DoctorList = (CircularDoublyLinkedList) util.Data.getDataFile("doctors", DoctorList);
+            } catch (QueueException | IOException ex) {
+                Logger.getLogger(FXMLMantenimientoDoctoresController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
 
         this.IDcolumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<List<String>, String>, ObservableValue<String>>() {
             @Override
@@ -189,6 +198,7 @@ public class FXMLMantenimientoDoctoresController implements Initializable {
                 if (DoctorList.contains(new Doctor(Integer.parseInt(id.get()), "", "", "", "", "", null))) {
                     DoctorList.clear();
                     TableView.getItems().clear();
+                    util.Data.setDataFile("doctors", DoctorList);
                 } else {
                     alert = new Alert(Alert.AlertType.NONE);
                     alert.setAlertType(Alert.AlertType.ERROR);
@@ -199,7 +209,7 @@ public class FXMLMantenimientoDoctoresController implements Initializable {
             } else {
                 if (DoctorList.contains(new Doctor(Integer.parseInt(id.get()), "", "", "", "", "", null))) {
                     DoctorList.remove(new Doctor(Integer.parseInt(id.get()), "", "", "", "", "", null));
-                    util.Utility.setCircularDoublyLinkedList(DoctorList);
+                    util.Data.setDataFile("doctors", DoctorList);
                     TableView.getItems().clear();
                     TableView.getItems().addAll(getData());
                     alert = new Alert(Alert.AlertType.NONE);
@@ -222,6 +232,8 @@ public class FXMLMantenimientoDoctoresController implements Initializable {
             alert.setTitle("Doctor - Remove");
             alert.setHeaderText(ex.getMessage());
             alert.show();
+        } catch (QueueException | IOException ex) {
+            Logger.getLogger(FXMLMantenimientoDoctoresController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

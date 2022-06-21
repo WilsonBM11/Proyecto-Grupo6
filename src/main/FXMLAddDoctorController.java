@@ -8,6 +8,8 @@ import domain.CircularDoublyLinkedList;
 import domain.CircularLinkedList;
 import domain.Doctor;
 import domain.ListException;
+import domain.QueueException;
+import java.io.IOException;
 import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -59,12 +61,19 @@ public class FXMLAddDoctorController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
+        doctorlist = new CircularDoublyLinkedList();
+        if(util.Data.fileExists("doctors")){
+            try {
+                doctorlist = (CircularDoublyLinkedList) util.Data.getDataFile("doctors", doctorlist);
+            } catch (QueueException | IOException ex) {
+                Logger.getLogger(FXMLMantenimientoDoctoresController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 
     @FXML
-    private void registerOnAction(ActionEvent event) throws ParseException, ListException {
-        if (doctorlist == null && util.Utility.getCircularDoublyLinkedList().isEmpty()) {
+    private void registerOnAction(ActionEvent event) throws ParseException, ListException, QueueException, IOException {
+        if (doctorlist == null && doctorlist.isEmpty()) {
             if ("".equals(firstNTextField.getText()) || "".equals(lastNTextField.getText())
                     || "".equals(calendarChoice) || "".equals(PhoneTextField.getText())
                     || "".equals(idTextField.getText())) {
@@ -82,9 +91,8 @@ public class FXMLAddDoctorController implements Initializable {
                     date.set(calendarChoice.getValue().getYear(), calendarChoice.getValue().getMonthValue(), calendarChoice.getValue().getDayOfMonth());
                     Doctor doctor = new Doctor(Integer.parseInt(idTextField.getText()), firstNTextField.getText(),
                             lastNTextField.getText(), PhoneTextField.getText(), TF_Email.getText(), TF_Address.getText(), date.getTime());
-                    doctorlist = new CircularDoublyLinkedList();
                     doctorlist.add(doctor);
-                    util.Utility.setCircularDoublyLinkedList(doctorlist);
+                    util.Data.setDataFile("doctors", doctorlist);
                     idTextField.setText("");
                     lastNTextField.setText("");
                     firstNTextField.setText("");
@@ -126,8 +134,8 @@ public class FXMLAddDoctorController implements Initializable {
 
                     Doctor d = new Doctor(Integer.parseInt(idTextField.getText()), firstNTextField.getText(),
                             lastNTextField.getText(), PhoneTextField.getText(), TF_Email.getText(), TF_Address.getText(), date.getTime());
-                    util.Utility.getCircularDoublyLinkedList().add(d);
-                    util.Utility.setCircularDoublyLinkedList(util.Utility.getCircularDoublyLinkedList());
+                    doctorlist.add(d);
+                    util.Data.setDataFile("doctors", doctorlist);
                     idTextField.setText("");
                     lastNTextField.setText("");
                     firstNTextField.setText("");

@@ -9,6 +9,8 @@ import domain.CircularLinkedList;
 import domain.Doctor;
 import domain.ListException;
 import domain.Patient;
+import domain.QueueException;
+import java.io.IOException;
 import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -67,7 +69,14 @@ public class FXMLMantenimientoPascientesController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        this.PatientList = util.Utility.getCircularLinkedList();
+        
+        if(util.Data.fileExists("patients")){
+            try {
+                this.PatientList = (CircularLinkedList) util.Data.getDataFile("patients", PatientList);
+            } catch (QueueException | IOException ex) {
+                Logger.getLogger(FXMLMantenimientoPascientesController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
 
         this.IDcolumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<List<String>, String>, ObservableValue<String>>() {
             @Override
@@ -176,7 +185,7 @@ public class FXMLMantenimientoPascientesController implements Initializable {
         if (!id.isPresent() || id.get().compareTo("") == 0) {
             alert = new Alert(Alert.AlertType.NONE);
             alert.setAlertType(Alert.AlertType.ERROR);
-            alert.setTitle("Doctor Remove");
+            alert.setTitle("Patient Remove");
             alert.setHeaderText("The list dont have the element");
             alert.show();
 
@@ -200,6 +209,11 @@ public class FXMLMantenimientoPascientesController implements Initializable {
                     util.Utility.setCircularLinkedList(PatientList);
                     TableView.getItems().clear();
                     TableView.getItems().addAll(getData());
+                    try {
+                        util.Data.setDataFile("patients", PatientList);
+                    } catch (QueueException | IOException ex) {
+                        Logger.getLogger(FXMLMantenimientoPascientesController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                     alert = new Alert(Alert.AlertType.NONE);
                     alert.setAlertType(Alert.AlertType.INFORMATION);
                     alert.setTitle("Patient - Remove");
