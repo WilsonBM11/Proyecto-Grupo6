@@ -9,13 +9,13 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="486.0" prefWidth="644.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.FXMLAddPatientController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="486.0" prefWidth="644.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.FXMLPatientAddController">
    <center>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
          <children>
             <Pane prefHeight="66.0" prefWidth="644.0" style="-fx-background-color: #0174DF;">
                <children>
-                  <Label layoutX="217.0" layoutY="11.0" prefHeight="45.0" prefWidth="211.0" text="Patient Register">
+                  <Label layoutX="217.0" layoutY="11.0" prefHeight="45.0" prefWidth="211.0" text="Doctor Register">
                      <font>
                         <Font name="Times New Roman" size="32.0" />
                      </font>

@@ -255,8 +255,8 @@ public class FXMLMantenimientoDoctoresController implements Initializable {
         } else {
 
             try {
-                if (util.Utility.getCircularDoublyLinkedList().contains(doctor)) {
-                    Object foundElement = util.Utility.getCircularDoublyLinkedList().getNodeById(doctor);
+                if (DoctorList.contains(doctor)) {
+                    Object foundElement = DoctorList.getNodeById(doctor);
                     alert = new Alert(Alert.AlertType.NONE);
                     alert.setAlertType(Alert.AlertType.INFORMATION);
                     alert.setTitle("Job Position Contains");

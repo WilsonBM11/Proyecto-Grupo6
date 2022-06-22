@@ -44,6 +44,7 @@ public class FXMLCitasController implements Initializable {
     }
     @FXML
     private void AddCode(ActionEvent event) {
+        FXMLMainMenuController.loadPage(getClass().getResource("FXMLAddCITAS.fxml"), bp);
     }
 
     @FXML

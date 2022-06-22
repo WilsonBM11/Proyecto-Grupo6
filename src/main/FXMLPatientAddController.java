@@ -8,6 +8,7 @@ import domain.CircularDoublyLinkedList;
 import domain.CircularLinkedList;
 import domain.Doctor;
 import domain.ListException;
+import domain.Patient;
 import domain.QueueException;
 import java.io.IOException;
 import java.net.URL;
@@ -34,9 +35,9 @@ import static main.FXMLMainMenuController.loadPage;
  *
  * @author Duran Family
  */
-public class FXMLAddDoctorController implements Initializable {
+public class FXMLPatientAddController implements Initializable {
 
-    private CircularDoublyLinkedList doctorlist;
+    private CircularLinkedList patientList;
     private Alert alert;
     private BorderPane bp;
     @FXML
@@ -61,10 +62,10 @@ public class FXMLAddDoctorController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        doctorlist = new CircularDoublyLinkedList();
-        if(util.Data.fileExists("doctors")){
+        patientList = new CircularLinkedList();
+        if(util.Data.fileExists("patients")){
             try {
-                doctorlist = (CircularDoublyLinkedList) util.Data.getDataFile("doctors", doctorlist);
+                patientList = (CircularLinkedList) util.Data.getDataFile("patients", patientList);
             } catch (QueueException | IOException ex) {
                 Logger.getLogger(FXMLMantenimientoDoctoresController.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -73,7 +74,7 @@ public class FXMLAddDoctorController implements Initializable {
 
     @FXML
     private void registerOnAction(ActionEvent event) throws ParseException, ListException, QueueException, IOException {
-        if (doctorlist == null && doctorlist.isEmpty()) {
+        if (patientList == null && patientList.isEmpty()) {
             if ("".equals(firstNTextField.getText()) || "".equals(lastNTextField.getText())
                     || "".equals(calendarChoice) || "".equals(PhoneTextField.getText())
                     || "".equals(idTextField.getText())) {
@@ -89,10 +90,10 @@ public class FXMLAddDoctorController implements Initializable {
                 try {
                     Calendar date = Calendar.getInstance();
                     date.set(calendarChoice.getValue().getYear(), calendarChoice.getValue().getMonthValue(), calendarChoice.getValue().getDayOfMonth());
-                    Doctor doctor = new Doctor(Integer.parseInt(idTextField.getText()), firstNTextField.getText(),
+                    Patient patient = new Patient(Integer.parseInt(idTextField.getText()), firstNTextField.getText(),
                             lastNTextField.getText(), PhoneTextField.getText(), TF_Email.getText(), TF_Address.getText(), date.getTime());
-                    doctorlist.add(doctor);
-                    util.Data.setDataFile("doctors", doctorlist);
+                    patientList.add(patient);
+                    util.Data.setDataFile("patients", patientList);
                     idTextField.setText("");
                     lastNTextField.setText("");
                     firstNTextField.setText("");
@@ -132,10 +133,10 @@ public class FXMLAddDoctorController implements Initializable {
                     Calendar date = Calendar.getInstance();
                     date.set(calendarChoice.getValue().getYear(), calendarChoice.getValue().getMonthValue(), calendarChoice.getValue().getDayOfMonth());
 
-                    Doctor d = new Doctor(Integer.parseInt(idTextField.getText()), firstNTextField.getText(),
+                    Patient d = new Patient(Integer.parseInt(idTextField.getText()), firstNTextField.getText(),
                             lastNTextField.getText(), PhoneTextField.getText(), TF_Email.getText(), TF_Address.getText(), date.getTime());
-                    doctorlist.add(d);
-                    util.Data.setDataFile("doctors", doctorlist);
+                    patientList.add(d);
+                    util.Data.setDataFile("patients", patientList);
                     idTextField.setText("");
                     lastNTextField.setText("");
                     firstNTextField.setText("");

@@ -171,7 +171,7 @@ public class FXMLMantenimientoPascientesController implements Initializable {
 
     @FXML
     private void AddCode(ActionEvent event) {
-        FXMLMainMenuController.loadPage(getClass().getResource("FXMLAddPatient.fxml"), bp);
+        FXMLMainMenuController.loadPage(getClass().getResource("FXMLPatientAdd.fxml"), bp);
     }
 
     @FXML
@@ -198,7 +198,7 @@ public class FXMLMantenimientoPascientesController implements Initializable {
                 } else {
                     alert = new Alert(Alert.AlertType.NONE);
                     alert.setAlertType(Alert.AlertType.ERROR);
-                    alert.setTitle("Doctor Remove");
+                    alert.setTitle("Patient Remove");
                     alert.setHeaderText("The list dont have the element");
                     alert.show();
 

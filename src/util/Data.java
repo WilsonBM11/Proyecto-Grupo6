@@ -159,8 +159,8 @@ public class Data {
         //El LocalDate y LocalTime se guarda con LocalDate.toString y  LocalTime.toString
         switch (fileName) {
             case "patients":
-                return new Patient(Integer.parseInt(aux.get(0)), aux.get(1), aux.get(2),
-                        aux.get(3), aux.get(4), aux.get(5),util.Utility.stringToDate(aux.get(6)));
+                return new Patient(Integer.parseInt(aux.get(0)), aux.get(1), aux.get(2), aux.get(3),
+                        aux.get(4), aux.get(5), util.Utility.stringToDate(aux.get(6)));
             case "doctors":
                 return new Doctor(Integer.parseInt(aux.get(0)), aux.get(1), aux.get(2), aux.get(3),
                         aux.get(4), aux.get(5), util.Utility.stringToDate(aux.get(6)));
@@ -199,7 +199,7 @@ public class Data {
         switch (fileName) {
             case "patients":
                 Patient p = (Patient) data;
-                return p.getId()+";"+p.getLastname()+";"+p.getFirstname()+";"+util.Utility.dateFormat(p.getBirthday())+";"+p.getPhoneNumber()+";"+p.getEmail()+";"+p.getAddress();
+                return p.getId()+";"+p.getFirstname()+";"+p.getLastname()+";"+p.getPhoneNumber()+";"+p.getEmail()+";"+p.getAddress()+";"+util.Utility.dateFormat(p.getBirthday());
             case "doctors":
                 Doctor d = (Doctor) data;
                 return d.getId()+";"+d.getFirstName()+";"+d.getLastName()+";"+d.getPhoneNumber()+";"+d.getEmail()+";"+d.getAddress()+";"+util.Utility.dateFormat(d.getBirthday());

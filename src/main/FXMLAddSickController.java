@@ -43,7 +43,7 @@ public class FXMLAddSickController implements Initializable {
 
                 alert = new Alert(Alert.AlertType.NONE);
                 alert.setAlertType(Alert.AlertType.ERROR);
-                alert.setTitle("Add Employee");
+                alert.setTitle("Add Sick");
                 alert.setHeaderText("ERROR");
                 alert.setContentText("Fill all the spaces");
                 alert.show();
@@ -58,7 +58,7 @@ public class FXMLAddSickController implements Initializable {
 
                 alert = new Alert(Alert.AlertType.NONE);
                 alert.setAlertType(Alert.AlertType.INFORMATION);
-                alert.setTitle("Employee added");
+                alert.setTitle("Sick added");
                 alert.show();
 
             }
@@ -67,7 +67,7 @@ public class FXMLAddSickController implements Initializable {
 
                 alert = new Alert(Alert.AlertType.NONE);
                 alert.setAlertType(Alert.AlertType.ERROR);
-                alert.setTitle("Add Employee");
+                alert.setTitle("Sick Employee");
                 alert.setHeaderText("ERROR");
                 alert.setContentText("Fill all the spaces");
                 alert.show();
