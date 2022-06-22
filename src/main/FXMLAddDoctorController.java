@@ -35,9 +35,9 @@ import static main.FXMLMainMenuController.loadPage;
  *
  * @author Duran Family
  */
-public class FXMLPatientAddController implements Initializable {
+public class FXMLAddDoctorController implements Initializable {
 
-    private CircularLinkedList patientList;
+    private CircularDoublyLinkedList doctorList;
     private Alert alert;
     private BorderPane bp;
     @FXML
@@ -62,19 +62,19 @@ public class FXMLPatientAddController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        patientList = new CircularLinkedList();
-        if(util.Data.fileExists("patients")){
+        doctorList = new CircularDoublyLinkedList();
+        if(util.Data.fileExists("doctors")){
             try {
-                patientList = (CircularLinkedList) util.Data.getDataFile("patients", patientList);
+                doctorList = (CircularDoublyLinkedList) util.Data.getDataFile("doctors", doctorList);
             } catch (QueueException | IOException ex) {
-                Logger.getLogger(FXMLPatientAddController.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(FXMLAddDoctorController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
 
     @FXML
     private void registerOnAction(ActionEvent event) throws ParseException, ListException, QueueException, IOException {
-        if (patientList == null && patientList.isEmpty()) {
+        if (doctorList == null && doctorList.isEmpty()) {
             if ("".equals(firstNTextField.getText()) || "".equals(lastNTextField.getText())
                     || "".equals(calendarChoice) || "".equals(PhoneTextField.getText())
                     || "".equals(idTextField.getText())) {
@@ -90,10 +90,10 @@ public class FXMLPatientAddController implements Initializable {
                 try {
                     Calendar date = Calendar.getInstance();
                     date.set(calendarChoice.getValue().getYear(), calendarChoice.getValue().getMonthValue(), calendarChoice.getValue().getDayOfMonth());
-                    Patient patient = new Patient(Integer.parseInt(idTextField.getText()), firstNTextField.getText(),
+                    Doctor doctor = new Doctor(Integer.parseInt(idTextField.getText()), firstNTextField.getText(),
                             lastNTextField.getText(), PhoneTextField.getText(), TF_Email.getText(), TF_Address.getText(), date.getTime());
-                    patientList.add(patient);
-                    util.Data.setDataFile("patients", patientList);
+                    doctorList.add(doctor);
+                    util.Data.setDataFile("doctors", doctorList);
                     idTextField.setText("");
                     lastNTextField.setText("");
                     firstNTextField.setText("");
@@ -133,10 +133,10 @@ public class FXMLPatientAddController implements Initializable {
                     Calendar date = Calendar.getInstance();
                     date.set(calendarChoice.getValue().getYear(), calendarChoice.getValue().getMonthValue(), calendarChoice.getValue().getDayOfMonth());
 
-                    Patient d = new Patient(Integer.parseInt(idTextField.getText()), firstNTextField.getText(),
+                    Doctor d = new Doctor(Integer.parseInt(idTextField.getText()), firstNTextField.getText(),
                             lastNTextField.getText(), PhoneTextField.getText(), TF_Email.getText(), TF_Address.getText(), date.getTime());
-                    patientList.add(d);
-                    util.Data.setDataFile("patients", patientList);
+                    doctorList.add(d);
+                    util.Data.setDataFile("doctors",doctorList);
                     idTextField.setText("");
                     lastNTextField.setText("");
                     firstNTextField.setText("");
