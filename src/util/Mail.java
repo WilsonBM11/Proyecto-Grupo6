@@ -7,7 +7,11 @@ package util;
 
 import java.util.Date;
 import java.util.Properties;
+import javax.activation.DataHandler;
+import javax.activation.DataSource;
+import javax.activation.FileDataSource;
 import javax.mail.Authenticator;
+import javax.mail.BodyPart;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
@@ -15,7 +19,9 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 
 /**
  *
@@ -23,8 +29,8 @@ import javax.mail.internet.MimeMessage;
  */
 public class Mail {
    
-        private final String username = "proyectogrupo06.algoritmos@gmail.com";//
-        private final String password = "contrasenagrupo06";
+        private final String username = "proyectogrupo06.algoritmos@gmail.com";
+        private final String password = "jbxcziuoiyefyodc";
         
 	public void sendEmail(String destinationEmail, String subjectEmail, String textEmail) throws AddressException, MessagingException{
           
@@ -59,7 +65,20 @@ public class Mail {
                 msg.setRecipients(Message.RecipientType.TO,
                         InternetAddress.parse(destinationEmail, false));
                 msg.setSubject(subjectEmail);
-                msg.setText(textEmail);
+                
+                BodyPart text = new MimeBodyPart();
+                text.setContent(textEmail, "text/html");
+                
+                BodyPart image = new MimeBodyPart();
+                image.setDataHandler((new DataHandler(new FileDataSource("src/images/logo.jpg"))));
+                image.setFileName("Clinica Grupo 06");
+                
+                MimeMultipart parts = new MimeMultipart();
+                parts.addBodyPart(text);
+                parts.addBodyPart(image);
+                
+                //msg.setText(textEmail);
+                msg.setContent(parts);
                 msg.setSentDate(new Date());
                 Transport.send(msg);
                 System.out.println("Message sent");
