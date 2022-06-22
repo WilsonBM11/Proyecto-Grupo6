@@ -4,15 +4,21 @@
  */
 package main;
 
+import domain.CircularDoublyLinkedList;
 import domain.Doctor;
 import domain.ListException;
+import domain.QueueException;
 import domain.Sickness;
 import domain.SinglyLinkedList;
+import java.io.IOException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -49,7 +55,15 @@ public class FXMLMantenimientoEnfermedadesController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-         this.SicknessList = util.Utility.getSinglyLinkedList();
+        SicknessList = new SinglyLinkedList();
+        if(util.Data.fileExists("sickness")){
+            try {
+                SicknessList = (SinglyLinkedList) util.Data.getDataFile("sickness", SicknessList);
+            } catch (QueueException | IOException ex) {
+                Logger.getLogger(FXMLMantenimientoEnfermedadesController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
 
         this.IDcolumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<List<String>, String>, ObservableValue<String>>() {
             @Override
@@ -57,16 +71,16 @@ public class FXMLMantenimientoEnfermedadesController implements Initializable {
                 return new ReadOnlyObjectWrapper<>(data.getValue().get(0));
             }
         });
-
         this.DescriptionColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<List<String>, String>, ObservableValue<String>>() {
             @Override
             public ObservableValue<String> call(TableColumn.CellDataFeatures<List<String>, String> data) {
                 return new ReadOnlyObjectWrapper<>(data.getValue().get(1));
             }
+
         });
         this.TableView.setEditable(true);
         DescriptionColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-         try {
+        try {
             if (this.SicknessList != null && !this.SicknessList.isEmpty()) {
                 for (int i = 1; i <= SicknessList.size(); i++) {
                     this.TableView.setItems(getData());
@@ -74,12 +88,27 @@ public class FXMLMantenimientoEnfermedadesController implements Initializable {
             }
         } catch (ListException ex) {
         }
-      
-            
+    }
+
+    private ObservableList<List<String>> getData() {
+        ObservableList<List<String>> data = FXCollections.observableArrayList();
+        if (this.SicknessList != null && !this.SicknessList.isEmpty()) {
+            try {
+                for (int i = 1; i <= this.SicknessList.size(); i++) {
+                    Sickness D = (Sickness) this.SicknessList.getNode(i).data;
+                    List<String> arrayList = new ArrayList<>();
+                    arrayList.add(String.valueOf(D.getId()));
+                    arrayList.add(D.getDescription());
+
+                    //Agrego el arrayList a ObservableList<List<String>> data
+                    data.add(arrayList);
+                }
+            } catch (ListException ex) {
+
+            }
         }
-
-    
-
+        return data;
+    }
     @FXML
     private void AddCode(ActionEvent event) {
         FXMLMainMenuController.loadPage(getClass().getResource("FXMLAddSick.fxml"), bp);
@@ -103,7 +132,13 @@ public class FXMLMantenimientoEnfermedadesController implements Initializable {
 
         try {
             SicknessList.remove(new Sickness(id.get()));
-            util.Utility.setSinglyLinkedList(SicknessList);
+            try {
+                util.Data.setDataFile("sickness", SicknessList);
+            } catch (QueueException ex) {
+                Logger.getLogger(FXMLMantenimientoEnfermedadesController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(FXMLMantenimientoEnfermedadesController.class.getName()).log(Level.SEVERE, null, ex);
+            }
             TableView.getItems().clear();
             TableView.getItems().addAll(getData());
             alert = new Alert(Alert.AlertType.NONE);
@@ -127,7 +162,7 @@ public class FXMLMantenimientoEnfermedadesController implements Initializable {
     @FXML
     private void ContainsCode(ActionEvent event) throws ListException {
          TextInputDialog dialog = new TextInputDialog();
-        dialog.setTitle("Job Position Contains");
+        dialog.setTitle("Sickness Contains");
         dialog.setHeaderText("Enter the description: ");
         Optional<String> description = dialog.showAndWait();
             
@@ -135,17 +170,17 @@ public class FXMLMantenimientoEnfermedadesController implements Initializable {
         if(!description.isPresent()||description.get().compareTo("") == 0) {
                  alert = new Alert(Alert.AlertType.NONE);
                  alert.setAlertType(Alert.AlertType.ERROR);
-                 alert.setTitle("Job Postiion Contains");
+                 alert.setTitle("Sickness Contains");
                  alert.setHeaderText("The list doesn't contains the element");
                  alert.show();
                       
         }else{
                  
              try {
-                 if(util.Utility.getSinglyLinkedList().contains(new Sickness(description.get()))){
+                 if(SicknessList.contains(new Sickness(description.get()))){
                    alert = new Alert(Alert.AlertType.NONE);
                      alert.setAlertType(Alert.AlertType.INFORMATION);
-                     alert.setTitle("Job Position Contains");
+                     alert.setTitle("Sickness Contains");
                      alert.setHeaderText("The list contains: ");
                      alert.setContentText(((new Sickness(description.get())).toString()));
                      alert.show();
@@ -167,25 +202,7 @@ public class FXMLMantenimientoEnfermedadesController implements Initializable {
              }
     }
    
-      private ObservableList<List<String>> getData() {
-        ObservableList<List<String>> data = FXCollections.observableArrayList();
-        if (this.SicknessList != null && !this.SicknessList.isEmpty()) {
-            try {
-                for (int i = 1; i <= this.SicknessList.size(); i++) {
-                    Sickness S = (Sickness) this.SicknessList.getNode(i).data;
-                    List<String> arrayList = new ArrayList<>();
-                    arrayList.add(String.valueOf(S.getId()));
-                    arrayList.add(S.getDescription());
-
-                    //Agrego el arrayList a ObservableList<List<String>> data
-                    data.add(arrayList);
-                }
-            } catch (ListException ex) {
-
-            }
-        }
-        return data;
-    }
+      
 
     @FXML
     private void DescriptionCommit(TableColumn.CellEditEvent<List<String>, String> event)throws ListException {

@@ -4,11 +4,16 @@
  */
 package main;
 
+import domain.CircularLinkedList;
 import domain.ListException;
+import domain.QueueException;
 import domain.Sickness;
 import domain.SinglyLinkedList;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -33,12 +38,20 @@ public class FXMLAddSickController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        sicknesslist = new SinglyLinkedList();
+        if(util.Data.fileExists("sickness")){
+            try {
+                sicknesslist = (SinglyLinkedList) util.Data.getDataFile("sickness", sicknesslist);
+            } catch (QueueException | IOException ex) {
+                Logger.getLogger(FXMLMantenimientoDoctoresController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
 
     }
 
     @FXML
     private void registerOnAction(ActionEvent event) throws ListException {
-        if (sicknesslist == null && util.Utility.getSinglyLinkedList().isEmpty()) {
+        if (sicknesslist == null && sicknesslist.isEmpty()) {
             if (TF_Description.getText().equals("")) {
 
                 alert = new Alert(Alert.AlertType.NONE);
@@ -50,16 +63,21 @@ public class FXMLAddSickController implements Initializable {
 
             } else {
 
-                Sickness sick = new Sickness(TF_Description.getText());
-                sicknesslist = new SinglyLinkedList();
-                sicknesslist.add(sick);
-                util.Utility.setSinglyLinkedList(sicknesslist);
-                TF_Description.setText("");
-
-                alert = new Alert(Alert.AlertType.NONE);
-                alert.setAlertType(Alert.AlertType.INFORMATION);
-                alert.setTitle("Sick added");
-                alert.show();
+                try {
+                    Sickness sick = new Sickness(TF_Description.getText());
+                    sicknesslist.add(sick);
+                    util.Data.setDataFile("sickness", sicknesslist);
+                    TF_Description.setText("");
+                    
+                    alert = new Alert(Alert.AlertType.NONE);
+                    alert.setAlertType(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Sick added");
+                    alert.show();
+                } catch (QueueException ex) {
+                    Logger.getLogger(FXMLAddSickController.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    Logger.getLogger(FXMLAddSickController.class.getName()).log(Level.SEVERE, null, ex);
+                }
 
             }
         } else {
@@ -74,16 +92,22 @@ public class FXMLAddSickController implements Initializable {
 
             } else {
 
-                Sickness S = new Sickness(TF_Description.getText());
-                util.Utility.getSinglyLinkedList().add(S);
-                util.Utility.setSinglyLinkedList(util.Utility.getSinglyLinkedList());
-                TF_Description.setText("");
-
-                alert = new Alert(Alert.AlertType.NONE);
-                alert.setAlertType(Alert.AlertType.INFORMATION);
-                alert.setTitle("Add Sick");
-                alert.setHeaderText("Sickness added");
-                alert.show();
+                try {
+                    Sickness S = new Sickness(TF_Description.getText());
+                    sicknesslist.add(S);
+                    util.Data.setDataFile("sickness", sicknesslist);
+                    TF_Description.setText("");
+                    
+                    alert = new Alert(Alert.AlertType.NONE);
+                    alert.setAlertType(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Add Sick");
+                    alert.setHeaderText("Sickness added");
+                    alert.show();
+                } catch (QueueException ex) {
+                    Logger.getLogger(FXMLAddSickController.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    Logger.getLogger(FXMLAddSickController.class.getName()).log(Level.SEVERE, null, ex);
+                }
 
             }
         }

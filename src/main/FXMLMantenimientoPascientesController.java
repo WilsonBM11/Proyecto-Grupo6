@@ -69,14 +69,15 @@ public class FXMLMantenimientoPascientesController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+         PatientList = new CircularLinkedList();
         if(util.Data.fileExists("patients")){
             try {
-                this.PatientList = (CircularLinkedList) util.Data.getDataFile("patients", PatientList);
+                PatientList = (CircularLinkedList) util.Data.getDataFile("patients", PatientList);
             } catch (QueueException | IOException ex) {
-                Logger.getLogger(FXMLMantenimientoPascientesController.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(FXMLMantenimientoDoctoresController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        
 
         this.IDcolumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<List<String>, String>, ObservableValue<String>>() {
             @Override
@@ -148,16 +149,16 @@ public class FXMLMantenimientoPascientesController implements Initializable {
         if (this.PatientList != null && !this.PatientList.isEmpty()) {
             try {
                 for (int i = 1; i <= this.PatientList.size(); i++) {
-                    Patient P = (Patient) this.PatientList.getNode(i).data;
+                    Patient D = (Patient) this.PatientList.getNode(i).data;
                     List<String> arrayList = new ArrayList<>();
-                    arrayList.add(String.valueOf(P.getId()));
-                    arrayList.add(P.getFirstname());
-                    arrayList.add(P.getLastname());
-                    arrayList.add(P.getPhoneNumber());
-                    arrayList.add(P.getEmail());
-                    arrayList.add(P.getAddress());
+                    arrayList.add(String.valueOf(D.getId()));
+                    arrayList.add(D.getFirstname());
+                    arrayList.add(D.getLastname());
+                    arrayList.add(D.getPhoneNumber());
+                    arrayList.add(D.getEmail());
+                    arrayList.add(D.getAddress());
                     SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-                    arrayList.add(String.valueOf(format.format(P.getBirthday())));
+                    arrayList.add(String.valueOf(format.format(D.getBirthday())));
 
                     //Agrego el arrayList a ObservableList<List<String>> data
                     data.add(arrayList);
@@ -195,6 +196,14 @@ public class FXMLMantenimientoPascientesController implements Initializable {
                 if (PatientList.contains(new Patient(Integer.parseInt(id.get()), "", "", "", "", "", null))) {
                     PatientList.clear();
                     TableView.getItems().clear();
+                    try {
+                        util.Data.setDataFile("patients", PatientList);
+                    } catch (QueueException ex) {
+                        Logger.getLogger(FXMLMantenimientoPascientesController.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (IOException ex) {
+                        Logger.getLogger(FXMLMantenimientoPascientesController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    
                 } else {
                     alert = new Alert(Alert.AlertType.NONE);
                     alert.setAlertType(Alert.AlertType.ERROR);
@@ -206,7 +215,13 @@ public class FXMLMantenimientoPascientesController implements Initializable {
             } else {
                 if (PatientList.contains(new Patient(Integer.parseInt(id.get()), "", "", "", "", "", null))) {
                     PatientList.remove(new Patient(Integer.parseInt(id.get()), "", "", "", "", "", null));
-                    util.Utility.setCircularLinkedList(PatientList);
+                    try {
+                        util.Data.setDataFile("patients", PatientList);
+                    } catch (QueueException ex) {
+                        Logger.getLogger(FXMLMantenimientoPascientesController.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (IOException ex) {
+                        Logger.getLogger(FXMLMantenimientoPascientesController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                     TableView.getItems().clear();
                     TableView.getItems().addAll(getData());
                     try {
@@ -236,7 +251,7 @@ public class FXMLMantenimientoPascientesController implements Initializable {
     @FXML
     private void ContainsCode(ActionEvent event) throws ListException {
         TextInputDialog dialog = new TextInputDialog();
-        dialog.setTitle("Doctor Position Contains");
+        dialog.setTitle("Patient Position Contains");
         dialog.setHeaderText("Enter the id: ");
         Optional<String> id = dialog.showAndWait();
         Patient patient = new Patient(Integer.parseInt(id.get()), "", "", "", "", "", null);
@@ -250,8 +265,8 @@ public class FXMLMantenimientoPascientesController implements Initializable {
         } else {
 
             try {
-                if (util.Utility.getCircularLinkedList().contains(patient)) {
-                    Object foundElement = util.Utility.getCircularLinkedList().getNodeById(patient);
+                if (PatientList.contains(patient)) {
+                    Object foundElement = PatientList.getNodeById(patient);
                     alert = new Alert(Alert.AlertType.NONE);
                     alert.setAlertType(Alert.AlertType.INFORMATION);
                     alert.setTitle("Patient Contains");
@@ -279,14 +294,19 @@ public class FXMLMantenimientoPascientesController implements Initializable {
     @FXML
     private void FirstNameCommit(TableColumn.CellEditEvent<List<String>, String> event) throws ListException {
         try {
-            PatientList = util.Utility.getCircularLinkedList();
             String FirstName = event.getRowValue().get(1);
             String sDate1 = event.getRowValue().get(6);
             Date date1 = new SimpleDateFormat("dd/MM/yyyy").parse(sDate1);
             Patient oldPatient = new Patient(Integer.parseInt(event.getRowValue().get(0)), FirstName, event.getRowValue().get(2), event.getRowValue().get(3), event.getRowValue().get(4), event.getRowValue().get(5), date1);
             Patient newPatient = new Patient(Integer.parseInt(event.getRowValue().get(0)), event.getNewValue(), event.getRowValue().get(2), event.getRowValue().get(3), event.getRowValue().get(4), event.getRowValue().get(5), date1);
             this.PatientList.modificar(oldPatient, newPatient);
-            util.Utility.setCircularLinkedList(PatientList);
+            try {
+                util.Data.setDataFile("patients", PatientList);
+            } catch (QueueException ex) {
+                Logger.getLogger(FXMLMantenimientoPascientesController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(FXMLMantenimientoPascientesController.class.getName()).log(Level.SEVERE, null, ex);
+            }
             System.out.println(PatientList.toString());
             if (this.PatientList != null && !this.PatientList.isEmpty()) {
                 this.TableView.setItems(getData());
@@ -299,14 +319,19 @@ public class FXMLMantenimientoPascientesController implements Initializable {
     @FXML
     private void LastNameCommit(TableColumn.CellEditEvent<List<String>, String> event) throws ListException {
         try {
-            PatientList = util.Utility.getCircularLinkedList();
             String lastName = event.getRowValue().get(2);
             String sDate1 = event.getRowValue().get(6);
             Date date1 = new SimpleDateFormat("dd/MM/yyyy").parse(sDate1);
             Patient oldPatient = new Patient(Integer.parseInt(event.getRowValue().get(0)), event.getRowValue().get(1), lastName, event.getRowValue().get(3), event.getRowValue().get(4), event.getRowValue().get(5), date1);
             Patient newPatient = new Patient(Integer.parseInt(event.getRowValue().get(0)), event.getRowValue().get(1), event.getNewValue(), event.getRowValue().get(3), event.getRowValue().get(4), event.getRowValue().get(5), date1);
             this.PatientList.modificar(oldPatient, newPatient);
-            util.Utility.setCircularLinkedList(PatientList);
+            try {
+                util.Data.setDataFile("patients", PatientList);
+            } catch (QueueException ex) {
+                Logger.getLogger(FXMLMantenimientoPascientesController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(FXMLMantenimientoPascientesController.class.getName()).log(Level.SEVERE, null, ex);
+            }
             if (this.PatientList != null && !this.PatientList.isEmpty()) {
                 this.TableView.setItems(getData());
             }
@@ -319,14 +344,19 @@ public class FXMLMantenimientoPascientesController implements Initializable {
     private void PhoneNumberCommit(TableColumn.CellEditEvent<List<String>, String> event) throws ListException {
 
         try {
-            PatientList = util.Utility.getCircularLinkedList();
             String PhoneNumber = event.getRowValue().get(3);
             String sDate1 = event.getRowValue().get(6);
             Date date1 = new SimpleDateFormat("dd/MM/yyyy").parse(sDate1);
             Patient oldPatient = new Patient(Integer.parseInt(event.getRowValue().get(0)), event.getRowValue().get(1), event.getRowValue().get(2), PhoneNumber, event.getRowValue().get(4), event.getRowValue().get(5), date1);
             Patient newPatient = new Patient(Integer.parseInt(event.getRowValue().get(0)), event.getRowValue().get(1), event.getRowValue().get(2), event.getNewValue(), event.getRowValue().get(4), event.getRowValue().get(5), date1);
             this.PatientList.modificar(oldPatient, newPatient);
-            util.Utility.setCircularLinkedList(PatientList);
+            try {
+                util.Data.setDataFile("patients", PatientList);
+            } catch (QueueException ex) {
+                Logger.getLogger(FXMLMantenimientoPascientesController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(FXMLMantenimientoPascientesController.class.getName()).log(Level.SEVERE, null, ex);
+            }
             if (this.PatientList != null && !this.PatientList.isEmpty()) {
                 this.TableView.setItems(getData());
             }
@@ -338,14 +368,19 @@ public class FXMLMantenimientoPascientesController implements Initializable {
     @FXML
     private void EmailCommit(TableColumn.CellEditEvent<List<String>, String> event) throws ListException {
         try {
-            PatientList = util.Utility.getCircularLinkedList();
             String Email = event.getRowValue().get(4);
             String sDate1 = event.getRowValue().get(6);
             Date date1 = new SimpleDateFormat("dd/MM/yyyy").parse(sDate1);
             Patient oldPatient = new Patient(Integer.parseInt(event.getRowValue().get(0)), event.getRowValue().get(1), event.getRowValue().get(2), event.getRowValue().get(3), Email, event.getRowValue().get(5), date1);
             Patient newPatient = new Patient(Integer.parseInt(event.getRowValue().get(0)), event.getRowValue().get(1), event.getRowValue().get(2), event.getRowValue().get(3), event.getNewValue(), event.getRowValue().get(5), date1);
             this.PatientList.modificar(oldPatient, newPatient);
-            util.Utility.setCircularLinkedList(PatientList);
+            try {
+                util.Data.setDataFile("patients", PatientList);
+            } catch (QueueException ex) {
+                Logger.getLogger(FXMLMantenimientoPascientesController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(FXMLMantenimientoPascientesController.class.getName()).log(Level.SEVERE, null, ex);
+            }
             if (this.PatientList != null && !this.PatientList.isEmpty()) {
                 this.TableView.setItems(getData());
             }
@@ -358,14 +393,19 @@ public class FXMLMantenimientoPascientesController implements Initializable {
     private void AddressCommit(TableColumn.CellEditEvent<List<String>, String> event) throws ListException {
 
         try {
-            PatientList = util.Utility.getCircularLinkedList();
             String Address = event.getRowValue().get(5);
             String sDate1 = event.getRowValue().get(6);
             Date date1 = new SimpleDateFormat("dd/MM/yyyy").parse(sDate1);
             Patient oldPatient = new Patient(Integer.parseInt(event.getRowValue().get(0)), event.getRowValue().get(1), event.getRowValue().get(2), event.getRowValue().get(3), event.getRowValue().get(4), Address, date1);
             Patient newPatient = new Patient(Integer.parseInt(event.getRowValue().get(0)), event.getRowValue().get(1), event.getRowValue().get(2), event.getRowValue().get(3), event.getRowValue().get(4), event.getNewValue(), date1);
             this.PatientList.modificar(oldPatient, newPatient);
-            util.Utility.setCircularLinkedList(PatientList);
+            try {
+                util.Data.setDataFile("patients", PatientList);
+            } catch (QueueException ex) {
+                Logger.getLogger(FXMLMantenimientoPascientesController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(FXMLMantenimientoPascientesController.class.getName()).log(Level.SEVERE, null, ex);
+            }
             if (this.PatientList != null && !this.PatientList.isEmpty()) {
                 this.TableView.setItems(getData());
             }

@@ -4,19 +4,14 @@
  */
 package main;
 
-import domain.CircularDoublyLinkedList;
 import domain.CircularLinkedList;
-import domain.Doctor;
 import domain.ListException;
 import domain.Patient;
 import domain.QueueException;
 import java.io.IOException;
 import java.net.URL;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -28,7 +23,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
-import static main.FXMLMainMenuController.loadPage;
 
 /**
  * FXML Controller class
@@ -104,12 +98,12 @@ public class FXMLPatientAddController implements Initializable {
 
                     alert = new Alert(Alert.AlertType.NONE);
                     alert.setAlertType(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Doctor added");
+                    alert.setTitle("Patient added");
                     alert.show();
                 } catch (NumberFormatException ex) {
                     alert = new Alert(Alert.AlertType.NONE);
                     alert.setAlertType(Alert.AlertType.ERROR);
-                    alert.setTitle("Add Doctor");
+                    alert.setTitle("Add Patient");
                     alert.setHeaderText("ERROR");
                     alert.setContentText("Wrong character, fill again the space");
                     alert.show();
@@ -123,7 +117,7 @@ public class FXMLPatientAddController implements Initializable {
 
                 alert = new Alert(Alert.AlertType.NONE);
                 alert.setAlertType(Alert.AlertType.ERROR);
-                alert.setTitle("Add Employee");
+                alert.setTitle("Add Patient");
                 alert.setHeaderText("ERROR");
                 alert.setContentText("Fill all the spaces");
                 alert.show();
@@ -147,13 +141,13 @@ public class FXMLPatientAddController implements Initializable {
 
                     alert = new Alert(Alert.AlertType.NONE);
                     alert.setAlertType(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Add Doctor");
-                    alert.setHeaderText("Doctor added");
+                    alert.setTitle("Add Patient");
+                    alert.setHeaderText("Patient added");
                     alert.show();
                 } catch (NumberFormatException ex) {
                     alert = new Alert(Alert.AlertType.NONE);
                     alert.setAlertType(Alert.AlertType.ERROR);
-                    alert.setTitle("Add Doctor");
+                    alert.setTitle("Add Patient");
                     alert.setHeaderText("ERROR");
                     alert.setContentText("Wrong character, fill again the space");
                     alert.show();
