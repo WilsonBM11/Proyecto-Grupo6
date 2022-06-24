@@ -39,6 +39,7 @@
                   <Font name="Times New Roman Bold" size="18.0" />
                </font>
             </Label>
+            <Button layoutX="462.0" layoutY="246.0" mnemonicParsing="false" onAction="#btnGenerar" prefHeight="33.0" prefWidth="95.0" text="Generar PDF" />
          </children>
       </AnchorPane>
    </center>
