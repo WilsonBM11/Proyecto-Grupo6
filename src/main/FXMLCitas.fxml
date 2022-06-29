@@ -23,11 +23,11 @@
             </AnchorPane>
             <TableView fx:id="TableView" layoutX="2.0" layoutY="100.0" prefHeight="200.0" prefWidth="1004.0">
               <columns>
-                <TableColumn fx:id="DOCTORIDCOLUMN" prefWidth="176.0" text="Doctor ID" />
-                  <TableColumn fx:id="PATIENTIDCOLUMN" prefWidth="163.0" text="Patient ID" />
-                <TableColumn fx:id="APPOINTMENTCOLUMN" prefWidth="143.0" text="Appointment Time" />
-                  <TableColumn fx:id="SICKNESSCOLUMN" prefWidth="209.0" text="Sickness ID" />
-                  <TableColumn fx:id="ANNOTATIONSCOLUMN" prefWidth="312.0" text="Annotations" />
+                  <TableColumn fx:id="IDCOLUMN" prefWidth="75.0" text="ID" />
+                  <TableColumn fx:id="PATIENTIDCOLUMN" onEditCommit="#PatientCommit" prefWidth="163.0" text="Patient ID" />
+                <TableColumn fx:id="DOCTORIDCOLUMN" onEditCommit="#DoctorCommit" prefWidth="176.0" text="Doctor ID" />
+                <TableColumn fx:id="APPOINTMENTCOLUMN" onEditCommit="#TimeCommit" prefWidth="321.0" text="Appointment Time" />
+                  <TableColumn fx:id="RemarksCOLUMN" onEditCommit="#RemarksCommit" prefWidth="343.0" text="Remarks" />
               </columns>
             </TableView>
             <Button layoutX="14.0" layoutY="344.0" mnemonicParsing="false" onAction="#AddCode" prefHeight="50.0" prefWidth="185.0" style="-fx-background-color: #0174DF;" text="Add" />

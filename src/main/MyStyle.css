@@ -247,12 +247,13 @@ and open the template in the editor.
 
 /* hacer transparente el fondo de los titulos */
 .table-view .column-header-background {
-    -fx-background-color: transparent;
+    -fx-background-color: black;
 }
 
 /* estilo para el boton que permite ocultar o mostrar las columnas */
 .table-view .show-hide-columns-button {
-    -fx-background-color: white;
+    -fx-background-color: black;
     -fx-border-color: -fx-box-border;
     -fx-border-insets: 0;
+
 }

@@ -1,2 +1,2 @@
-305370239;Juan;Duran Artavia ;70765725;duranartaviamariano@hotmail.com;Cartago;22/02/2002
+305370239;Juan;Duran Artavia ;70765725;duranartaviamariano@hotmail.com;22/09/2002;22/09/2002
 1085738492;Gabriel;Duran Jimenez;88294975;gabrieldj71@gmail.com;Cartago;07/07/2022

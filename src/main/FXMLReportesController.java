@@ -4,6 +4,7 @@
  */
 package main;
 
+import com.itextpdf.text.Document;
 import java.sql.*;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -19,6 +20,13 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import javax.swing.event.DocumentListener;
+import javax.swing.event.UndoableEditListener;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.Element;
+import javax.swing.text.Position;
+import javax.swing.text.Segment;
 
 
 
@@ -149,11 +157,79 @@ public class FXMLReportesController implements Initializable {
     
     private void btnGenerar (ActionEvent event){
         
-        Document document = new Document ();
+        Document document = new Document () {
+            public int getLength() {
+                throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+            }
+
+            public void addDocumentListener(DocumentListener listener) {
+                throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+            }
+
+            public void removeDocumentListener(DocumentListener listener) {
+                throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+            }
+
+            public void addUndoableEditListener(UndoableEditListener listener) {
+                throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+            }
+
+            public void removeUndoableEditListener(UndoableEditListener listener) {
+                throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+            }
+
+            public Object getProperty(Object key) {
+                throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+            }
+
+            public void putProperty(Object key, Object value) {
+                throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+            }
+
+            public void remove(int offs, int len) throws BadLocationException {
+                throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+            }
+
+            public void insertString(int offset, String str, AttributeSet a) throws BadLocationException {
+                throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+            }
+
+            public String getText(int offset, int length) throws BadLocationException {
+                throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+            }
+
+            public void getText(int offset, int length, Segment txt) throws BadLocationException {
+                throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+            }
+
+            public Position getStartPosition() {
+                throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+            }
+
+            public Position getEndPosition() {
+                throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+            }
+
+            public Position createPosition(int offs) throws BadLocationException {
+                throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+            }
+
+            public Element[] getRootElements() {
+                throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+            }
+
+            public Element getDefaultRootElement() {
+                throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+            }
+
+            public void render(Runnable r) {
+                throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+            }
+        };
         
         try {
             String ruta = System.getProperty("user.home");
-            PdfWriter.getInstance(document, new FileOutputStream(ruta+ "/Desktop/ Reporte.pdf"));// Aqui se ve donde guarda el documento y el nombre que tendra 
+            PdfWriter.getInstance((com.itextpdf.text.Document) document, new FileOutputStream(ruta+ "/Desktop/ Reporte.pdf"));// Aqui se ve donde guarda el documento y el nombre que tendra 
             document.open();
             
             PdfPTable tabla =  new PdfPTable(3);
@@ -176,7 +252,7 @@ public class FXMLReportesController implements Initializable {
                      } while (rs.next());
                      document.add(tabla);
                 } 
-            } catch (DocumentException | SQLException e) {
+            } catch (SQLException e) {
             }
             document.close();
             

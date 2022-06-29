@@ -5,18 +5,13 @@
 package main;
 
 import domain.CircularDoublyLinkedList;
-import domain.CircularLinkedList;
 import domain.Doctor;
 import domain.ListException;
-import domain.Patient;
 import domain.QueueException;
 import java.io.IOException;
 import java.net.URL;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -28,7 +23,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
-import static main.FXMLMainMenuController.loadPage;
 
 /**
  * FXML Controller class

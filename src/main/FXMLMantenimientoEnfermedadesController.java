@@ -4,15 +4,12 @@
  */
 package main;
 
-import domain.CircularDoublyLinkedList;
-import domain.Doctor;
 import domain.ListException;
 import domain.QueueException;
 import domain.Sickness;
 import domain.SinglyLinkedList;
 import java.io.IOException;
 import java.net.URL;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -162,60 +159,61 @@ public class FXMLMantenimientoEnfermedadesController implements Initializable {
     @FXML
     private void ContainsCode(ActionEvent event) throws ListException {
          TextInputDialog dialog = new TextInputDialog();
-        dialog.setTitle("Sickness Contains");
-        dialog.setHeaderText("Enter the description: ");
-        Optional<String> description = dialog.showAndWait();
-            
-            
-        if(!description.isPresent()||description.get().compareTo("") == 0) {
-                 alert = new Alert(Alert.AlertType.NONE);
-                 alert.setAlertType(Alert.AlertType.ERROR);
-                 alert.setTitle("Sickness Contains");
-                 alert.setHeaderText("The list doesn't contains the element");
-                 alert.show();
-                      
-        }else{
-                 
-             try {
-                 if(SicknessList.contains(new Sickness(description.get()))){
-                   alert = new Alert(Alert.AlertType.NONE);
-                     alert.setAlertType(Alert.AlertType.INFORMATION);
-                     alert.setTitle("Sickness Contains");
-                     alert.setHeaderText("The list contains: ");
-                     alert.setContentText(((new Sickness(description.get())).toString()));
-                     alert.show();
-                 }else{
-                     alert = new Alert(Alert.AlertType.NONE);
-                     alert.setAlertType(Alert.AlertType.ERROR);
-                     alert.setTitle("Job Position Contains");
-                     alert.setHeaderText("The list dont have the element");
-                     alert.show();
+        dialog.setTitle("Sickness Position Contains");
+        dialog.setHeaderText("Enter the id: ");
+        Optional<String> id = dialog.showAndWait();
+        Sickness sickness = new Sickness(id.get());
 
-                 }
-             } catch (ListException ex) {
-                 alert = new Alert(Alert.AlertType.NONE);
-                 alert.setAlertType(Alert.AlertType.ERROR);
-                 alert.setTitle("Job Position Contains");
-                 alert.setHeaderText(ex.getMessage());
-                 alert.show();
-             }
-             }
+        if (!id.isPresent() || id.get().compareTo("") == 0) {
+            alert = new Alert(Alert.AlertType.NONE);
+            alert.setAlertType(Alert.AlertType.ERROR);
+            alert.setTitle("Sickness Position Contains");
+            alert.setHeaderText("The list doesn't contains the element");
+            alert.show();
+
+        } else {
+
+            try {
+                if (SicknessList.contains(sickness)) {
+                    Object foundElement = SicknessList.getNodeById(sickness);
+                    alert = new Alert(Alert.AlertType.NONE);
+                    alert.setAlertType(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Job Position Contains");
+                    alert.setHeaderText("The list contains: ");
+                    alert.setContentText(foundElement.toString());
+                    alert.show();
+                } else {
+                    alert = new Alert(Alert.AlertType.NONE);
+                    alert.setAlertType(Alert.AlertType.ERROR);
+                    alert.setTitle("Doctor Position Contains");
+                    alert.setHeaderText("The list dont have the element");
+                    alert.show();
+
+                }
+            } catch (ListException ex) {
+                alert = new Alert(Alert.AlertType.NONE);
+                alert.setAlertType(Alert.AlertType.ERROR);
+                alert.setTitle("Doctor Position Contains");
+                alert.setHeaderText(ex.getMessage());
+                alert.show();
+            }
+        }
     }
-   
-      
-
     @FXML
     private void DescriptionCommit(TableColumn.CellEditEvent<List<String>, String> event)throws ListException {
-        
-        SicknessList = util.Utility.getSinglyLinkedList();
-        String Description = event.getRowValue().get(1);
-        Sickness oldSick = new Sickness(Description);
-        int id = oldSick.getId();
-        Sickness newSick = new Sickness(event.getNewValue());
-        newSick.setId(id-1);
-        Sickness.setConsecutivo(id);
-        this.SicknessList.modificar(oldSick, newSick);
-        util.Utility.setSinglyLinkedList(SicknessList);
-        System.out.println(SicknessList.toString());
+        try {
+            String Description = event.getRowValue().get(1);
+            Sickness oldSick = new Sickness(Description);
+            int id = oldSick.getId();
+            Sickness newSick = new Sickness(event.getNewValue());
+            newSick.setId(id-1);
+            this.SicknessList.modificar(oldSick, newSick);
+            Sickness.setConsecutivo(id);
+            util.Data.setDataFile("sickness", SicknessList);
+        } catch (QueueException ex) {
+            Logger.getLogger(FXMLMantenimientoEnfermedadesController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(FXMLMantenimientoEnfermedadesController.class.getName()).log(Level.SEVERE, null, ex);
+        }
        }
     }

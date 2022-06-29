@@ -23,13 +23,15 @@ public class Appointment {
     private LocalDateTime dateTime;
     private String remarks;
 
-    public Appointment(int patientID, int doctorID, LocalDate date,LocalTime time, String remarks) {
-        this.id = consecutivo++;
+    public Appointment(int patientID, int doctorID, LocalDateTime dateTime, String remarks) {
         this.patientID = patientID;
         this.doctorID = doctorID;
-        this.dateTime = LocalDateTime.of(date,time);
+        this.dateTime = dateTime;
         this.remarks = remarks;
+        this.id = consecutivo ++;
     }
+
+  
 
     /**
      * @return the id
@@ -66,19 +68,15 @@ public class Appointment {
         this.doctorID = doctorID;
     }
 
-    /**
-     * @return the dateTime
-     */
     public LocalDateTime getDateTime() {
         return dateTime;
     }
 
-    /**
-     * @param dateTime the dateTime to set
-     */
     public void setDateTime(LocalDateTime dateTime) {
         this.dateTime = dateTime;
     }
+
+   
     
     
     /**
@@ -115,6 +113,12 @@ public class Appointment {
     public static void setConsecutivo(int aConsecutivo) {
         consecutivo = aConsecutivo;
     }
+
+    @Override
+    public String toString() {
+        return "Appointment " + "id = " + id + ", patientID = " + patientID + ", doctorID = " + doctorID + ", dateTime = " + dateTime + ", remarks = " + remarks;
+    }
+    
     
     
     

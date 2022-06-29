@@ -28,6 +28,7 @@ import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.util.Date;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
@@ -166,7 +167,7 @@ public class Data {
                         aux.get(4), aux.get(5), util.Utility.stringToDate(aux.get(6)));
             case "appointment":
                 Appointment a = new Appointment(Integer.parseInt(aux.get(1)),
-                            Integer.parseInt(aux.get(2)), LocalDate.parse(aux.get(3)), LocalTime.parse(aux.get(4)), aux.get(5));
+                            Integer.parseInt(aux.get(2)), LocalDateTime.parse(aux.get(3)), aux.get(4));
                 a.setId(Integer.parseInt(aux.get(0)));
                 Appointment.setConsecutivo(a.getId()+1);
                 return a;
@@ -205,8 +206,7 @@ public class Data {
                 return d.getId()+";"+d.getFirstName()+";"+d.getLastName()+";"+d.getPhoneNumber()+";"+d.getEmail()+";"+d.getAddress()+";"+util.Utility.dateFormat(d.getBirthday());
             case "appointment":
                 Appointment a = (Appointment) data;
-                return a.getId()+";"+a.getPatientID()+";"+a.getDoctorID()+";"+a.getDateTime().toLocalDate().toString()+";"+
-                a.getDateTime().toLocalTime().toString()+";"+a.getRemarks();
+                return a.getId()+";"+a.getPatientID()+";"+a.getDoctorID()+";"+a.getDateTime().toString()+";"+a.getRemarks();
             case "sickness":
                 Sickness s = (Sickness) data;
                 return s.getId()+";"+s.getDescription();

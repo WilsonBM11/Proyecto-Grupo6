@@ -413,5 +413,34 @@ public class FXMLMantenimientoPascientesController implements Initializable {
             Logger.getLogger(FXMLMantenimientoPascientesController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
-}
+   @FXML
+    private void BirthdayCommit(TableColumn.CellEditEvent<List<String>, String> event) {
+        try {
+            String sDate1 = event.getRowValue().get(6);
+            Date date1 = new SimpleDateFormat("dd/MM/yyyy").parse(sDate1);
+            Patient oldPatient = new Patient(Integer.parseInt(event.getRowValue().get(0)), event.getRowValue().get(1), event.getRowValue().get(2), event.getRowValue().get(3), event.getRowValue().get(4), event.getRowValue().get(5), date1);
+            Patient newPatient = new Patient(Integer.parseInt(event.getRowValue().get(0)), event.getRowValue().get(1), event.getRowValue().get(2), event.getRowValue().get(3), event.getRowValue().get(4), event.getNewValue(), new SimpleDateFormat("dd/MM/yyyy").parse(event.getNewValue()));
+            try {
+                this.PatientList.modificar(oldPatient, newPatient);
+            } catch (ListException ex) {
+                Logger.getLogger(FXMLMantenimientoPascientesController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            try {
+                try {
+                    util.Data.setDataFile("patients", PatientList);
+                } catch (ListException ex) {
+                    Logger.getLogger(FXMLMantenimientoPascientesController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } catch (QueueException ex) {
+                Logger.getLogger(FXMLMantenimientoDoctoresController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(FXMLMantenimientoDoctoresController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            if (this.PatientList != null && !this.PatientList.isEmpty()) {
+                this.TableView.setItems(getData());
+            }
+        } catch (ParseException ex) {
+            Logger.getLogger(FXMLMantenimientoDoctoresController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    }

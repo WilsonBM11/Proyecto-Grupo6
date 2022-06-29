@@ -6,11 +6,8 @@ package main;
 
 import domain.CircularDoublyLinkedList;
 import domain.Doctor;
-import domain.LinkedQueue;
 import domain.ListException;
-import domain.Queue;
 import domain.QueueException;
-import domain.SinglyLinkedList;
 import java.io.IOException;
 import java.net.URL;
 import java.text.ParseException;
@@ -36,7 +33,6 @@ import javafx.util.Callback;
 import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.scene.control.TableCell;
 
 /**
  * FXML Controller class
@@ -72,14 +68,13 @@ public class FXMLMantenimientoDoctoresController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         DoctorList = new CircularDoublyLinkedList();
-        if(util.Data.fileExists("doctors")){
+        if (util.Data.fileExists("doctors")) {
             try {
                 DoctorList = (CircularDoublyLinkedList) util.Data.getDataFile("doctors", DoctorList);
             } catch (QueueException | IOException ex) {
                 Logger.getLogger(FXMLMantenimientoDoctoresController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        
 
         this.IDcolumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<List<String>, String>, ObservableValue<String>>() {
             @Override
@@ -162,7 +157,6 @@ public class FXMLMantenimientoDoctoresController implements Initializable {
                     SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
                     arrayList.add(String.valueOf(format.format(D.getBirthday())));
 
-                    //Agrego el arrayList a ObservableList<List<String>> data
                     data.add(arrayList);
                 }
             } catch (ListException ex) {
@@ -381,7 +375,7 @@ public class FXMLMantenimientoDoctoresController implements Initializable {
 
         try {
             String Address = event.getRowValue().get(5);
-            String sDate1= event.getRowValue().get(6);
+            String sDate1 = event.getRowValue().get(6);
             Date date1 = new SimpleDateFormat("dd/MM/yyyy").parse(sDate1);
             Doctor oldDoctor = new Doctor(Integer.parseInt(event.getRowValue().get(0)), event.getRowValue().get(1), event.getRowValue().get(2), event.getRowValue().get(3), event.getRowValue().get(4), Address, date1);
             Doctor newDoctor = new Doctor(Integer.parseInt(event.getRowValue().get(0)), event.getRowValue().get(1), event.getRowValue().get(2), event.getRowValue().get(3), event.getRowValue().get(4), event.getNewValue(), date1);
@@ -400,5 +394,28 @@ public class FXMLMantenimientoDoctoresController implements Initializable {
             Logger.getLogger(FXMLMantenimientoDoctoresController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+   @FXML
+    private void BirthdayCommit(TableColumn.CellEditEvent<List<String>, String> event) throws ListException {
+        try {
+            String sDate1 = event.getRowValue().get(6);
+            Date date1 = new SimpleDateFormat("dd/MM/yyyy").parse(sDate1);
+            Doctor oldDoctor = new Doctor(Integer.parseInt(event.getRowValue().get(0)), event.getRowValue().get(1), event.getRowValue().get(2), event.getRowValue().get(3), event.getRowValue().get(4), event.getRowValue().get(5), date1);
+            Doctor newDoctor = new Doctor(Integer.parseInt(event.getRowValue().get(0)), event.getRowValue().get(1), event.getRowValue().get(2), event.getRowValue().get(3), event.getRowValue().get(4), event.getNewValue(), new SimpleDateFormat("dd/MM/yyyy").parse(event.getNewValue()));
+            this.DoctorList.modificar(oldDoctor, newDoctor);
+            try {
+                util.Data.setDataFile("doctors", DoctorList);
+            } catch (QueueException ex) {
+                Logger.getLogger(FXMLMantenimientoDoctoresController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(FXMLMantenimientoDoctoresController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            if (this.DoctorList != null && !this.DoctorList.isEmpty()) {
+                this.TableView.setItems(getData());
+            }
+        } catch (ParseException ex) {
+            Logger.getLogger(FXMLMantenimientoDoctoresController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
+    
 }

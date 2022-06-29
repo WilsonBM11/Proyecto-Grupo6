@@ -23,18 +23,18 @@
             </AnchorPane>
             <TableView fx:id="TableView" layoutX="2.0" layoutY="100.0" prefHeight="386.0" prefWidth="1004.0">
               <columns>
-                <TableColumn fx:id="IDcolumn" prefWidth="75.0" text="Id" />
-                  <TableColumn fx:id="FirstNameColumn" onEditCommit="#FirstNameCommit" prefWidth="148.0" text="First Name" />
+                <TableColumn fx:id="IDcolumn" prefWidth="109.0" text="Id" />
+                  <TableColumn fx:id="FirstNameColumn" onEditCommit="#FirstNameCommit" prefWidth="114.0" text="First Name" />
                 <TableColumn fx:id="LastNameColumn" onEditCommit="#LastNameCommit" prefWidth="148.0" text="Last Name" />
                   <TableColumn fx:id="PhoneNumberColumn" onEditCommit="#PhoneNumberCommit" prefWidth="113.0" text="Phone Number" />
                   <TableColumn fx:id="EmailColumn" onEditCommit="#EmailCommit" prefWidth="195.0" text="Email" />
                   <TableColumn fx:id="AddressColumn" onEditCommit="#AddressCommit" prefWidth="187.0" text="Address" />
-                  <TableColumn fx:id="AgeColumn" prefWidth="136.0" text="Age" />
+                  <TableColumn fx:id="AgeColumn" onEditCommit="#BirthdayCommit" prefWidth="136.0" text="Birthday" />
               </columns>
             </TableView>
             <Button layoutX="33.0" layoutY="517.0" mnemonicParsing="false" onAction="#AddCode" prefHeight="50.0" prefWidth="185.0" style="-fx-background-color: #0174DF;" text="Add" />
-            <Button layoutX="259.0" layoutY="517.0" mnemonicParsing="false" onAction="#DeleteCode" prefHeight="50.0" prefWidth="185.0" style="-fx-background-color: #0174DF;" text="Delete" />
-            <Button layoutX="494.0" layoutY="517.0" mnemonicParsing="false" onAction="#ContainsCode" prefHeight="50.0" prefWidth="185.0" style="-fx-background-color: #0174DF;" text="Contains" />
+            <Button layoutX="412.0" layoutY="517.0" mnemonicParsing="false" onAction="#DeleteCode" prefHeight="50.0" prefWidth="185.0" style="-fx-background-color: #0174DF;" text="Delete" />
+            <Button layoutX="793.0" layoutY="517.0" mnemonicParsing="false" onAction="#ContainsCode" prefHeight="50.0" prefWidth="185.0" style="-fx-background-color: #0174DF;" text="Contains" />
          </children>
       </AnchorPane>
    </center>

@@ -1,3 +1,3 @@
-1;Hola
-2;Buenas
-3;Todo Bien
+1;Trastornos de Neuro Desarrollo
+2;Trastorno Depresivo 
+3;Espectro de la esquizofrenia y otros trastornos psicóticos
