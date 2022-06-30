@@ -1,2 +1,3 @@
 2075648329;Maria Laura;Elizondo Fallas;776245172;ElizfallasML@gmail.com;10/08/1995;10/08/1995
 329847382;Fernando;Sanabria Guillen;882938172;fAlonsoG@hotmail.com;Cartago;25/08/1982
+305380944;Wilson;Bonilla Mata;87905871;wilsonbm11@gmail.com;Tejar, El Guarco, Cartago;11/06/2002

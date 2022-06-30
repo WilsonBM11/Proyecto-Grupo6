@@ -23,6 +23,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
+import javax.mail.MessagingException;
+import util.Mail;
 
 /**
  * FXML Controller class
@@ -68,7 +70,7 @@ public class FXMLPatientAddController implements Initializable {
 
     @FXML
     private void registerOnAction(ActionEvent event) throws ParseException, ListException, QueueException, IOException {
-        if (patientList == null && patientList.isEmpty()) {
+        if (patientList != null) {
             if ("".equals(firstNTextField.getText()) || "".equals(lastNTextField.getText())
                     || "".equals(calendarChoice) || "".equals(PhoneTextField.getText())
                     || "".equals(idTextField.getText())) {
@@ -88,6 +90,20 @@ public class FXMLPatientAddController implements Initializable {
                             lastNTextField.getText(), PhoneTextField.getText(), TF_Email.getText(), TF_Address.getText(), date.getTime());
                     patientList.add(patient);
                     util.Data.setDataFile("patients", patientList);
+                    
+                    Mail m = new Mail();
+                    m.sendEmail(TF_Email.getText(), "Registro de Usuario - Clinica Grupo 06", 
+                    "¡Se registro con exito su usario!<br><br>"
+                  + "A continuación se muestran los datos de su registro:<br><br>"
+                  + "Cédula: " + idTextField.getText()+"<br><br>"
+                  + "Nombre: " + firstNTextField.getText() + " " + lastNTextField.getText()+"<br><br>"
+                  + "Teléfono: " + PhoneTextField.getText()+"<br><br>"
+                  + "Dirección: "+TF_Address.getText()+"<br><br>"
+                  + "Email: "+TF_Email.getText()+"<br><br>"
+                  + "Su usuario de ingreso al sistema es: "+idTextField.getText()+"<br><br>"
+                  + "Su contraseña temporal de ingreso al sistema es: "+util.Utility.random(0, 10000)+"<br><br>"
+                  + "¡Gracias por poner su salud en nuestras manos!");
+                    
                     idTextField.setText("");
                     lastNTextField.setText("");
                     firstNTextField.setText("");
@@ -107,53 +123,12 @@ public class FXMLPatientAddController implements Initializable {
                     alert.setHeaderText("ERROR");
                     alert.setContentText("Wrong character, fill again the space");
                     alert.show();
+                } catch (MessagingException ex) {
+                    Logger.getLogger(FXMLPatientAddController.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
             }
-        } else {
-            if ("".equals(firstNTextField.getText()) || "".equals(lastNTextField.getText())
-                    || "".equals(calendarChoice) || "".equals(PhoneTextField.getText())
-                    || "".equals(idTextField.getText())) {
-
-                alert = new Alert(Alert.AlertType.NONE);
-                alert.setAlertType(Alert.AlertType.ERROR);
-                alert.setTitle("Add Patient");
-                alert.setHeaderText("ERROR");
-                alert.setContentText("Fill all the spaces");
-                alert.show();
-
-            } else {
-                try {
-                    Calendar date = Calendar.getInstance();
-                    date.set(calendarChoice.getValue().getYear(), calendarChoice.getValue().getMonthValue(), calendarChoice.getValue().getDayOfMonth());
-
-                    Patient d = new Patient(Integer.parseInt(idTextField.getText()), firstNTextField.getText(),
-                            lastNTextField.getText(), PhoneTextField.getText(), TF_Email.getText(), TF_Address.getText(), date.getTime());
-                    patientList.add(d);
-                    util.Data.setDataFile("patients", patientList);
-                    idTextField.setText("");
-                    lastNTextField.setText("");
-                    firstNTextField.setText("");
-                    PhoneTextField.setText("");
-                    calendarChoice.getEditor().clear();
-                    TF_Address.setText("");
-                    TF_Email.setText("");
-
-                    alert = new Alert(Alert.AlertType.NONE);
-                    alert.setAlertType(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Add Patient");
-                    alert.setHeaderText("Patient added");
-                    alert.show();
-                } catch (NumberFormatException ex) {
-                    alert = new Alert(Alert.AlertType.NONE);
-                    alert.setAlertType(Alert.AlertType.ERROR);
-                    alert.setTitle("Add Patient");
-                    alert.setHeaderText("ERROR");
-                    alert.setContentText("Wrong character, fill again the space");
-                    alert.show();
-
-                }
-            }
+        } 
         }
     }
-}
+
