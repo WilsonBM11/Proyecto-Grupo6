@@ -113,7 +113,11 @@ public class Appointment {
     public static void setConsecutivo(int aConsecutivo) {
         consecutivo = aConsecutivo;
     }
-
+    
+    public boolean compareDoctorId(int id){
+        return util.Utility.equals(this.doctorID, id);
+    }
+    
     @Override
     public String toString() {
         return "Appointment " + "id = " + id + ", patientID = " + patientID + ", doctorID = " + doctorID + ", dateTime = " + dateTime + ", remarks = " + remarks;

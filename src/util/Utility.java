@@ -146,8 +146,8 @@ public class Utility {
         if(a instanceof Character && b instanceof Character) return "Character";
         if(a instanceof Doctor && b instanceof Doctor) return "Doctor";
         if(a instanceof Sickness  && b instanceof Sickness)return "Sickness";
-         if(a instanceof Patient  && b instanceof Patient)return "Patient";
-          if(a instanceof Appointment  && b instanceof Appointment)return "Appointment";
+        if(a instanceof Patient  && b instanceof Patient)return "Patient";
+        if(a instanceof Appointment  && b instanceof Appointment)return "Appointment";
         return "unknown";
     }
 
@@ -177,7 +177,7 @@ public class Utility {
            case "Patient":
                 Patient a7 = (Patient) a;
                 Patient b7 = (Patient) b;
-                return a7.getId() == b7.getId();
+                return a7.getId()==b7.getId();
            case "Appointment":
                Appointment a8 = (Appointment)a;
                Appointment b8 = (Appointment)b;

@@ -107,6 +107,7 @@ public class FXMLAddCITASController implements Initializable {
             try {
                 for (int i = 1; i <= PatientList.size(); i++) {
                     this.PatientComboBox.setItems(getDataPatient());
+                    
                 }
             } catch (ListException ex) {
                 Logger.getLogger(FXMLAddCITASController.class.getName()).log(Level.SEVERE, null, ex);
