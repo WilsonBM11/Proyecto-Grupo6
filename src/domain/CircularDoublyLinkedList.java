@@ -309,7 +309,7 @@ public class CircularDoublyLinkedList implements List {
         if(isEmpty())
             throw new ListException("Doubly Linked List is empty");
         Node aux = first;
-        while(aux!=null&&!util.Utility.equals(aux.data, element)){
+        while(aux!=last&&!util.Utility.equals(aux.data, element)){
             aux = aux.next;
         }
         //sale cuando aux==null o encontro el elemento

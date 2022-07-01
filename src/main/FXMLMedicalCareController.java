@@ -93,6 +93,7 @@ public class FXMLMedicalCareController implements Initializable {
         appoimentsList = new DoublyLinkedList();
         patientsList = new CircularLinkedList();
         sicknessList = new SinglyLinkedList();
+        tableViewData = FXCollections.observableArrayList();
         try {
             if (util.Data.fileExists("medicalcare")) 
                 medicalCareList = (BTree) Data.getDataFile("medicalcare", medicalCareList);
@@ -143,14 +144,7 @@ public class FXMLMedicalCareController implements Initializable {
             }
         }
         
-        if (medicalCareList != null && !medicalCareList.isEmpty()) {
-            try {
-                getTreeData(medicalCareList.getRoot(),305380944);
-                this.tableViewMedicalCare.setItems(tableViewData);
-            } catch (ListException ex) {
-                Logger.getLogger(FXMLMedicalCareController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
+        
         
 
     }    
@@ -190,6 +184,14 @@ public class FXMLMedicalCareController implements Initializable {
         sicknessComboBox.setDisable(false);
         patientsComboBox.setItems(getComboBoxData("patients", doctorID));
         sicknessComboBox.setItems(getComboBoxData("sickness", 0));
+        if (medicalCareList != null && !medicalCareList.isEmpty()) {
+            try {
+                getTreeData(medicalCareList.getRoot(),305380944);
+                this.tableViewMedicalCare.setItems(tableViewData);
+            } catch (ListException ex) {
+                Logger.getLogger(FXMLMedicalCareController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
         
     }
     
@@ -220,8 +222,8 @@ public class FXMLMedicalCareController implements Initializable {
             MedicalCare A = (MedicalCare) node.data;
             if (util.Utility.equals(A.getPatientID(), id)) {
                 List<String> arrayList = new ArrayList<>();
-                Doctor d = (Doctor) doctorsList.getNodeById(A.getDoctorID());
-                Sickness s = (Sickness) sicknessList.getNodeById(A.getSicknessID());
+                Doctor d = (Doctor) doctorsList.getNodeById(new Doctor(A.getDoctorID(), "", "", "", "", "", new Date()));
+                Sickness s = (Sickness) sicknessList.getSicknessById(A.getSicknessID());
                 arrayList.add(d.getFirstName() + " " + d.getLastName());
                 arrayList.add(A.getDateTime().toString());
                 arrayList.add(s.getDescription());
