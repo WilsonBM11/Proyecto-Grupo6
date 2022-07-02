@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -129,21 +130,20 @@ public class FXMLCitasController implements Initializable {
 
     @FXML
     private void DeleteCode(ActionEvent event) {
-        TextInputDialog dialog = new TextInputDialog();
-        dialog.setTitle("Doctor Remove");
-        dialog.setHeaderText("Enter the ID:");
-        Optional<String> id = dialog.showAndWait();
-
-        if (!id.isPresent() || id.get().compareTo("") == 0) {
-            alert = new Alert(Alert.AlertType.NONE);
-            alert.setAlertType(Alert.AlertType.ERROR);
-            alert.setTitle("Doctor Remove");
-            alert.setHeaderText("The list dont have the element");
-            alert.show();
-
-        } 
-
         try {
+            TextInputDialog dialog = new TextInputDialog();
+            dialog.setTitle("Doctor Remove");
+            dialog.setHeaderText("Enter the ID:");
+            Optional<String> id = dialog.showAndWait();
+
+            if (!id.isPresent() || id.get().compareTo("") == 0) {
+                alert = new Alert(Alert.AlertType.NONE);
+                alert.setAlertType(Alert.AlertType.ERROR);
+                alert.setTitle("Doctor Remove");
+                alert.setHeaderText("The list dont have the element");
+                alert.show();
+
+            }
             if (AppointmentList.size() == 1) {
                 if (AppointmentList.contains(new Appointment(Integer.parseInt(id.get()), 0, null, ""))) {
                     AppointmentList.clear();
@@ -184,27 +184,28 @@ public class FXMLCitasController implements Initializable {
             alert.show();
         } catch (QueueException | IOException ex) {
             Logger.getLogger(FXMLMantenimientoDoctoresController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NoSuchElementException ex) {
+            System.err.println("ERROR " + ex);
         }
     }
 
     @FXML
     private void ContainsCode(ActionEvent event) {
-        TextInputDialog dialog = new TextInputDialog();
-        dialog.setTitle("Doctor Position Contains");
-        dialog.setHeaderText("Enter the id: ");
-        Optional<String> id = dialog.showAndWait();
-        Appointment appointment = new Appointment(Integer.parseInt(id.get()), 0, null, "");
+        try {
+            TextInputDialog dialog = new TextInputDialog();
+            dialog.setTitle("Doctor Position Contains");
+            dialog.setHeaderText("Enter the id: ");
+            Optional<String> id = dialog.showAndWait();
+            Appointment appointment = new Appointment(Integer.parseInt(id.get()), 0, null, "");
 
-        if (!id.isPresent() || id.get().compareTo("") == 0) {
-            alert = new Alert(Alert.AlertType.NONE);
-            alert.setAlertType(Alert.AlertType.ERROR);
-            alert.setTitle("Appointment Postiion Contains");
-            alert.setHeaderText("The list doesn't contains the element");
-            alert.show();
+            if (!id.isPresent() || id.get().compareTo("") == 0) {
+                alert = new Alert(Alert.AlertType.NONE);
+                alert.setAlertType(Alert.AlertType.ERROR);
+                alert.setTitle("Appointment Postiion Contains");
+                alert.setHeaderText("The list doesn't contains the element");
+                alert.show();
 
-        } else {
-
-            try {
+            } else {
                 if (AppointmentList.contains(appointment)) {
                     Object foundElement = AppointmentList.getNodeById(appointment);
                     alert = new Alert(Alert.AlertType.NONE);
@@ -221,13 +222,15 @@ public class FXMLCitasController implements Initializable {
                     alert.show();
 
                 }
-            } catch (ListException ex) {
-                alert = new Alert(Alert.AlertType.NONE);
-                alert.setAlertType(Alert.AlertType.ERROR);
-                alert.setTitle("Doctor Position Contains");
-                alert.setHeaderText(ex.getMessage());
-                alert.show();
             }
+        } catch (ListException ex) {
+            alert = new Alert(Alert.AlertType.NONE);
+            alert.setAlertType(Alert.AlertType.ERROR);
+            alert.setTitle("Doctor Position Contains");
+            alert.setHeaderText(ex.getMessage());
+            alert.show();
+        } catch (NoSuchElementException ex) {
+            System.err.println("ERROR " + ex);
         }
     }
 
@@ -285,7 +288,8 @@ public class FXMLCitasController implements Initializable {
             int DoctorID = Integer.parseInt(event.getRowValue().get(2));
             String strDatewithTime = event.getRowValue().get(3);
             LocalDateTime aLDT = LocalDateTime.parse(strDatewithTime);
-            Appointment oldDAppointment = new Appointment(Integer.parseInt(event.getRowValue().get(1)), DoctorID, aLDT, event.getRowValue().get(4));Appointment newAppointment = new Appointment(Integer.parseInt(event.getRowValue().get(1)), Integer.parseInt(event.getNewValue()), aLDT, event.getRowValue().get(4));
+            Appointment oldDAppointment = new Appointment(Integer.parseInt(event.getRowValue().get(1)), DoctorID, aLDT, event.getRowValue().get(4));
+            Appointment newAppointment = new Appointment(Integer.parseInt(event.getRowValue().get(1)), Integer.parseInt(event.getNewValue()), aLDT, event.getRowValue().get(4));
             this.AppointmentList.modificar(oldDAppointment, newAppointment);
             try {
                 util.Data.setDataFile("appointment", AppointmentList);
@@ -305,7 +309,7 @@ public class FXMLCitasController implements Initializable {
 
     @FXML
     private void TimeCommit(TableColumn.CellEditEvent<List<String>, String> event) {
-        
+
     }
 
     @FXML

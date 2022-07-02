@@ -16,6 +16,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -31,6 +33,7 @@ import javafx.stage.FileChooser;
  * @author Duran Family
  */
 public class FXMLAddConfigurationController implements Initializable {
+
     BST tree;
     Alert alert;
 
@@ -42,7 +45,7 @@ public class FXMLAddConfigurationController implements Initializable {
     private TextField TF_PhoneNumber;
     @FXML
     private Button registerButton;
-   
+
     @FXML
     private AnchorPane pane;
     @FXML
@@ -55,7 +58,7 @@ public class FXMLAddConfigurationController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-       
+
         tree = new BST();
         if (util.Data.fileExists("configuration")) {
             try {
@@ -64,15 +67,15 @@ public class FXMLAddConfigurationController implements Initializable {
                 Logger.getLogger(FXMLAddDoctorController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-    }    
+    }
 
     @FXML
     private void registerOnAction(ActionEvent event) {
         if (tree != null) {
-            if ( "".equals(TF_Email.getText())
+            if ("".equals(TF_Email.getText())
                     || "".equals(TF_PhoneNumber) || "".equals(TF_image.getText())
                     || "".equals(idClinicName.getText())) {
-                 alert = new Alert(Alert.AlertType.NONE);
+                alert = new Alert(Alert.AlertType.NONE);
                 alert.setAlertType(Alert.AlertType.ERROR);
                 alert.setTitle("Configuration");
                 alert.setHeaderText("ERROR");
@@ -81,39 +84,51 @@ public class FXMLAddConfigurationController implements Initializable {
 
             } else {
                 try {
-                    Configurations configurations = new Configurations(idClinicName.getText(), TF_PhoneNumber.getText(), TF_Email.getText(), TF_image.getText(),TF_image1.getText(), 0, 0);
-                    tree.clear();
-                    tree.add(configurations);
-                    try {
-                        util.Data.setDataFile("configuration",tree);
-                    } catch (QueueException ex) {
-                        Logger.getLogger(FXMLAddConfigurationController.class.getName()).log(Level.SEVERE, null, ex);
-                    } catch (ListException ex) {
-                        Logger.getLogger(FXMLAddConfigurationController.class.getName()).log(Level.SEVERE, null, ex);
-                    } catch (IOException ex) {
-                        Logger.getLogger(FXMLAddConfigurationController.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                    try {
-                        util.Data.setDataFile("configuration", tree);
-                    } catch (QueueException ex) {
-                        Logger.getLogger(FXMLAddCITASController.class.getName()).log(Level.SEVERE, null, ex);
-                    } catch (ListException ex) {
-                        Logger.getLogger(FXMLAddCITASController.class.getName()).log(Level.SEVERE, null, ex);
-                    } catch (IOException ex) {
-                        Logger.getLogger(FXMLAddCITASController.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+                    Pattern pattern = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+                            + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
+                    Matcher mather = pattern.matcher(TF_Email.getText());
+                    if (mather.find() == true) {
+                        Configurations configurations = new Configurations(idClinicName.getText(), TF_PhoneNumber.getText(), TF_Email.getText(), TF_image.getText(), TF_image1.getText(), 0, 0);
+                        tree.clear();
+                        tree.add(configurations);
+                        try {
+                            util.Data.setDataFile("configuration", tree);
+                        } catch (QueueException ex) {
+                            Logger.getLogger(FXMLAddConfigurationController.class.getName()).log(Level.SEVERE, null, ex);
+                        } catch (ListException ex) {
+                            Logger.getLogger(FXMLAddConfigurationController.class.getName()).log(Level.SEVERE, null, ex);
+                        } catch (IOException ex) {
+                            Logger.getLogger(FXMLAddConfigurationController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        try {
+                            util.Data.setDataFile("configuration", tree);
+                        } catch (QueueException ex) {
+                            Logger.getLogger(FXMLAddCITASController.class.getName()).log(Level.SEVERE, null, ex);
+                        } catch (ListException ex) {
+                            Logger.getLogger(FXMLAddCITASController.class.getName()).log(Level.SEVERE, null, ex);
+                        } catch (IOException ex) {
+                            Logger.getLogger(FXMLAddCITASController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
 
-                    idClinicName.setText("");
-                    TF_image.setText("");
-                    TF_PhoneNumber.setText("");
-                    TF_Email.setText("");
-                    TF_image1.setText("");
+                        idClinicName.setText("");
+                        TF_image.setText("");
+                        TF_PhoneNumber.setText("");
+                        TF_Email.setText("");
+                        TF_image1.setText("");
 
-                    alert = new Alert(Alert.AlertType.NONE);
-                    alert.setAlertType(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Configurations");
-                    alert.setContentText("The changes were made successfully");
-                    alert.show();
+                        alert = new Alert(Alert.AlertType.NONE);
+                        alert.setAlertType(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Configurations");
+                        alert.setContentText("The changes were made successfully");
+                        alert.show();
+                    } else {
+                        alert = new Alert(Alert.AlertType.NONE);
+                        alert.setAlertType(Alert.AlertType.ERROR);
+                        alert.setTitle("Doctor");
+                        alert.setHeaderText("ERROR");
+                        alert.setContentText("Invalid Email");
+                        alert.show();
+                    }
                 } catch (NumberFormatException ex) {
                     alert = new Alert(Alert.AlertType.NONE);
                     alert.setAlertType(Alert.AlertType.ERROR);
@@ -124,19 +139,18 @@ public class FXMLAddConfigurationController implements Initializable {
                 }
             }
         }
-            }
+    }
 
     @FXML
     private void ChangeLogoCode(ActionEvent event) throws IOException {
         FileChooser fc = new FileChooser();
         File selectedFile = fc.showOpenDialog(null);
-        if (selectedFile!=null){
+        if (selectedFile != null) {
             TF_image.setText(selectedFile.toURI().toString());
             TF_image1.setText(selectedFile.getAbsolutePath());
         } else {
             TF_image.setText("Is not valid");
         }
     }
-    
-    
+
 }

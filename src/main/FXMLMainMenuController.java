@@ -51,6 +51,10 @@ public class FXMLMainMenuController implements Initializable {
     private Text txtMessage;
     @FXML
     private ImageView LogoImage;
+    @FXML
+    private Label TXTCorreo;
+    @FXML
+    private Label TXTTelefono;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -64,6 +68,8 @@ public class FXMLMainMenuController implements Initializable {
         }
         this.txtMessage.setText(getClinicName());
         this.image = new Image(getClinicImage());
+        this.TXTTelefono.setText(getPhone());
+        this.TXTCorreo.setText(getMail());
         LogoImage.setImage(image);
     }   
     
@@ -98,6 +104,8 @@ public class FXMLMainMenuController implements Initializable {
         this.txtMessage.setText(getClinicName());
         this.image = new Image(getClinicImage());
         LogoImage.setImage(image);
+        this.TXTTelefono.setText(getPhone());
+        this.TXTCorreo.setText(getMail());
     }
 
     @FXML
@@ -113,7 +121,7 @@ public class FXMLMainMenuController implements Initializable {
 
     @FXML
     private void DoctoresCode(ActionEvent event) {
-        loadPage(getClass().getResource("FXMLMedicalCare.fxml"), bp);
+        loadPage(getClass().getResource("FXMLMantenimientoDoctores.fxml"), bp);
     }
 
     @FXML
@@ -149,7 +157,7 @@ public class FXMLMainMenuController implements Initializable {
         return data;
     }
 
-    private String getClinicName() {
+    public String getClinicName() {
         String name1 = "";
         try {
             String ClinicName = String.valueOf(getData());
@@ -169,6 +177,30 @@ public class FXMLMainMenuController implements Initializable {
             String[] parts = ClinicImage.split(",");
             String name = parts[2];
             name1 = name.substring(1, name.length());
+        } catch (TreeException ex) {
+            Logger.getLogger(FXMLMainMenuController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return name1;
+    }
+    private String getMail() {
+        String name1 = "";
+        try {
+            String ClinicName = String.valueOf(getData());
+            String[] parts = ClinicName.split(",");
+            String name = parts[1];
+            name1 = name.substring(0, name.length());
+        } catch (TreeException ex) {
+            Logger.getLogger(FXMLMainMenuController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return name1;
+    }
+      private String getPhone() {
+        String name1 = "";
+        try {
+            String ClinicName = String.valueOf(getData());
+            String[] parts = ClinicName.split(",");
+            String name = parts[3];
+            name1 = name.substring(0, name.length()-2);
         } catch (TreeException ex) {
             Logger.getLogger(FXMLMainMenuController.class.getName()).log(Level.SEVERE, null, ex);
         }

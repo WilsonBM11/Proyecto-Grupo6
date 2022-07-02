@@ -175,21 +175,20 @@ public class FXMLMantenimientoDoctoresController implements Initializable {
 
     @FXML
     private void DeleteCode(ActionEvent event) {
-        TextInputDialog dialog = new TextInputDialog();
-        dialog.setTitle("Doctor Remove");
-        dialog.setHeaderText("Enter the ID:");
-        Optional<String> id = dialog.showAndWait();
-
-        if (!id.isPresent() || id.get().compareTo("") == 0) {
-            alert = new Alert(Alert.AlertType.NONE);
-            alert.setAlertType(Alert.AlertType.ERROR);
-            alert.setTitle("Doctor Remove");
-            alert.setHeaderText("The list dont have the element");
-            alert.show();
-
-        }
-
         try {
+            TextInputDialog dialog = new TextInputDialog();
+            dialog.setTitle("Doctor Remove");
+            dialog.setHeaderText("Enter the ID:");
+            Optional<String> id = dialog.showAndWait();
+
+            if (!id.isPresent() || id.get().compareTo("") == 0) {
+                alert = new Alert(Alert.AlertType.NONE);
+                alert.setAlertType(Alert.AlertType.ERROR);
+                alert.setTitle("Doctor Remove");
+                alert.setHeaderText("The list dont have the element");
+                alert.show();
+
+            }
             if (DoctorList.size() == 1) {
                 if (DoctorList.contains(new Doctor(Integer.parseInt(id.get()), "", "", "", "", "", null))) {
                     DoctorList.clear();
@@ -230,27 +229,29 @@ public class FXMLMantenimientoDoctoresController implements Initializable {
             alert.show();
         } catch (QueueException | IOException ex) {
             Logger.getLogger(FXMLMantenimientoDoctoresController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NoSuchFieldError ex) {
+            System.err.println("ERROR " + ex);
+
         }
     }
 
     @FXML
     private void ContainsCode(ActionEvent event) throws ListException {
-        TextInputDialog dialog = new TextInputDialog();
-        dialog.setTitle("Doctor Position Contains");
-        dialog.setHeaderText("Enter the id: ");
-        Optional<String> id = dialog.showAndWait();
-        Doctor doctor = new Doctor(Integer.parseInt(id.get()), "", "", "", "", "", null);
+        try {
+            TextInputDialog dialog = new TextInputDialog();
+            dialog.setTitle("Doctor Position Contains");
+            dialog.setHeaderText("Enter the id: ");
+            Optional<String> id = dialog.showAndWait();
+            Doctor doctor = new Doctor(Integer.parseInt(id.get()), "", "", "", "", "", null);
 
-        if (!id.isPresent() || id.get().compareTo("") == 0) {
-            alert = new Alert(Alert.AlertType.NONE);
-            alert.setAlertType(Alert.AlertType.ERROR);
-            alert.setTitle("Doctor Postiion Contains");
-            alert.setHeaderText("The list doesn't contains the element");
-            alert.show();
+            if (!id.isPresent() || id.get().compareTo("") == 0) {
+                alert = new Alert(Alert.AlertType.NONE);
+                alert.setAlertType(Alert.AlertType.ERROR);
+                alert.setTitle("Doctor Postiion Contains");
+                alert.setHeaderText("The list doesn't contains the element");
+                alert.show();
 
-        } else {
-
-            try {
+            } else {
                 if (DoctorList.contains(doctor)) {
                     Object foundElement = DoctorList.getNodeById(doctor);
                     alert = new Alert(Alert.AlertType.NONE);
@@ -267,13 +268,15 @@ public class FXMLMantenimientoDoctoresController implements Initializable {
                     alert.show();
 
                 }
-            } catch (ListException ex) {
-                alert = new Alert(Alert.AlertType.NONE);
-                alert.setAlertType(Alert.AlertType.ERROR);
-                alert.setTitle("Doctor Position Contains");
-                alert.setHeaderText(ex.getMessage());
-                alert.show();
             }
+        } catch (ListException ex) {
+            alert = new Alert(Alert.AlertType.NONE);
+            alert.setAlertType(Alert.AlertType.ERROR);
+            alert.setTitle("Doctor Position Contains");
+            alert.setHeaderText(ex.getMessage());
+            alert.show();
+        } catch (NoSuchFieldError ex) {
+            System.err.println("ERROR " + ex);
         }
     }
 

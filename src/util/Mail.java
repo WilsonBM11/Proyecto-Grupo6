@@ -131,4 +131,14 @@ public class Mail {
     }
         return Image;
     }
+    public String getClinicName (){
+        String correo = "";
+    
+        if (this.getTree() != null && !this.getTree().isEmpty()) {
+            Configurations C = (Configurations) this.getTree().getRoot().data;
+            correo = C.getClinicName();
+    }
+        return correo;
+
+}
 }

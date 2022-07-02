@@ -114,6 +114,7 @@ public class FXMLMantenimientoEnfermedadesController implements Initializable {
 
     @FXML
     private void DeleteCode(ActionEvent event) {
+       try {
         TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle("Doctor Remove");
         dialog.setHeaderText("Enter the ID:");
@@ -127,8 +128,6 @@ public class FXMLMantenimientoEnfermedadesController implements Initializable {
             alert.show();
 
         } else{
-
-        try {
             SicknessList.remove(new Sickness(id.get()));
             try {
                 util.Data.setDataFile("sickness", SicknessList);
@@ -144,22 +143,24 @@ public class FXMLMantenimientoEnfermedadesController implements Initializable {
             alert.setTitle("Doctor - Remove");
             alert.setHeaderText("The element was removed");
             alert.show();
-        } catch (ListException ex) {
+        }
+       }catch (ListException ex) {
             alert = new Alert(Alert.AlertType.NONE);
             alert.setAlertType(Alert.AlertType.ERROR);
             alert.setTitle("Doctor - Remove");
             alert.setHeaderText(ex.getMessage());
             alert.show();
-        }
-    
-        }
+        } catch (NoSuchFieldError ex ) {
+                System.err.println("ERROR " + ex);
+                }
         
         
     }
 
     @FXML
     private void ContainsCode(ActionEvent event) throws ListException {
-         TextInputDialog dialog = new TextInputDialog();
+        try {
+        TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle("Sickness Position Contains");
         dialog.setHeaderText("Enter the id: ");
         Optional<String> id = dialog.showAndWait();
@@ -173,8 +174,6 @@ public class FXMLMantenimientoEnfermedadesController implements Initializable {
             alert.show();
 
         } else {
-
-            try {
                 if (SicknessList.contains(sickness)) {
                     Object foundElement = SicknessList.getNodeById(sickness);
                     alert = new Alert(Alert.AlertType.NONE);
@@ -189,17 +188,19 @@ public class FXMLMantenimientoEnfermedadesController implements Initializable {
                     alert.setTitle("Doctor Position Contains");
                     alert.setHeaderText("The list dont have the element");
                     alert.show();
-
+           
                 }
-            } catch (ListException ex) {
+        }
+        } catch (ListException ex) {
                 alert = new Alert(Alert.AlertType.NONE);
                 alert.setAlertType(Alert.AlertType.ERROR);
                 alert.setTitle("Doctor Position Contains");
                 alert.setHeaderText(ex.getMessage());
                 alert.show();
-            }
+            } catch (NoSuchFieldError ex ) {
+                    System.err.println("ERROR " + ex);
+                    } 
         }
-    }
     @FXML
     private void DescriptionCommit(TableColumn.CellEditEvent<List<String>, String> event)throws ListException {
         try {

@@ -100,7 +100,7 @@ public class FXMLPatientAddController implements Initializable {
                             util.Data.setDataFile("patients", patientList);
 
                             Mail m = new Mail();
-                            m.sendEmail(TF_Email.getText(), "Registro de Usuario - Clinica Grupo 06",
+                            m.sendEmail(TF_Email.getText(), "Registro de Usuario - " + m.getClinicName(),
                                     "¡Se registro con exito su usario!<br><br>"
                                     + "A continuación se muestran los datos de su registro:<br><br>"
                                     + "Cédula: " + idTextField.getText() + "<br><br>"

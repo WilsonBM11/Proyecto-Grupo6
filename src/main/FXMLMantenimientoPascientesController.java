@@ -17,6 +17,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -180,7 +181,7 @@ public class FXMLMantenimientoPascientesController implements Initializable {
 
     @FXML
     private void DeleteCode(ActionEvent event) throws ListException {
-
+try {
         TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle("Patient Remove");
         dialog.setHeaderText("Enter the ID:");
@@ -194,7 +195,6 @@ public class FXMLMantenimientoPascientesController implements Initializable {
             alert.show();
 
         }
-        try {
             if (PatientList.size() == 1) {
                 if (PatientList.contains(new Patient(Integer.parseInt(id.get()), "", "", "", "", "", null))) {
                     PatientList.clear();
@@ -246,13 +246,17 @@ public class FXMLMantenimientoPascientesController implements Initializable {
 
                 }
             }
-        } catch (ListException ex) {
+        } catch (ListException ex)  {
             Logger.getLogger(FXMLMantenimientoPascientesController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        } catch (NoSuchElementException ex){
+            System.err.println("ERROR " + ex);
+            
+    }
     }
 
     @FXML
     private void ContainsCode(ActionEvent event) throws ListException {
+       try {
         TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle("Patient Position Contains");
         dialog.setHeaderText("Enter the id: ");
@@ -264,10 +268,7 @@ public class FXMLMantenimientoPascientesController implements Initializable {
             alert.setTitle("Patient Position Contains");
             alert.setHeaderText("The list doesn't contains the element");
             alert.show();
-
-        } else {
-
-            try {
+        }else {
                 if (PatientList.contains(patient)) {
                     Object foundElement = PatientList.getNodeById(patient);
                     alert = new Alert(Alert.AlertType.NONE);
@@ -284,16 +285,18 @@ public class FXMLMantenimientoPascientesController implements Initializable {
                     alert.show();
 
                 }
-            } catch (ListException ex) {
+            }
+       }catch (ListException ex) {
                 alert = new Alert(Alert.AlertType.NONE);
                 alert.setAlertType(Alert.AlertType.ERROR);
                 alert.setTitle("Doctor Position Contains");
                 alert.setHeaderText(ex.getMessage());
                 alert.show();
-            }
+        } catch (NoSuchElementException ex){
+            System.err.println("ERROR " + ex);
         }
-    }
-
+       }
+    
     @FXML
     private void FirstNameCommit(TableColumn.CellEditEvent<List<String>, String> event) throws ListException {
         try {
@@ -390,7 +393,7 @@ public class FXMLMantenimientoPascientesController implements Initializable {
                 }
                 Mail m = new Mail();
                 try {
-                    m.sendEmail(newPatient.getEmail(), "Registro de Usuario - Clinica Grupo 06",
+                    m.sendEmail(newPatient.getEmail(), "Registro de Usuario - " + m.getClinicName(),
                             "¡Se registro con exito su usario!<br><br>"
                             + "A continuación se muestran los datos de su registro:<br><br>"
                             + "Cédula: " + newPatient.getId() + "<br><br>"
