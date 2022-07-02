@@ -4,6 +4,7 @@
  */
 package main;
 
+import domain.Appointment;
 import domain.ListException;
 import domain.QueueException;
 import domain.Sickness;
@@ -204,11 +205,11 @@ public class FXMLMantenimientoEnfermedadesController implements Initializable {
         try {
             String Description = event.getRowValue().get(1);
             Sickness oldSick = new Sickness(Description);
-            int id = oldSick.getId();
             Sickness newSick = new Sickness(event.getNewValue());
-            newSick.setId(id-1);
             this.SicknessList.modificar(oldSick, newSick);
-            Sickness.setConsecutivo(id);
+            newSick.setId(oldSick.getId()-1);
+            Sickness.setConsecutivo(newSick.getId()+1);
+            
             util.Data.setDataFile("sickness", SicknessList);
         } catch (QueueException ex) {
             Logger.getLogger(FXMLMantenimientoEnfermedadesController.class.getName()).log(Level.SEVERE, null, ex);

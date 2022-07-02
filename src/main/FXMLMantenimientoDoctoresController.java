@@ -33,6 +33,8 @@ import javafx.util.Callback;
 import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * FXML Controller class
@@ -349,18 +351,30 @@ public class FXMLMantenimientoDoctoresController implements Initializable {
     @FXML
     private void EmailCommit(TableColumn.CellEditEvent<List<String>, String> event) throws ListException {
         try {
-            String Email = event.getRowValue().get(4);
-            String sDate1 = event.getRowValue().get(6);
-            Date date1 = new SimpleDateFormat("dd/MM/yyyy").parse(sDate1);
-            Doctor oldDoctor = new Doctor(Integer.parseInt(event.getRowValue().get(0)), event.getRowValue().get(1), event.getRowValue().get(2), event.getRowValue().get(3), Email, event.getRowValue().get(5), date1);
-            Doctor newDoctor = new Doctor(Integer.parseInt(event.getRowValue().get(0)), event.getRowValue().get(1), event.getRowValue().get(2), event.getRowValue().get(3), event.getNewValue(), event.getRowValue().get(5), date1);
-            this.DoctorList.modificar(oldDoctor, newDoctor);
-            try {
-                util.Data.setDataFile("doctors", DoctorList);
-            } catch (QueueException ex) {
-                Logger.getLogger(FXMLMantenimientoDoctoresController.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
-                Logger.getLogger(FXMLMantenimientoDoctoresController.class.getName()).log(Level.SEVERE, null, ex);
+            Pattern pattern = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+                    + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
+            Matcher mather = pattern.matcher(event.getNewValue());
+            if (mather.find() == true) {
+                String Email = event.getRowValue().get(4);
+                String sDate1 = event.getRowValue().get(6);
+                Date date1 = new SimpleDateFormat("dd/MM/yyyy").parse(sDate1);
+                Doctor oldDoctor = new Doctor(Integer.parseInt(event.getRowValue().get(0)), event.getRowValue().get(1), event.getRowValue().get(2), event.getRowValue().get(3), Email, event.getRowValue().get(5), date1);
+                Doctor newDoctor = new Doctor(Integer.parseInt(event.getRowValue().get(0)), event.getRowValue().get(1), event.getRowValue().get(2), event.getRowValue().get(3), event.getNewValue(), event.getRowValue().get(5), date1);
+                this.DoctorList.modificar(oldDoctor, newDoctor);
+                try {
+                    util.Data.setDataFile("doctors", DoctorList);
+                } catch (QueueException ex) {
+                    Logger.getLogger(FXMLMantenimientoDoctoresController.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    Logger.getLogger(FXMLMantenimientoDoctoresController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else {
+                alert = new Alert(Alert.AlertType.NONE);
+                alert.setAlertType(Alert.AlertType.ERROR);
+                alert.setTitle("Doctor");
+                alert.setHeaderText("ERROR");
+                alert.setContentText("Invalid Email");
+                alert.show();
             }
             if (this.DoctorList != null && !this.DoctorList.isEmpty()) {
                 this.TableView.setItems(getData());
@@ -368,6 +382,7 @@ public class FXMLMantenimientoDoctoresController implements Initializable {
         } catch (ParseException ex) {
             Logger.getLogger(FXMLMantenimientoDoctoresController.class.getName()).log(Level.SEVERE, null, ex);
         }
+
     }
 
     @FXML
@@ -394,7 +409,8 @@ public class FXMLMantenimientoDoctoresController implements Initializable {
             Logger.getLogger(FXMLMantenimientoDoctoresController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-   @FXML
+
+    @FXML
     private void BirthdayCommit(TableColumn.CellEditEvent<List<String>, String> event) throws ListException {
         try {
             String sDate1 = event.getRowValue().get(6);
@@ -417,5 +433,4 @@ public class FXMLMantenimientoDoctoresController implements Initializable {
         }
     }
 
-    
 }

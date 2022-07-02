@@ -40,8 +40,6 @@ public class FXMLReportesController implements Initializable {
 
     
     @FXML
-    private BorderPane bp;
-    @FXML
     private Button btnBuscar;
     @FXML
     private Label labelStatus;
@@ -132,7 +130,6 @@ public class FXMLReportesController implements Initializable {
     
     } 
     
-     @FXML
     private void btnBuscar(ActionEvent event) {
         
         try {
@@ -155,6 +152,7 @@ public class FXMLReportesController implements Initializable {
         }
     }
     
+    @FXML
     private void btnGenerar (ActionEvent event){
         
         Document document = new Document () {

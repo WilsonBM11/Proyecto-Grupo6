@@ -242,17 +242,16 @@ public class DoublyLinkedList implements List {
         return null; //el elemento no existe
     }
       public void modificar (Object element1, Object element2) throws ListException{
-       if(isEmpty())
-            throw new ListException("Doubly Linked List is empty");
-        Node aux = first;
-        while(aux!=null&&!util.Utility.equals(aux, element1)){
-            aux.data = element2;
-            aux = aux.next;
-        }
-        //sale cuando aux==null o encontro el elemento
-        if(aux!=null&&util.Utility.equals(aux, element1)){
-            aux.data = element1;
-        }
+        if(isEmpty())
+              throw new ListException("Doubly Linked list is empty");
+          Node aux = first;
+          while (aux!= null){
+              if(util.Utility.equals(aux.data, element1)){
+                  aux.data = element2;
+              }
+                aux = aux.next;
+             
+} 
     }
     @Override
     public void addInSortedList(Object element) {

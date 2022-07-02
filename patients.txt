@@ -1,3 +1,6 @@
-2075648329;Maria Laura;Elizondo Fallas;776245172;ElizfallasML@gmail.com;10/08/1995;10/08/1995
+2075648329;Mariano ;Duran Artavia;71133894;duranartaviamariano@hotmail.com;10/08/1995;10/08/1995
 329847382;Fernando;Sanabria Guillen;882938172;fAlonsoG@hotmail.com;Cartago;25/08/1982
 305380944;Wilson;Bonilla Mata;87905871;wilsonbm11@gmail.com;Tejar, El Guarco, Cartago;11/06/2002
+382748328;Gabriel;Duran;88297945;gabrieldj71@hotmail.com;Cartago;24/05/1971
+244284328;Jose;Gonzalez Angulo;882974621;duranartaviamariano@hotmail.com;Cartago;19/04/1998
+10847362;Daniela;Solano Mata;70765623;marianoda717202@gmail.com;Limon;05/08/2007

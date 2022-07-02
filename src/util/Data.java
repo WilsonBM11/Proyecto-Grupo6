@@ -8,6 +8,7 @@ package util;
 import domain.Appointment;
 import domain.BTreeNode;
 import domain.CircularDoublyLinkedList;
+import domain.Configurations;
 import domain.Doctor;
 import domain.Queue;
 import domain.List;
@@ -191,6 +192,9 @@ public class Data {
                 return pay;
             case "numbers":
                 return Integer.parseInt(aux.get(0));
+            case "configuration":
+                Configurations c = new Configurations(aux.get(0), aux.get(1),aux.get(2), aux.get(3),aux.get(4), Integer.parseInt(aux.get(5)), Integer.parseInt(aux.get(6)));
+                return c;
         }
         return null;
     }
@@ -220,6 +224,9 @@ public class Data {
                        util.Utility.dateFormat(pay.getBillingDate())+";"+pay.getTotalCharge();
             case "numbers":
                 return String.valueOf(data);
+            case "configuration":
+                Configurations c = (Configurations) data;
+                return c.getClinicName()+";"+c.getTelefono()+";"+c.getCorreoElectronico()+";"+c.getImagen()+";"+c.getImagenCorreo()+";"+c.getHoraEntrada()+";"+c.getHoraSalida();
         }
         return null;
     }

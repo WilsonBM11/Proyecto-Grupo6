@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.FXMLReportesController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.FXMLReportesController">
    <center>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
@@ -24,22 +24,22 @@
             <TextField layoutX="23.0" layoutY="126.0" onAction="#txt_nombre" />
             <Label layoutX="24.0" layoutY="166.0" prefHeight="34.0" prefWidth="106.0" text="Departamento " />
             <TextField layoutX="23.0" layoutY="200.0" onAction="#txt_departamento" />
-            <Button layoutX="35.0" layoutY="246.0" mnemonicParsing="false" onAction="#btnRegistrar" prefHeight="33.0" prefWidth="80.0" text="Registrar " />
-            <Button layoutX="177.0" layoutY="248.0" mnemonicParsing="false" onAction="#btnModificar" prefHeight="33.0" prefWidth="79.0" text="Modificar" />
-            <Button layoutX="327.0" layoutY="248.0" mnemonicParsing="false" onAction="#btnEliminar" prefHeight="33.0" prefWidth="80.0" text="Eliminar" />
+            <Button layoutX="21.0" layoutY="246.0" mnemonicParsing="false" onAction="#btnRegistrar" prefHeight="33.0" prefWidth="133.0" style="-fx-background-color: #0174DF;" text="Registrar " />
+            <Button layoutX="175.0" layoutY="246.0" mnemonicParsing="false" onAction="#btnModificar" prefHeight="33.0" prefWidth="126.0" style="-fx-background-color: #0174DF;" text="Modificar" />
+            <Button layoutX="326.0" layoutY="246.0" mnemonicParsing="false" onAction="#btnEliminar" prefHeight="33.0" prefWidth="119.0" style="-fx-background-color: #0174DF;" text="Eliminar" />
             <Label layoutX="24.0" layoutY="308.0" prefHeight="34.0" prefWidth="153.0" text="Ingrese ID de busqueda">
                <font>
-                  <Font name="Times New Roman" size="14.0" />
+                  <Font name="Arial" size="14.0" />
                </font>
             </Label>
             <TextField layoutX="221.0" layoutY="308.0" onAction="#txt_departamento" prefHeight="35.0" prefWidth="158.0" />
-            <Button fx:id="btnBuscar" layoutX="452.0" layoutY="308.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="74.0" text="Buscar " />
+            <Button fx:id="btnBuscar" layoutX="445.0" layoutY="308.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="142.0" style="-fx-background-color: #0174DF;" text="Buscar " />
             <Label fx:id="labelStatus" layoutX="26.0" layoutY="363.0" prefHeight="14.0" prefWidth="149.0">
                <font>
                   <Font name="Times New Roman Bold" size="18.0" />
                </font>
             </Label>
-            <Button layoutX="462.0" layoutY="246.0" mnemonicParsing="false" onAction="#btnGenerar" prefHeight="33.0" prefWidth="95.0" text="Generar PDF" />
+            <Button layoutX="462.0" layoutY="246.0" mnemonicParsing="false" onAction="#btnGenerar" prefHeight="33.0" prefWidth="125.0" style="-fx-background-color: #0174DF;" text="Generar PDF" />
          </children>
       </AnchorPane>
    </center>

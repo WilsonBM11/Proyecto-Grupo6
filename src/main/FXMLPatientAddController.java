@@ -5,6 +5,7 @@
 package main;
 
 import domain.CircularLinkedList;
+import domain.Doctor;
 import domain.ListException;
 import domain.Patient;
 import domain.QueueException;
@@ -15,6 +16,8 @@ import java.util.Calendar;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -59,7 +62,7 @@ public class FXMLPatientAddController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         patientList = new CircularLinkedList();
-        if(util.Data.fileExists("patients")){
+        if (util.Data.fileExists("patients")) {
             try {
                 patientList = (CircularLinkedList) util.Data.getDataFile("patients", patientList);
             } catch (QueueException | IOException ex) {
@@ -84,38 +87,60 @@ public class FXMLPatientAddController implements Initializable {
 
             } else {
                 try {
-                    Calendar date = Calendar.getInstance();
-                    date.set(calendarChoice.getValue().getYear(), calendarChoice.getValue().getMonthValue(), calendarChoice.getValue().getDayOfMonth());
-                    Patient patient = new Patient(Integer.parseInt(idTextField.getText()), firstNTextField.getText(),
-                            lastNTextField.getText(), PhoneTextField.getText(), TF_Email.getText(), TF_Address.getText(), date.getTime());
-                    patientList.add(patient);
-                    util.Data.setDataFile("patients", patientList);
-                    
-                    Mail m = new Mail();
-                    m.sendEmail(TF_Email.getText(), "Registro de Usuario - Clinica Grupo 06", 
-                    "¡Se registro con exito su usario!<br><br>"
-                  + "A continuación se muestran los datos de su registro:<br><br>"
-                  + "Cédula: " + idTextField.getText()+"<br><br>"
-                  + "Nombre: " + firstNTextField.getText() + " " + lastNTextField.getText()+"<br><br>"
-                  + "Teléfono: " + PhoneTextField.getText()+"<br><br>"
-                  + "Dirección: "+TF_Address.getText()+"<br><br>"
-                  + "Email: "+TF_Email.getText()+"<br><br>"
-                  + "Su usuario de ingreso al sistema es: "+idTextField.getText()+"<br><br>"
-                  + "Su contraseña temporal de ingreso al sistema es: "+util.Utility.random(0, 10000)+"<br><br>"
-                  + "¡Gracias por poner su salud en nuestras manos!");
-                    
-                    idTextField.setText("");
-                    lastNTextField.setText("");
-                    firstNTextField.setText("");
-                    PhoneTextField.setText("");
-                    TF_Address.setText("");
-                    TF_Email.setText("");
-                    calendarChoice.getEditor().clear();
+                    Pattern pattern = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+                            + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
+                    Matcher mather = pattern.matcher(TF_Email.getText());
+                    if (mather.find() == true) {
+                        if (!patientList.contains(new Patient(Integer.parseInt(idTextField.getText()), "", "", "", "", "", null))) {
+                            Calendar date = Calendar.getInstance();
+                            date.set(calendarChoice.getValue().getYear(), calendarChoice.getValue().getMonthValue(), calendarChoice.getValue().getDayOfMonth());
+                            Patient patient = new Patient(Integer.parseInt(idTextField.getText()), firstNTextField.getText(),
+                                    lastNTextField.getText(), PhoneTextField.getText(), TF_Email.getText(), TF_Address.getText(), date.getTime());
+                            patientList.add(patient);
+                            util.Data.setDataFile("patients", patientList);
 
-                    alert = new Alert(Alert.AlertType.NONE);
-                    alert.setAlertType(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Patient added");
-                    alert.show();
+                            Mail m = new Mail();
+                            m.sendEmail(TF_Email.getText(), "Registro de Usuario - Clinica Grupo 06",
+                                    "¡Se registro con exito su usario!<br><br>"
+                                    + "A continuación se muestran los datos de su registro:<br><br>"
+                                    + "Cédula: " + idTextField.getText() + "<br><br>"
+                                    + "Nombre: " + firstNTextField.getText() + " " + lastNTextField.getText() + "<br><br>"
+                                    + "Teléfono: " + PhoneTextField.getText() + "<br><br>"
+                                    + "Dirección: " + TF_Address.getText() + "<br><br>"
+                                    + "Email: " + TF_Email.getText() + "<br><br>"
+                                    + "Su usuario de ingreso al sistema es: " + idTextField.getText() + "<br><br>"
+                                    + "Su contraseña temporal de ingreso al sistema es: " + util.Utility.random(0, 10000) + "<br><br>"
+                                    + "¡Gracias por poner su salud en nuestras manos!");
+
+                            idTextField.setText("");
+                            lastNTextField.setText("");
+                            firstNTextField.setText("");
+                            PhoneTextField.setText("");
+                            TF_Address.setText("");
+                            TF_Email.setText("");
+                            calendarChoice.getEditor().clear();
+
+                            alert = new Alert(Alert.AlertType.NONE);
+                            alert.setAlertType(Alert.AlertType.INFORMATION);
+                            alert.setTitle("Patient added");
+                            alert.show();
+
+                        } else {
+                            alert = new Alert(Alert.AlertType.NONE);
+                            alert.setAlertType(Alert.AlertType.ERROR);
+                            alert.setTitle("Doctor");
+                            alert.setHeaderText("ERROR");
+                            alert.setContentText("Id Patient already register");
+                            alert.show();
+                        }
+                    } else {
+                        alert = new Alert(Alert.AlertType.NONE);
+                        alert.setAlertType(Alert.AlertType.ERROR);
+                        alert.setTitle("Doctor");
+                        alert.setHeaderText("ERROR");
+                        alert.setContentText("Invalid Email");
+                        alert.show();
+                    }
                 } catch (NumberFormatException ex) {
                     alert = new Alert(Alert.AlertType.NONE);
                     alert.setAlertType(Alert.AlertType.ERROR);
@@ -128,7 +153,6 @@ public class FXMLPatientAddController implements Initializable {
                 }
 
             }
-        } 
         }
     }
-
+}

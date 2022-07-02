@@ -4,10 +4,19 @@
  */
 package main;
 
+import domain.BST;
+import domain.Configurations;
+import domain.QueueException;
+import domain.TreeException;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,6 +24,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -25,7 +36,8 @@ import javafx.scene.text.Text;
  * @author Profesor Gilberth Chaves A <gchavesav@ucr.ac.cr>
  */
 public class FXMLMainMenuController implements Initializable {
-    
+    BST tree;
+    Image image;
     private Label label;
     @FXML
     private BorderPane bp;
@@ -37,10 +49,22 @@ public class FXMLMainMenuController implements Initializable {
     private Button btnExit;
     @FXML
     private Text txtMessage;
+    @FXML
+    private ImageView LogoImage;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        tree = new BST();
+        if (util.Data.fileExists("configuration")) {
+            try {
+                tree = (BST) util.Data.getDataFile("configuration", tree);
+            } catch (QueueException | IOException ex) {
+                Logger.getLogger(FXMLAddDoctorController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        this.txtMessage.setText(getClinicName());
+        this.image = new Image(getClinicImage());
+        LogoImage.setImage(image);
     }   
     
     public static void loadPage(URL ui, BorderPane bp){
@@ -60,8 +84,20 @@ public class FXMLMainMenuController implements Initializable {
 
     @FXML
     private void Home(MouseEvent event) {
-        this.txtMessage.setText("Proyecto Clinica de Salud Mental");
+          tree = new BST();
+        if (util.Data.fileExists("configuration")) {
+            try {
+                tree = (BST) util.Data.getDataFile("configuration", tree);
+            } catch (QueueException ex) {
+                Logger.getLogger(FXMLMainMenuController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(FXMLMainMenuController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
         this.bp.setCenter(ap);
+        this.txtMessage.setText(getClinicName());
+        this.image = new Image(getClinicImage());
+        LogoImage.setImage(image);
     }
 
     @FXML
@@ -89,16 +125,56 @@ public class FXMLMainMenuController implements Initializable {
     private void CitasCode(ActionEvent event) {
         loadPage(getClass().getResource("FXMLCitas.fxml"), bp);
     }
-    
-     @FXML
-    private void ReportesCode (ActionEvent event) {
-        loadPage(getClass().getResource("FXMLReportes.fxml"), bp);
+
+    @FXML
+    private void MedicalCareCode(ActionEvent event) {
+        loadPage(getClass().getResource("FXMLMedicalCare.fxml"), bp);
     }
 
     @FXML
-    private void medicalCareOnAction(ActionEvent event) {
-        loadPage(getClass().getResource("FXMLMedicalCare.fxml"), bp);
+    private void ReportsCode(ActionEvent event) {
+        loadPage(getClass().getResource("FXMLReportes.fxml"), bp);
     }
+     private ObservableList<List<String>> getData() throws TreeException {
+        ObservableList<List<String>> data = FXCollections.observableArrayList();
+        if (this.tree != null && !this.tree.isEmpty()) {
+            Configurations C = (Configurations) this.tree.getRoot().data;
+            List<String> arrayList = new ArrayList<>();
+            arrayList.add(String.valueOf(C.getClinicName()));
+            arrayList.add(C.getCorreoElectronico());
+            arrayList.add(C.getImagen());
+            arrayList.add(C.getTelefono());
+            data.add(arrayList);
+        }
+        return data;
+    }
+
+    private String getClinicName() {
+        String name1 = "";
+        try {
+            String ClinicName = String.valueOf(getData());
+            String[] parts = ClinicName.split(",");
+            String name = parts[0];
+            name1 = name.substring(2, name.length());
+        } catch (TreeException ex) {
+            Logger.getLogger(FXMLMainMenuController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return name1;
+    }
+
+    private String getClinicImage() {
+        String name1 = "";
+        try {
+            String ClinicImage = String.valueOf(getData());
+            String[] parts = ClinicImage.split(",");
+            String name = parts[2];
+            name1 = name.substring(1, name.length());
+        } catch (TreeException ex) {
+            Logger.getLogger(FXMLMainMenuController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return name1;
+    }
+
    
     
 }

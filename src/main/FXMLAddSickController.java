@@ -5,12 +5,14 @@
 package main;
 
 import domain.CircularLinkedList;
+import domain.Doctor;
 import domain.ListException;
 import domain.QueueException;
 import domain.Sickness;
 import domain.SinglyLinkedList;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Calendar;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -51,64 +53,43 @@ public class FXMLAddSickController implements Initializable {
 
     @FXML
     private void registerOnAction(ActionEvent event) throws ListException {
-        if (sicknesslist == null && sicknesslist.isEmpty()) {
-            if (TF_Description.getText().equals("")) {
-
-                alert = new Alert(Alert.AlertType.NONE);
-                alert.setAlertType(Alert.AlertType.ERROR);
-                alert.setTitle("Add Sick");
-                alert.setHeaderText("ERROR");
-                alert.setContentText("Fill all the spaces");
-                alert.show();
-
-            } else {
-
-                try {
-                    Sickness sick = new Sickness(TF_Description.getText());
-                    sicknesslist.add(sick);
-                    util.Data.setDataFile("sickness", sicknesslist);
-                    TF_Description.setText("");
-                    
-                    alert = new Alert(Alert.AlertType.NONE);
-                    alert.setAlertType(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Sick added");
-                    alert.show();
-                } catch (QueueException ex) {
-                    Logger.getLogger(FXMLAddSickController.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (IOException ex) {
-                    Logger.getLogger(FXMLAddSickController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-
-            }
-        } else {
+       if (sicknesslist != null) {
             if ("".equals(TF_Description.getText())) {
 
                 alert = new Alert(Alert.AlertType.NONE);
                 alert.setAlertType(Alert.AlertType.ERROR);
-                alert.setTitle("Sick Employee");
+                alert.setTitle("Sick Add");
                 alert.setHeaderText("ERROR");
                 alert.setContentText("Fill all the spaces");
                 alert.show();
 
             } else {
-
                 try {
-                    Sickness S = new Sickness(TF_Description.getText());
-                    sicknesslist.add(S);
-                    util.Data.setDataFile("sickness", sicknesslist);
+                    Sickness sick = new Sickness(TF_Description.getText());
+                    sicknesslist.add(sick);
+                    try {
+                        util.Data.setDataFile("sickness", sicknesslist);
+                    } catch (QueueException ex) {
+                        Logger.getLogger(FXMLAddSickController.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (IOException ex) {
+                        Logger.getLogger(FXMLAddSickController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
                     TF_Description.setText("");
                     
+
                     alert = new Alert(Alert.AlertType.NONE);
                     alert.setAlertType(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Add Sick");
-                    alert.setHeaderText("Sickness added");
+                    alert.setTitle("Sickness added");
                     alert.show();
-                } catch (QueueException ex) {
-                    Logger.getLogger(FXMLAddSickController.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (IOException ex) {
-                    Logger.getLogger(FXMLAddSickController.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (NumberFormatException ex) {
+                    alert = new Alert(Alert.AlertType.NONE);
+                    alert.setAlertType(Alert.AlertType.ERROR);
+                    alert.setTitle("Sickness");
+                    alert.setHeaderText("ERROR");
+                    alert.setContentText("Wrong character, fill again the space");
+                    alert.show();
                 }
-
             }
         }
     }

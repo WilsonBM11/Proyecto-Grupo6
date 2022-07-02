@@ -10,30 +10,30 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="428.0" prefWidth="625.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.FXMLMedicalCareController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="628.0" prefWidth="998.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.FXMLMedicalCareController">
    <right>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="628.0" prefWidth="851.0" BorderPane.alignment="CENTER">
          <children>
-            <Pane prefHeight="53.0" prefWidth="625.0" style="-fx-background-color: #0174DF;">
+            <Pane prefHeight="93.0" prefWidth="998.0" style="-fx-background-color: #0174DF;">
                <children>
-                  <Label layoutX="256.0" layoutY="15.0" text="Medical Care">
+                  <Label layoutX="411.0" layoutY="29.0" text="Medical Care">
                      <font>
-                        <Font name="Times New Roman" size="21.0" />
+                        <Font name="Arial" size="30.0" />
                      </font>
                   </Label>
                </children>
             </Pane>
-            <ComboBox fx:id="doctorsComboBox" layoutX="21.0" layoutY="70.0" onAction="#selectDoctorOnAction" prefHeight="27.0" prefWidth="142.0" promptText="Select Doctor" style="-fx-background-color: #FFBF00;" />
-            <ComboBox fx:id="patientsComboBox" disable="true" layoutX="186.0" layoutY="70.0" prefHeight="27.0" prefWidth="142.0" promptText="Assigned Patients" style="-fx-background-color: #FFBF00;" />
-            <ComboBox fx:id="sicknessComboBox" layoutX="21.0" layoutY="339.0" prefHeight="27.0" prefWidth="142.0" promptText="Sickness" style="-fx-background-color: #FFBF00;" />
-            <DatePicker fx:id="datePicker" layoutX="171.0" layoutY="339.0" prefHeight="27.0" prefWidth="142.0" style="-fx-background-color: #FFBF00;" />
-            <ComboBox fx:id="timeComboBox" layoutX="21.0" layoutY="375.0" prefHeight="27.0" prefWidth="142.0" promptText="Time" style="-fx-background-color: #FFBF00;" />
-            <TableView fx:id="tableViewMedicalCare" layoutX="66.0" layoutY="114.0" prefHeight="200.0" prefWidth="493.0">
+            <ComboBox fx:id="doctorsComboBox" layoutX="21.0" layoutY="118.0" onAction="#selectDoctorOnAction" prefHeight="27.0" prefWidth="142.0" promptText="Select Doctor" style="-fx-background-color: #0174DF;" />
+            <ComboBox fx:id="patientsComboBox" disable="true" layoutX="186.0" layoutY="118.0" prefHeight="27.0" prefWidth="142.0" promptText="Assigned Patients" style="-fx-background-color: #0174DF;" />
+            <ComboBox fx:id="sicknessComboBox" layoutX="21.0" layoutY="450.0" prefHeight="27.0" prefWidth="142.0" promptText="Sickness" style="-fx-background-color: #0174DF;" />
+            <DatePicker fx:id="datePicker" layoutX="186.0" layoutY="450.0" prefHeight="27.0" prefWidth="142.0" style="-fx-background-color: #FFBF00;" />
+            <ComboBox fx:id="timeComboBox" layoutX="21.0" layoutY="498.0" prefHeight="27.0" prefWidth="142.0" promptText="Time" style="-fx-background-color: #0174DF;" />
+            <TableView fx:id="tableViewMedicalCare" layoutX="3.0" layoutY="160.0" prefHeight="268.0" prefWidth="992.0">
               <columns>
-                <TableColumn fx:id="doctorColumn" prefWidth="114.00003814697266" style="-fx-background-color: #FFBF00;" text="Doctor" />
-                <TableColumn fx:id="timeColumn" prefWidth="100.66659545898438" style="-fx-background-color: #FFBF00;" text="Time" />
-                  <TableColumn fx:id="sicknessColumn" prefWidth="88.0" style="-fx-background-color: #FFBF00;" text="Sickness" />
-                  <TableColumn fx:id="annotationsColumn" prefWidth="186.00006103515625" style="-fx-background-color: #FFBF00;" text="Annotations" />
+                <TableColumn fx:id="doctorColumn" prefWidth="114.00003814697266" style="-fx-background-color: #0174DF;" text="Doctor" />
+                <TableColumn fx:id="timeColumn" prefWidth="145.0" style="-fx-background-color: #0174DF;" text="Time" />
+                  <TableColumn fx:id="sicknessColumn" prefWidth="400.0" style="-fx-background-color: #0174DF;" text="Sickness" />
+                  <TableColumn fx:id="annotationsColumn" prefWidth="331.0" style="-fx-background-color: #0174DF;" text="Annotations" />
               </columns>
             </TableView>
          </children>

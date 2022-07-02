@@ -21,6 +21,8 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -35,6 +37,8 @@ import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.BorderPane;
 import javafx.util.Callback;
+import javax.mail.MessagingException;
+import util.Mail;
 
 /**
  * FXML Controller class
@@ -69,15 +73,14 @@ public class FXMLMantenimientoPascientesController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-         PatientList = new CircularLinkedList();
-        if(util.Data.fileExists("patients")){
+        PatientList = new CircularLinkedList();
+        if (util.Data.fileExists("patients")) {
             try {
                 PatientList = (CircularLinkedList) util.Data.getDataFile("patients", PatientList);
             } catch (QueueException | IOException ex) {
                 Logger.getLogger(FXMLMantenimientoDoctoresController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        
 
         this.IDcolumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<List<String>, String>, ObservableValue<String>>() {
             @Override
@@ -203,7 +206,7 @@ public class FXMLMantenimientoPascientesController implements Initializable {
                     } catch (IOException ex) {
                         Logger.getLogger(FXMLMantenimientoPascientesController.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                    
+
                 } else {
                     alert = new Alert(Alert.AlertType.NONE);
                     alert.setAlertType(Alert.AlertType.ERROR);
@@ -232,13 +235,13 @@ public class FXMLMantenimientoPascientesController implements Initializable {
                     alert = new Alert(Alert.AlertType.NONE);
                     alert.setAlertType(Alert.AlertType.INFORMATION);
                     alert.setTitle("Patient - Remove");
-                    alert.setHeaderText("The element was removed");
+                    alert.setHeaderText("The Patient was removed");
                     alert.show();
                 } else {
                     alert = new Alert(Alert.AlertType.NONE);
                     alert.setAlertType(Alert.AlertType.ERROR);
                     alert.setTitle("Patient Remove");
-                    alert.setHeaderText("The list dont have the element");
+                    alert.setHeaderText("The list dont have the Patient");
                     alert.show();
 
                 }
@@ -258,7 +261,7 @@ public class FXMLMantenimientoPascientesController implements Initializable {
         if (!id.isPresent() || id.get().compareTo("") == 0) {
             alert = new Alert(Alert.AlertType.NONE);
             alert.setAlertType(Alert.AlertType.ERROR);
-            alert.setTitle("Patient Postiion Contains");
+            alert.setTitle("Patient Position Contains");
             alert.setHeaderText("The list doesn't contains the element");
             alert.show();
 
@@ -276,7 +279,7 @@ public class FXMLMantenimientoPascientesController implements Initializable {
                 } else {
                     alert = new Alert(Alert.AlertType.NONE);
                     alert.setAlertType(Alert.AlertType.ERROR);
-                    alert.setTitle("Doctor Position Contains");
+                    alert.setTitle("Patient Position Contains");
                     alert.setHeaderText("The list dont have the element");
                     alert.show();
 
@@ -368,18 +371,47 @@ public class FXMLMantenimientoPascientesController implements Initializable {
     @FXML
     private void EmailCommit(TableColumn.CellEditEvent<List<String>, String> event) throws ListException {
         try {
-            String Email = event.getRowValue().get(4);
-            String sDate1 = event.getRowValue().get(6);
-            Date date1 = new SimpleDateFormat("dd/MM/yyyy").parse(sDate1);
-            Patient oldPatient = new Patient(Integer.parseInt(event.getRowValue().get(0)), event.getRowValue().get(1), event.getRowValue().get(2), event.getRowValue().get(3), Email, event.getRowValue().get(5), date1);
-            Patient newPatient = new Patient(Integer.parseInt(event.getRowValue().get(0)), event.getRowValue().get(1), event.getRowValue().get(2), event.getRowValue().get(3), event.getNewValue(), event.getRowValue().get(5), date1);
-            this.PatientList.modificar(oldPatient, newPatient);
-            try {
-                util.Data.setDataFile("patients", PatientList);
-            } catch (QueueException ex) {
-                Logger.getLogger(FXMLMantenimientoPascientesController.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
-                Logger.getLogger(FXMLMantenimientoPascientesController.class.getName()).log(Level.SEVERE, null, ex);
+            Pattern pattern = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+                    + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
+            Matcher mather = pattern.matcher(event.getNewValue());
+            if (mather.find() == true) {
+                String Email = event.getRowValue().get(4);
+                String sDate1 = event.getRowValue().get(6);
+                Date date1 = new SimpleDateFormat("dd/MM/yyyy").parse(sDate1);
+                Patient oldPatient = new Patient(Integer.parseInt(event.getRowValue().get(0)), event.getRowValue().get(1), event.getRowValue().get(2), event.getRowValue().get(3), Email, event.getRowValue().get(5), date1);
+                Patient newPatient = new Patient(Integer.parseInt(event.getRowValue().get(0)), event.getRowValue().get(1), event.getRowValue().get(2), event.getRowValue().get(3), event.getNewValue(), event.getRowValue().get(5), date1);
+                this.PatientList.modificar(oldPatient, newPatient);
+                try {
+                    util.Data.setDataFile("patients", PatientList);
+                } catch (QueueException ex) {
+                    Logger.getLogger(FXMLMantenimientoPascientesController.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    Logger.getLogger(FXMLMantenimientoPascientesController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                Mail m = new Mail();
+                try {
+                    m.sendEmail(newPatient.getEmail(), "Registro de Usuario - Clinica Grupo 06",
+                            "¡Se registro con exito su usario!<br><br>"
+                            + "A continuación se muestran los datos de su registro:<br><br>"
+                            + "Cédula: " + newPatient.getId() + "<br><br>"
+                            + "Nombre: " + newPatient.getFirstname() + " " + newPatient.getLastname() + "<br><br>"
+                            + "Teléfono: " + newPatient.getPhoneNumber() + "<br><br>"
+                            + "Dirección: " + newPatient.getAddress() + "<br><br>"
+                            + "Email: " + newPatient.getEmail() + "<br><br>"
+                            + "Su usuario de ingreso al sistema es: " + newPatient.getId() + "<br><br>"
+                            + "Su contraseña temporal de ingreso al sistema es: " + util.Utility.random(0, 10000) + "<br><br>"
+                            + "¡Gracias por poner su salud en nuestras manos!");
+
+                } catch (MessagingException ex) {
+                    Logger.getLogger(FXMLMantenimientoPascientesController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else {
+                alert = new Alert(Alert.AlertType.NONE);
+                alert.setAlertType(Alert.AlertType.ERROR);
+                alert.setTitle("Doctor");
+                alert.setHeaderText("ERROR");
+                alert.setContentText("Invalid Email");
+                alert.show();
             }
             if (this.PatientList != null && !this.PatientList.isEmpty()) {
                 this.TableView.setItems(getData());
@@ -413,7 +445,8 @@ public class FXMLMantenimientoPascientesController implements Initializable {
             Logger.getLogger(FXMLMantenimientoPascientesController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-   @FXML
+
+    @FXML
     private void BirthdayCommit(TableColumn.CellEditEvent<List<String>, String> event) {
         try {
             String sDate1 = event.getRowValue().get(6);
@@ -443,4 +476,4 @@ public class FXMLMantenimientoPascientesController implements Initializable {
             Logger.getLogger(FXMLMantenimientoDoctoresController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    }
+}
