@@ -175,6 +175,11 @@ public class FXMLMainMenuController implements Initializable {
         return name1;
     }
 
+    @FXML
+    private void ConfigurationCode(ActionEvent event) {
+        loadPage(getClass().getResource("FXMLAddConfiguration.fxml"), bp);
+    }
+
    
     
 }
