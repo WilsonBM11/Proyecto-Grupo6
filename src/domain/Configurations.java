@@ -15,15 +15,19 @@ public class Configurations {
     int HoraEntrada;
     int HoraSalida;
 
-    public Configurations(String ClinicName, String telefono, String correoElectronico, String imagen, String ImagenCorreo, int HoraEntrada, int HoraSalida) {
+    public Configurations(String ClinicName, String telefono, String correoElectronico, String imagen, String ImagenCorreo) {
         this.ClinicName = ClinicName;
         this.telefono = telefono;
         this.correoElectronico = correoElectronico;
         this.imagen = imagen;
         this.imagenCorreo = ImagenCorreo;
+    }
+
+    public Configurations(int HoraEntrada, int HoraSalida) {
         this.HoraEntrada = HoraEntrada;
         this.HoraSalida = HoraSalida;
     }
+    
 
     public String getImagenCorreo() {
         return imagenCorreo;

@@ -131,9 +131,7 @@ public class FXMLMantenimientoEnfermedadesController implements Initializable {
             SicknessList.remove(new Sickness(id.get()));
             try {
                 util.Data.setDataFile("sickness", SicknessList);
-            } catch (QueueException ex) {
-                Logger.getLogger(FXMLMantenimientoEnfermedadesController.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
+            } catch (QueueException | IOException ex) {
                 Logger.getLogger(FXMLMantenimientoEnfermedadesController.class.getName()).log(Level.SEVERE, null, ex);
             }
             TableView.getItems().clear();
@@ -212,9 +210,7 @@ public class FXMLMantenimientoEnfermedadesController implements Initializable {
             Sickness.setConsecutivo(newSick.getId()+1);
             
             util.Data.setDataFile("sickness", SicknessList);
-        } catch (QueueException ex) {
-            Logger.getLogger(FXMLMantenimientoEnfermedadesController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
+        } catch (QueueException | IOException ex) {
             Logger.getLogger(FXMLMantenimientoEnfermedadesController.class.getName()).log(Level.SEVERE, null, ex);
         }
        }

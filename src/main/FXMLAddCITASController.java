@@ -74,9 +74,11 @@ public class FXMLAddCITASController implements Initializable {
     @Override
     @SuppressWarnings("empty-statement")
     public void initialize(URL url, ResourceBundle rb) {
+       IDPatient.setEditable(false);
+       IDDoctor.setEditable(false);
+       TEXTFIELDTIME.setEditable(false);
 
         DoctorList = new CircularDoublyLinkedList();
-
         if (util.Data.fileExists("doctors")) {
             try {
                 DoctorList = (CircularDoublyLinkedList) util.Data.getDataFile("doctors", DoctorList);
@@ -127,12 +129,12 @@ public class FXMLAddCITASController implements Initializable {
     }
 
     @FXML
-    private void registerOnAction(ActionEvent event) {
+    private void registerOnAction(ActionEvent event) throws ListException {
         String str = TEXTFIELDTIME.getText();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
         LocalDateTime dateTime = LocalDateTime.parse(str, formatter);
 
-        if (AppointmentList == null && AppointmentList.isEmpty()) {
+        if (AppointmentList.isEmpty()) {
             if ("".equals(TEXTFIELDTIME.getText()) || "".equals(IDDoctor.getText())
                     || "".equals(IDPatient) || "".equals(TF_REMARKS.getText())) {
 
@@ -147,8 +149,8 @@ public class FXMLAddCITASController implements Initializable {
                 try {
                     Appointment appointment = new Appointment(Integer.parseInt(IDPatient.getText()),
                             Integer.parseInt(IDDoctor.getText()), dateTime, TF_REMARKS.getText());
-                    appointment.setId(1);
                     AppointmentList.add(appointment);
+                       appointment.setId(1);
                     try {
                         util.Data.setDataFile("appointment", AppointmentList);
                     } catch (QueueException ex) {
@@ -164,7 +166,9 @@ public class FXMLAddCITASController implements Initializable {
                     TF_REMARKS.setText("");
                     TEXTFIELDTIME.setText("");
                     CalendarChoice.getEditor().clear();
-
+                    PatientComboBox.setValue("Patients");
+                    DoctorComboBox.setValue("Doctors");
+                    TIMECOMBOBOX.setValue("");
                     alert = new Alert(Alert.AlertType.NONE);
                     alert.setAlertType(Alert.AlertType.INFORMATION);
                     alert.setTitle("Apointment added");
@@ -194,7 +198,9 @@ public class FXMLAddCITASController implements Initializable {
                 try {
                     Appointment appointment = new Appointment(Integer.parseInt(IDPatient.getText()),
                             Integer.parseInt(IDDoctor.getText()), dateTime, TF_REMARKS.getText());
+                    if (!AppointmentList.contains(new Appointment(0, Integer.parseInt(IDDoctor.getText()), dateTime, ""))){
                     AppointmentList.add(appointment);
+                    Appointment.setConsecutivo(-1);
                     try {
                         util.Data.setDataFile("appointment", AppointmentList);
                     } catch (QueueException ex) {
@@ -215,6 +221,14 @@ public class FXMLAddCITASController implements Initializable {
                     alert.setTitle("Add Appointment");
                     alert.setHeaderText("Appointment added");
                     alert.show();
+                    } else {     
+                    alert = new Alert(Alert.AlertType.NONE);
+                    alert.setAlertType(Alert.AlertType.ERROR);
+                    alert.setTitle("Add Appointment");
+                    alert.setHeaderText("ERROR");
+                    alert.setContentText("There is already an appointment registered on that date with that doctor");
+                    alert.show();     
+                    }
                 } catch (NumberFormatException ex) {
                     alert = new Alert(Alert.AlertType.NONE);
                     alert.setAlertType(Alert.AlertType.ERROR);

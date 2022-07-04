@@ -1,5 +1,5 @@
 305370239;Mariano;Duran Artavia ;70765725;duranartaviamariano@hotmail.com;22/09/2002;22/09/2002
 1085738492;Gabriel;Duran Jimenez;88294975;gabrieldj71@gmail.com;Cartago;07/07/2022
 1238574632;Sergio;Gutierrez Fonseca;882716253;gutierrez@gmail.com;Puntarenas;08/04/1989
-573627392;Enrique;Aguilar Valerio;882736452;Aguilar28@gmail.com;San Jose;23/07/1993
+573627392;Pedro;Aguilar Valerio;882736452;Aguilar28@gmail.com;San Jose;23/07/1993
 305370321;Gabriel;Jimenez;70600483;gabjimenez27@gmail.com;Paraiso;18/07/2022

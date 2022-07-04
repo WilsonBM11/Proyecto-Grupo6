@@ -88,7 +88,7 @@ public class FXMLAddConfigurationController implements Initializable {
                             + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
                     Matcher mather = pattern.matcher(TF_Email.getText());
                     if (mather.find() == true) {
-                        Configurations configurations = new Configurations(idClinicName.getText(), TF_PhoneNumber.getText(), TF_Email.getText(), TF_image.getText(), TF_image1.getText(), 0, 0);
+                        Configurations configurations = new Configurations(idClinicName.getText(), TF_PhoneNumber.getText(), TF_Email.getText(), TF_image.getText(), TF_image1.getText());
                         tree.clear();
                         tree.add(configurations);
                         try {

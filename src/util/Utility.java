@@ -181,7 +181,8 @@ public class Utility {
            case "Appointment":
                Appointment a8 = (Appointment)a;
                Appointment b8 = (Appointment)b;
-               return a8.getPatientID() == b8.getPatientID();
+               return (a8.getPatientID() == b8.getPatientID() && a8.getDateTime().equals(b8.getDateTime())) 
+                       || (a8.getDoctorID() == b8.getDoctorID() && a8.getDateTime().equals(b8.getDateTime())) ;
         }
         return false;
     }

@@ -193,7 +193,7 @@ public class Data {
             case "numbers":
                 return Integer.parseInt(aux.get(0));
             case "configuration":
-                Configurations c = new Configurations(aux.get(0), aux.get(1),aux.get(2), aux.get(3),aux.get(4), Integer.parseInt(aux.get(5)), Integer.parseInt(aux.get(6)));
+                Configurations c = new Configurations(aux.get(0), aux.get(1),aux.get(2), aux.get(3),aux.get(4));
                 return c;
         }
         return null;
@@ -226,7 +226,8 @@ public class Data {
                 return String.valueOf(data);
             case "configuration":
                 Configurations c = (Configurations) data;
-                return c.getClinicName()+";"+c.getTelefono()+";"+c.getCorreoElectronico()+";"+c.getImagen()+";"+c.getImagenCorreo()+";"+c.getHoraEntrada()+";"+c.getHoraSalida();
+                return c.getClinicName()+";"+c.getTelefono()+";"+c.getCorreoElectronico()+";"+c.getImagen()+";"+c.getImagenCorreo();
+                
         }
         return null;
     }

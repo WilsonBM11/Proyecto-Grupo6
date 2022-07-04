@@ -21,7 +21,7 @@
                   </Label>
                </children>
             </AnchorPane>
-            <TableView fx:id="TableView" layoutX="2.0" layoutY="100.0" prefHeight="200.0" prefWidth="1004.0">
+            <TableView fx:id="TableView" layoutX="2.0" layoutY="100.0" prefHeight="380.0" prefWidth="1004.0">
               <columns>
                 <TableColumn fx:id="IDcolumn" prefWidth="110.0" text="Id" />
                   <TableColumn fx:id="FirstNameColumn" onEditCommit="#FirstNameCommit" prefWidth="113.0" text="First Name" />
@@ -32,9 +32,9 @@
                   <TableColumn fx:id="AgeColumn" onEditCommit="#BirthdayCommit" prefWidth="136.0" text="Birthday" />
               </columns>
             </TableView>
-            <Button layoutX="14.0" layoutY="344.0" mnemonicParsing="false" onAction="#AddCode" prefHeight="50.0" prefWidth="185.0" style="-fx-background-color: #0174DF;" text="Add" />
-            <Button layoutX="412.0" layoutY="344.0" mnemonicParsing="false" onAction="#DeleteCode" prefHeight="50.0" prefWidth="185.0" style="-fx-background-color: #0174DF;" text="Delete" />
-            <Button layoutX="801.0" layoutY="344.0" mnemonicParsing="false" onAction="#ContainsCode" prefHeight="50.0" prefWidth="185.0" style="-fx-background-color: #0174DF;" text="Contains" />
+            <Button layoutX="14.0" layoutY="513.0" mnemonicParsing="false" onAction="#AddCode" prefHeight="50.0" prefWidth="185.0" style="-fx-background-color: #0174DF;" text="Add" />
+            <Button layoutX="412.0" layoutY="513.0" mnemonicParsing="false" onAction="#DeleteCode" prefHeight="50.0" prefWidth="185.0" style="-fx-background-color: #0174DF;" text="Delete" />
+            <Button layoutX="809.0" layoutY="513.0" mnemonicParsing="false" onAction="#ContainsCode" prefHeight="50.0" prefWidth="185.0" style="-fx-background-color: #0174DF;" text="Contains" />
          </children>
       </AnchorPane>
    </center>

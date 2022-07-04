@@ -97,6 +97,7 @@ public class DoublyLinkedList implements List {
         else{
             Node prev = first; //elemento anterior
             Node aux = first.next; //elemento sgte
+            int contador = 0;
             while(aux!=null&&!util.Utility.equals(aux.data, element)){
                 prev = aux; //actualizo anterior
                 aux = aux.next;
@@ -108,8 +109,10 @@ public class DoublyLinkedList implements List {
                 //tengo que desenlazar el nodo
                 prev.next = aux.next; //se lo salta
                 //mantengo el doble enlace
-                aux.next.prev = prev;
-            }
+                contador++;
+            } else if(contador==size()&&util.Utility.equals(aux.data, element)){
+               removeLast();
+        }
         }
     }
 
