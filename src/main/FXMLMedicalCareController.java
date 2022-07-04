@@ -39,10 +39,16 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.ToggleGroup;
+import javafx.scene.layout.BorderPane;
 import javafx.util.Callback;
 import util.Data;
 
@@ -67,10 +73,6 @@ public class FXMLMedicalCareController implements Initializable {
     @FXML
     private ComboBox<String> sicknessComboBox;
     @FXML
-    private DatePicker datePicker;
-    @FXML
-    private ComboBox<String> timeComboBox;
-    @FXML
     private TableView<List<String>> tableViewMedicalCare;
     @FXML
     private TableColumn<List<String>, String> doctorColumn;
@@ -80,6 +82,22 @@ public class FXMLMedicalCareController implements Initializable {
     private TableColumn<List<String>, String> sicknessColumn;
     @FXML
     private TableColumn<List<String>, String> annotationsColumn;
+    @FXML
+    private Label annotationsLabel;
+    @FXML
+    private TextArea annotationsTextArea;
+    @FXML
+    private Button addPatientInformation;
+    @FXML
+    private Button addMedicalAttentionButton;
+    @FXML
+    private Button showPatientRecordButton;
+    @FXML
+    private TableColumn<List<String>, String> patientColumn;
+    @FXML
+    private Button scheduleAppoimentButton;
+    @FXML
+    private BorderPane bp;
 
     /**
      * Initializes the controller class.
@@ -110,29 +128,35 @@ public class FXMLMedicalCareController implements Initializable {
             Logger.getLogger(FXMLMedicalCareController.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        
-        this.doctorColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<List<String>, String>, ObservableValue<String>>() {
+        this.patientColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<List<String>, String>, ObservableValue<String>>() {
             @Override
             public ObservableValue<String> call(TableColumn.CellDataFeatures<List<String>, String> data) {
                 return new ReadOnlyObjectWrapper<>(data.getValue().get(0));
             }
         });
-        this.timeColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<List<String>, String>, ObservableValue<String>>() {
+        
+        this.doctorColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<List<String>, String>, ObservableValue<String>>() {
             @Override
             public ObservableValue<String> call(TableColumn.CellDataFeatures<List<String>, String> data) {
                 return new ReadOnlyObjectWrapper<>(data.getValue().get(1));
             }
         });
-        this.sicknessColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<List<String>, String>, ObservableValue<String>>() {
+        this.timeColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<List<String>, String>, ObservableValue<String>>() {
             @Override
             public ObservableValue<String> call(TableColumn.CellDataFeatures<List<String>, String> data) {
                 return new ReadOnlyObjectWrapper<>(data.getValue().get(2));
             }
         });
-        this.annotationsColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<List<String>, String>, ObservableValue<String>>() {
+        this.sicknessColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<List<String>, String>, ObservableValue<String>>() {
             @Override
             public ObservableValue<String> call(TableColumn.CellDataFeatures<List<String>, String> data) {
                 return new ReadOnlyObjectWrapper<>(data.getValue().get(3));
+            }
+        });
+        this.annotationsColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<List<String>, String>, ObservableValue<String>>() {
+            @Override
+            public ObservableValue<String> call(TableColumn.CellDataFeatures<List<String>, String> data) {
+                return new ReadOnlyObjectWrapper<>(data.getValue().get(4));
             }
         });
         
@@ -144,9 +168,6 @@ public class FXMLMedicalCareController implements Initializable {
             }
         }
         
-        
-        
-
     }    
 
     private ObservableList<String> getComboBoxData(String identifier, int id) throws ListException {
@@ -164,7 +185,9 @@ public class FXMLMedicalCareController implements Initializable {
                     Appointment A = (Appointment) appoimentsList.getNode(i).data;
                     if(A.compareDoctorId(id)){
                         Patient aux = (Patient) patientsList.getNodeById(new Patient(A.getPatientID(), "", "", "", "", "", new Date()));
-                        data.add(aux.getFirstname()+" "+aux.getLastname()+"-"+aux.getId());
+                        if(!data.contains(aux.getFirstname()+" "+aux.getLastname()+"-"+aux.getId())){
+                            data.add(aux.getFirstname()+" "+aux.getLastname()+"-"+aux.getId());
+                        }
                     }
                 }
             break;
@@ -179,21 +202,90 @@ public class FXMLMedicalCareController implements Initializable {
 
     @FXML
     private void selectDoctorOnAction(ActionEvent event) throws ListException {
+        tableViewMedicalCare.setVisible(false);
+        annotationsLabel.setVisible(false);
+        annotationsTextArea.setVisible(false);
+        addPatientInformation.setVisible(false);
+        addMedicalAttentionButton.setDisable(true);
+        showPatientRecordButton.setDisable(true);
+        sicknessComboBox.setDisable(true);
+        sicknessComboBox.setVisible(false);
+        
         int doctorID = getId(String.valueOf(doctorsComboBox.getValue()));
         patientsComboBox.setDisable(false);
-        sicknessComboBox.setDisable(false);
         patientsComboBox.setItems(getComboBoxData("patients", doctorID));
-        sicknessComboBox.setItems(getComboBoxData("sickness", 0));
+    }
+    
+    @FXML
+    private void patientsOnAction(ActionEvent event){
+        showPatientRecordButton.setDisable(false);
+        addMedicalAttentionButton.setDisable(false);
+        tableViewMedicalCare.setVisible(false);
+        annotationsLabel.setVisible(false);
+        annotationsTextArea.setVisible(false);
+        addPatientInformation.setVisible(false);
+        sicknessComboBox.setDisable(true);
+        sicknessComboBox.setVisible(false);
+    }
+    @FXML
+    private void showPatientRecordOnAction(ActionEvent event) throws ListException {
+        
+        int patientID = getId(String.valueOf(patientsComboBox.getValue()));
+        this.tableViewMedicalCare.getItems().clear();
         if (medicalCareList != null && !medicalCareList.isEmpty()) {
             try {
-                getTreeData(medicalCareList.getRoot(),305380944);
+                getTreeData(medicalCareList.getRoot(),patientID);
                 this.tableViewMedicalCare.setItems(tableViewData);
             } catch (ListException ex) {
                 Logger.getLogger(FXMLMedicalCareController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        
+        sicknessComboBox.setVisible(false);
+        annotationsLabel.setVisible(false);
+        annotationsTextArea.setVisible(false);
+        addPatientInformation.setVisible(false);
+        tableViewMedicalCare.setVisible(true);
     }
+    
+    @FXML
+    private void sicknessComboBoxOnAction(ActionEvent event) {
+        annotationsTextArea.setEditable(true);
+        addPatientInformation.setDisable(false);
+    }
+    
+    
+
+    @FXML
+    private void addMedicalAttentionOnAction(ActionEvent event) throws ListException {
+        tableViewMedicalCare.setVisible(false);
+        annotationsLabel.setVisible(true);
+        annotationsTextArea.setVisible(true);
+        addPatientInformation.setVisible(true);
+        sicknessComboBox.setVisible(true);
+        sicknessComboBox.setDisable(false);
+        sicknessComboBox.setItems(getComboBoxData("sickness", 0));
+    }
+
+    @FXML
+    private void addPatientInformationOnAction(ActionEvent event) {
+        if(!"".equals(annotationsTextArea.getText())){
+            medicalCareList.add(new MedicalCare(getId(String.valueOf(doctorsComboBox.getValue())), getId(String.valueOf(patientsComboBox.getValue())), 
+                            LocalDate.now(), LocalTime.now(), getId(String.valueOf(sicknessComboBox.getValue())), annotationsTextArea.getText()));
+        }
+        try {
+            Data.setDataFile("medicalcare", medicalCareList);
+        } catch (QueueException | ListException | IOException ex) {
+            Logger.getLogger(FXMLMedicalCareController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        annotationsTextArea.setText("");
+        annotationsTextArea.setEditable(false);
+    }
+    
+    @FXML
+    private void scheduleAppoimentButtonOnAction(ActionEvent event) {
+        FXMLMainMenuController.loadPage(getClass().getResource("FXMLAddCITAS.fxml"), bp);
+    }
+
     
     public int getId(String selectedItem){
         ArrayList<String> aux = new ArrayList<>();
@@ -204,26 +296,15 @@ public class FXMLMedicalCareController implements Initializable {
         return Integer.parseInt(aux.get(1));
     }
     
-//    private ObservableList<List<String>> getData(int medicalCareId) {
-//        ObservableList<List<String>> data = FXCollections.observableArrayList();
-//        if (medicalCareList != null && !medicalCareList.isEmpty()) {
-//            try {
-//                getTreeData(medicalCareList.getRoot(),medicalCareId);
-//                data = tableViewData;
-//            } catch (ListException ex) {
-//                Logger.getLogger(FXMLMedicalCareController.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        }
-//        return data;
-//    }
-    
     private void getTreeData(BTreeNode node, int id) throws ListException {
         if(node != null){
             MedicalCare A = (MedicalCare) node.data;
             if (util.Utility.equals(A.getPatientID(), id)) {
                 List<String> arrayList = new ArrayList<>();
+                Patient p = (Patient) patientsList.getNodeById(new Patient(id, "", "", "", "", "", new Date()));
                 Doctor d = (Doctor) doctorsList.getNodeById(new Doctor(A.getDoctorID(), "", "", "", "", "", new Date()));
                 Sickness s = (Sickness) sicknessList.getSicknessById(A.getSicknessID());
+                arrayList.add(p.getFirstname() + " " + p.getLastname());
                 arrayList.add(d.getFirstName() + " " + d.getLastName());
                 arrayList.add(A.getDateTime().toString());
                 arrayList.add(s.getDescription());
@@ -234,5 +315,12 @@ public class FXMLMedicalCareController implements Initializable {
             getTreeData(node.right, id);
         }
     }
+
+    
+    
+
+    
+
+    
     
 }
