@@ -4,6 +4,7 @@
  */
 package main;
 
+import domain.Appointment;
 import domain.CircularLinkedList;
 import domain.Doctor;
 import domain.ListException;
@@ -41,7 +42,7 @@ public class FXMLAddSickController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         sicknesslist = new SinglyLinkedList();
-        if(util.Data.fileExists("sickness")){
+        if (util.Data.fileExists("sickness")) {
             try {
                 sicknesslist = (SinglyLinkedList) util.Data.getDataFile("sickness", sicknesslist);
             } catch (QueueException | IOException ex) {
@@ -53,7 +54,8 @@ public class FXMLAddSickController implements Initializable {
 
     @FXML
     private void registerOnAction(ActionEvent event) throws ListException {
-       if (sicknesslist != null) {
+        Sickness sick = new Sickness(TF_Description.getText());
+        if (sicknesslist.isEmpty()) {
             if ("".equals(TF_Description.getText())) {
 
                 alert = new Alert(Alert.AlertType.NONE);
@@ -65,8 +67,9 @@ public class FXMLAddSickController implements Initializable {
 
             } else {
                 try {
-                    Sickness sick = new Sickness(TF_Description.getText());
                     sicknesslist.add(sick);
+                    sick.setId(1);
+                    Sickness.setConsecutivo(sick.getId()+1);
                     try {
                         util.Data.setDataFile("sickness", sicknesslist);
                     } catch (QueueException ex) {
@@ -76,7 +79,6 @@ public class FXMLAddSickController implements Initializable {
                     }
 
                     TF_Description.setText("");
-                    
 
                     alert = new Alert(Alert.AlertType.NONE);
                     alert.setAlertType(Alert.AlertType.INFORMATION);
@@ -91,6 +93,66 @@ public class FXMLAddSickController implements Initializable {
                     alert.show();
                 }
             }
+        } else {
+            if ("".equals(TF_Description.getText())) {
+
+                alert = new Alert(Alert.AlertType.NONE);
+                alert.setAlertType(Alert.AlertType.ERROR);
+                alert.setTitle("Sick Add");
+                alert.setHeaderText("ERROR");
+                alert.setContentText("Fill all the spaces");
+                alert.show();
+
+            } else {
+                try {
+                     Sickness sick2 = new Sickness(TF_Description.getText());
+                    if (!sicknesslist.contains(new Sickness(TF_Description.getText()))) {
+                        if (sicknesslist.size() == 1) {
+                            Sickness.setConsecutivo(sick.getId());
+                            sick2.setId(Sickness.getConsecutivo());
+                        } else {
+                            Sickness.setConsecutivo(sicknesslist.size() + 1);
+                            sick2.setId(Sickness.getConsecutivo());
+                        }//Se agrega el elemento y esto se agrega al archivo txt
+                        sicknesslist.add(sick);
+                        try {
+                            util.Data.setDataFile("sickness", sicknesslist);
+                        } catch (QueueException | IOException ex) {
+                            Logger.getLogger(FXMLAddSickController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+
+                        TF_Description.setText("");
+
+                        alert = new Alert(Alert.AlertType.NONE);
+                        alert.setAlertType(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Sickness added");
+                        alert.show();
+                    } else {
+                        if (sicknesslist.size() == 1) {
+                            Sickness.setConsecutivo(sick.getId());
+                            sick2.setId(Sickness.getConsecutivo());
+                        } else {
+                            Sickness.setConsecutivo(sicknesslist.size() + 1);
+                            sick2.setId(Sickness.getConsecutivo());
+                        }
+                            alert = new Alert(Alert.AlertType.NONE);
+                            alert.setAlertType(Alert.AlertType.ERROR);
+                            alert.setTitle("Sickness");
+                            alert.setHeaderText("ERROR");
+                            alert.setContentText("Disease is already registered");
+                            alert.show();
+
+                        }
+                    }catch (NumberFormatException ex) {
+                    alert = new Alert(Alert.AlertType.NONE);
+                    alert.setAlertType(Alert.AlertType.ERROR);
+                    alert.setTitle("Sickness");
+                    alert.setHeaderText("ERROR");
+                    alert.setContentText("Wrong character, fill again the space");
+                    alert.show();
+                }
+
+                }
+            }
         }
     }
-}

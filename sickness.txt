@@ -1,9 +1,0 @@
-1;Trastornos de Neuro Desarrollo
-2;Trastorno Depresivo 
-3;Espectro de la esquizofrenia y otros trastornos psicóticos
-4;Trastorno de la conducta
-5;Trastorno Bipolar
-6;Trastorno de Doble Identidad
-7;Trastorno Disociativo de la Realidad
-8;Depresion Fuerte
-9;Trastorno depresivo

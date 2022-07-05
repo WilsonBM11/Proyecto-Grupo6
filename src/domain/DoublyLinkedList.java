@@ -48,6 +48,7 @@ public class DoublyLinkedList implements List {
             if(util.Utility.equals(aux.data, element))
                 return true;
            aux = aux.next;
+           
         }
         return false;
     }

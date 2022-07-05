@@ -51,19 +51,19 @@
                   <Font name="Calibri Light" size="13.0" />
                </font>
             </Button>
-            <Button fx:id="addMedicalAttentionButton" disable="true" layoutX="18.0" layoutY="510.0" mnemonicParsing="false" onAction="#addMedicalAttentionOnAction" prefHeight="33.0" prefWidth="147.0" style="-fx-background-color: #0174DF;" text="Add Medical Attention">
+            <Button fx:id="addMedicalAttentionButton" disable="true" layoutX="362.0" layoutY="575.0" mnemonicParsing="false" onAction="#addMedicalAttentionOnAction" prefHeight="33.0" prefWidth="261.0" style="-fx-background-color: #0174DF;" text="Add Medical Attention">
                <font>
-                  <Font name="Calibri Light" size="12.0" />
+                  <Font name="Calibri Light" size="10.0" />
                </font>
             </Button>
-            <Button fx:id="showPatientRecordButton" disable="true" layoutX="19.0" layoutY="462.0" mnemonicParsing="false" onAction="#showPatientRecordOnAction" prefHeight="33.0" prefWidth="147.0" style="-fx-background-color: #0174DF;" text="Show Patient's Record">
+            <Button fx:id="showPatientRecordButton" disable="true" layoutX="647.0" layoutY="575.0" mnemonicParsing="false" onAction="#showPatientRecordOnAction" prefHeight="33.0" prefWidth="270.0" style="-fx-background-color: #0174DF;" text="Show Patient's Record">
                <font>
-                  <Font name="Calibri Light" size="12.0" />
+                  <Font name="Arial" size="10.0" />
                </font>
             </Button>
-            <Button fx:id="scheduleAppoimentButton" layoutX="19.0" layoutY="563.0" mnemonicParsing="false" onAction="#scheduleAppoimentButtonOnAction" prefHeight="33.0" prefWidth="147.0" style="-fx-background-color: #0174DF;" text="Schedule New Appoiment">
+            <Button fx:id="scheduleAppoimentButton" layoutX="19.0" layoutY="575.0" mnemonicParsing="false" onAction="#scheduleAppoimentButtonOnAction" prefHeight="33.0" prefWidth="313.0" style="-fx-background-color: #0174DF;" text="Schedule New Appoiment">
                <font>
-                  <Font name="Calibri Light" size="12.0" />
+                  <Font name="Arial" size="10.0" />
                </font>
             </Button>
          </children>

@@ -153,4 +153,9 @@ public class FXMLAddConfigurationController implements Initializable {
         }
     }
 
+    @FXML
+    private void ScheduleCode(ActionEvent event) {
+        
+    }
+
 }

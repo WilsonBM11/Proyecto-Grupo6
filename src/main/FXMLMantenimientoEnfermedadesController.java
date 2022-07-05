@@ -6,6 +6,7 @@ package main;
 
 import domain.Appointment;
 import domain.ListException;
+import domain.Patient;
 import domain.QueueException;
 import domain.Sickness;
 import domain.SinglyLinkedList;
@@ -38,30 +39,31 @@ import javafx.util.Callback;
  * @author Duran Family
  */
 public class FXMLMantenimientoEnfermedadesController implements Initializable {
+
     SinglyLinkedList SicknessList;
     Alert alert;
     @FXML
     private BorderPane bp;
-     @FXML
+    @FXML
     private TableColumn<List<String>, String> IDcolumn;
     @FXML
     private TableColumn<List<String>, String> DescriptionColumn;
     @FXML
-    private TableView<List<String>>  TableView;
+    private TableView<List<String>> TableView;
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         SicknessList = new SinglyLinkedList();
-        if(util.Data.fileExists("sickness")){
+        if (util.Data.fileExists("sickness")) {
             try {
                 SicknessList = (SinglyLinkedList) util.Data.getDataFile("sickness", SicknessList);
             } catch (QueueException | IOException ex) {
                 Logger.getLogger(FXMLMantenimientoEnfermedadesController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        
 
         this.IDcolumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<List<String>, String>, ObservableValue<String>>() {
             @Override
@@ -107,6 +109,7 @@ public class FXMLMantenimientoEnfermedadesController implements Initializable {
         }
         return data;
     }
+
     @FXML
     private void AddCode(ActionEvent event) {
         FXMLMainMenuController.loadPage(getClass().getResource("FXMLAddSick.fxml"), bp);
@@ -114,64 +117,84 @@ public class FXMLMantenimientoEnfermedadesController implements Initializable {
 
     @FXML
     private void DeleteCode(ActionEvent event) {
-       try {
-        TextInputDialog dialog = new TextInputDialog();
-        dialog.setTitle("Doctor Remove");
-        dialog.setHeaderText("Enter the ID:");
-        Optional<String> id = dialog.showAndWait();
+        try {
+            TextInputDialog dialog = new TextInputDialog();
+            dialog.setTitle("Doctor Remove");
+            dialog.setHeaderText("Enter the ID:");
+            Optional<String> id = dialog.showAndWait();
 
-        if (!id.isPresent() || id.get().compareTo("") == 0) {
-            alert = new Alert(Alert.AlertType.NONE);
-            alert.setAlertType(Alert.AlertType.ERROR);
-            alert.setTitle("Doctor Remove");
-            alert.setHeaderText("The list dont have the element");
-            alert.show();
+            if (!id.isPresent() || id.get().compareTo("") == 0) {
+                alert = new Alert(Alert.AlertType.NONE);
+                alert.setAlertType(Alert.AlertType.ERROR);
+                alert.setTitle("Doctor Remove");
+                alert.setHeaderText("The list dont have the element");
+                alert.show();
+                   
+            }   if (SicknessList.size() == 1) {
+                if (SicknessList.contains(new Sickness(id.get()))) {
+                    SicknessList.clear();
+                    TableView.getItems().clear();
+                    try {
+                        util.Data.setDataFile("sickness", SicknessList);
+                    } catch (QueueException ex) {
+                        Logger.getLogger(FXMLMantenimientoPascientesController.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (IOException ex) {
+                        Logger.getLogger(FXMLMantenimientoPascientesController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
 
-        } else{
-            SicknessList.remove(new Sickness(id.get()));
-            try {
-                util.Data.setDataFile("sickness", SicknessList);
-            } catch (QueueException | IOException ex) {
-                Logger.getLogger(FXMLMantenimientoEnfermedadesController.class.getName()).log(Level.SEVERE, null, ex);
+                } else {
+                    alert = new Alert(Alert.AlertType.NONE);
+                    alert.setAlertType(Alert.AlertType.ERROR);
+                    alert.setTitle("Patient Remove");
+                    alert.setHeaderText("The list dont have the element");
+                    alert.show();
+
+                }
+
+            } else {
+                SicknessList.remove(new Sickness(id.get()));
+                try {
+                    util.Data.setDataFile("sickness", SicknessList);
+                } catch (QueueException | IOException ex) {
+                    Logger.getLogger(FXMLMantenimientoEnfermedadesController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                TableView.getItems().clear();
+                TableView.getItems().addAll(getData());
+                alert = new Alert(Alert.AlertType.NONE);
+                alert.setAlertType(Alert.AlertType.INFORMATION);
+                alert.setTitle("Doctor - Remove");
+                alert.setHeaderText("The element was removed");
+                alert.show();
             }
-            TableView.getItems().clear();
-            TableView.getItems().addAll(getData());
-            alert = new Alert(Alert.AlertType.NONE);
-            alert.setAlertType(Alert.AlertType.INFORMATION);
-            alert.setTitle("Doctor - Remove");
-            alert.setHeaderText("The element was removed");
-            alert.show();
-        }
-       }catch (ListException ex) {
+        } catch (ListException ex) {
             alert = new Alert(Alert.AlertType.NONE);
             alert.setAlertType(Alert.AlertType.ERROR);
             alert.setTitle("Doctor - Remove");
             alert.setHeaderText(ex.getMessage());
             alert.show();
-        } catch (NoSuchFieldError ex ) {
-                System.err.println("ERROR " + ex);
-                }
-        
-        
+        } catch (NoSuchFieldError ex) {
+            System.err.println("ERROR " + ex);
+        }
+
     }
 
     @FXML
     private void ContainsCode(ActionEvent event) throws ListException {
         try {
-        TextInputDialog dialog = new TextInputDialog();
-        dialog.setTitle("Sickness Position Contains");
-        dialog.setHeaderText("Enter the id: ");
-        Optional<String> id = dialog.showAndWait();
-        Sickness sickness = new Sickness(id.get());
+            TextInputDialog dialog = new TextInputDialog();
+            dialog.setTitle("Sickness Position Contains");
+            dialog.setHeaderText("Enter the id: ");
+            Optional<String> id = dialog.showAndWait();
+            Sickness sickness = new Sickness(id.get());
 
-        if (!id.isPresent() || id.get().compareTo("") == 0) {
-            alert = new Alert(Alert.AlertType.NONE);
-            alert.setAlertType(Alert.AlertType.ERROR);
-            alert.setTitle("Sickness Position Contains");
-            alert.setHeaderText("The list doesn't contains the element");
-            alert.show();
+            if (!id.isPresent() || id.get().compareTo("") == 0) {
+                alert = new Alert(Alert.AlertType.NONE);
+                alert.setAlertType(Alert.AlertType.ERROR);
+                alert.setTitle("Sickness Position Contains");
+                alert.setHeaderText("The list doesn't contains the element");
+                alert.show();
 
-        } else {
+            } else {
                 if (SicknessList.contains(sickness)) {
                     Object foundElement = SicknessList.getNodeById(sickness);
                     alert = new Alert(Alert.AlertType.NONE);
@@ -186,32 +209,42 @@ public class FXMLMantenimientoEnfermedadesController implements Initializable {
                     alert.setTitle("Doctor Position Contains");
                     alert.setHeaderText("The list dont have the element");
                     alert.show();
-           
+
                 }
-        }
+            }
         } catch (ListException ex) {
-                alert = new Alert(Alert.AlertType.NONE);
-                alert.setAlertType(Alert.AlertType.ERROR);
-                alert.setTitle("Doctor Position Contains");
-                alert.setHeaderText(ex.getMessage());
-                alert.show();
-            } catch (NoSuchFieldError ex ) {
-                    System.err.println("ERROR " + ex);
-                    } 
+            alert = new Alert(Alert.AlertType.NONE);
+            alert.setAlertType(Alert.AlertType.ERROR);
+            alert.setTitle("Doctor Position Contains");
+            alert.setHeaderText(ex.getMessage());
+            alert.show();
+        } catch (NoSuchFieldError ex) {
+            System.err.println("ERROR " + ex);
         }
+    }
+
     @FXML
-    private void DescriptionCommit(TableColumn.CellEditEvent<List<String>, String> event)throws ListException {
+    private void DescriptionCommit(TableColumn.CellEditEvent<List<String>, String> event) throws ListException {
         try {
             String Description = event.getRowValue().get(1);
             Sickness oldSick = new Sickness(Description);
             Sickness newSick = new Sickness(event.getNewValue());
-            this.SicknessList.modificar(oldSick, newSick);
-            newSick.setId(oldSick.getId()-1);
-            Sickness.setConsecutivo(newSick.getId()+1);
-            
-            util.Data.setDataFile("sickness", SicknessList);
+            if (!SicknessList.contains(event.getNewValue())) {
+                this.SicknessList.modificar(oldSick, newSick);
+                Sickness.setConsecutivo(oldSick.getId());
+                newSick.setId(Sickness.getConsecutivo() - 1);
+
+                util.Data.setDataFile("sickness", SicknessList);
+            } else {
+            alert = new Alert(Alert.AlertType.NONE);
+            alert.setAlertType(Alert.AlertType.ERROR);
+            alert.setTitle("Doctor Position Contains");
+           alert.setContentText("Sickness is already Register");
+            alert.show();
+
+            }
         } catch (QueueException | IOException ex) {
             Logger.getLogger(FXMLMantenimientoEnfermedadesController.class.getName()).log(Level.SEVERE, null, ex);
         }
-       }
     }
+}

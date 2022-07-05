@@ -73,7 +73,61 @@ public class FXMLAddDoctorController implements Initializable {
 
     @FXML
     private void registerOnAction(ActionEvent event) throws ParseException, ListException, QueueException, IOException {
-        if (doctorList != null) {
+        if (doctorList.isEmpty()) {
+            if ("".equals(firstNTextField.getText()) || "".equals(lastNTextField.getText())
+                    || "".equals(calendarChoice) || "".equals(PhoneTextField.getText())
+                    || "".equals(idTextField.getText())) {
+
+                alert = new Alert(Alert.AlertType.NONE);
+                alert.setAlertType(Alert.AlertType.ERROR);
+                alert.setTitle("Doctor Add");
+                alert.setHeaderText("ERROR");
+                alert.setContentText("Fill all the spaces");
+                alert.show();
+
+            } else {
+                try {
+                    Calendar date = Calendar.getInstance();
+                    date.set(calendarChoice.getValue().getYear(), calendarChoice.getValue().getMonthValue(), calendarChoice.getValue().getDayOfMonth());
+                    Pattern pattern = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+                            + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
+                    Matcher mather = pattern.matcher(TF_Email.getText());
+                    if (mather.find() == true) {
+                        Doctor doctor = new Doctor(Integer.parseInt(idTextField.getText()), firstNTextField.getText(),
+                                lastNTextField.getText(), PhoneTextField.getText(), TF_Email.getText(), TF_Address.getText(), date.getTime());
+                        doctorList.add(doctor);
+                        util.Data.setDataFile("doctors", doctorList);
+
+                        idTextField.setText("");
+                        lastNTextField.setText("");
+                        firstNTextField.setText("");
+                        PhoneTextField.setText("");
+                        TF_Address.setText("");
+                        TF_Email.setText("");
+                        calendarChoice.getEditor().clear();
+
+                        alert = new Alert(Alert.AlertType.NONE);
+                        alert.setAlertType(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Doctor added");
+                        alert.show();
+                    } else {
+                        alert = new Alert(Alert.AlertType.NONE);
+                        alert.setAlertType(Alert.AlertType.ERROR);
+                        alert.setTitle("Doctor");
+                        alert.setHeaderText("ERROR");
+                        alert.setContentText("Invalid Email");
+                        alert.show();
+                    }
+                } catch (NumberFormatException ex) {
+                    alert = new Alert(Alert.AlertType.NONE);
+                    alert.setAlertType(Alert.AlertType.ERROR);
+                    alert.setTitle("Doctor");
+                    alert.setHeaderText("ERROR");
+                    alert.setContentText("Wrong character, fill again the space");
+                    alert.show();
+                }
+            }
+        } else {
             if ("".equals(firstNTextField.getText()) || "".equals(lastNTextField.getText())
                     || "".equals(calendarChoice) || "".equals(PhoneTextField.getText())
                     || "".equals(idTextField.getText())) {
@@ -116,7 +170,7 @@ public class FXMLAddDoctorController implements Initializable {
                             alert.setAlertType(Alert.AlertType.ERROR);
                             alert.setTitle("Doctor");
                             alert.setHeaderText("ERROR");
-                            alert.setContentText("Id Doctor Already Register");
+                            alert.setContentText("ID Already Register");
                             alert.show();
                         }
                     } else {
@@ -136,6 +190,7 @@ public class FXMLAddDoctorController implements Initializable {
                     alert.show();
                 }
             }
+
         }
     }
 }

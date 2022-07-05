@@ -156,6 +156,7 @@ public class FXMLCitasController implements Initializable {
                 RemarksCOLUMN.setCellFactory(TextFieldTableCell.forTableColumn());
                 PATIENTIDCOLUMN.setCellFactory(TextFieldTableCell.forTableColumn());
                 DOCTORIDCOLUMN.setCellFactory(TextFieldTableCell.forTableColumn());
+                APPOINTMENTCOLUMN.setCellFactory(TextFieldTableCell.forTableColumn());
 
                 try {
                     if (this.AppointmentList != null && !this.AppointmentList.isEmpty()) {
@@ -328,24 +329,28 @@ public class FXMLCitasController implements Initializable {
         Appointment oldDAppointment = new Appointment(PatientId, Integer.parseInt(event.getRowValue().get(2)), aLDT, event.getRowValue().get(4));
         Appointment newAppointment = new Appointment(Integer.parseInt(event.getNewValue()), Integer.parseInt(event.getRowValue().get(2)), aLDT, event.getRowValue().get(4));
         if (PatientList.contains(new Patient(Integer.parseInt(event.getNewValue()), "", "", "", "", "", null))) {
-        this.AppointmentList.modificar(oldDAppointment, newAppointment);
-        try {
-            util.Data.setDataFile("appointment", AppointmentList);
-        } catch (QueueException | ListException | IOException ex) {
-            Logger.getLogger(FXMLCitasController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+            this.AppointmentList.modificar(oldDAppointment, newAppointment);
+            Appointment.setConsecutivo(oldDAppointment.getId());
+            newAppointment.setId(Appointment.getConsecutivo() - 1);
+            try {
+                util.Data.setDataFile("appointment", AppointmentList);
+            } catch (QueueException | ListException | IOException ex) {
+                Logger.getLogger(FXMLCitasController.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
-        if (this.AppointmentList != null && !this.AppointmentList.isEmpty()) {
-            this.TableView.setItems(getData());
+            if (this.AppointmentList != null && !this.AppointmentList.isEmpty()) {
+                this.TableView.setItems(getData());
+            }
+        } else {
+            Appointment.setConsecutivo(oldDAppointment.getId());
+            newAppointment.setId(Appointment.getConsecutivo() - 1);
+            alert = new Alert(Alert.AlertType.NONE);
+            alert.setAlertType(Alert.AlertType.ERROR);
+            alert.setTitle("Appointment Contains");
+            alert.setHeaderText("There is no Patient with that id check the combobox options");
+            alert.show();
         }
-        }else {
-             alert = new Alert(Alert.AlertType.NONE);
-             alert.setAlertType(Alert.AlertType.ERROR);
-             alert.setTitle("Appointment Contains");
-             alert.setHeaderText("There is no Patient with that id check the combobox options");
-             alert.show();
-        }
-        }
+    }
 
     @FXML
     private void DoctorCommit(TableColumn.CellEditEvent<List<String>, String> event) {
@@ -356,26 +361,30 @@ public class FXMLCitasController implements Initializable {
             Appointment oldDAppointment = new Appointment(Integer.parseInt(event.getRowValue().get(1)), DoctorID, aLDT, event.getRowValue().get(4));
             Appointment newAppointment = new Appointment(Integer.parseInt(event.getRowValue().get(1)), Integer.parseInt(event.getNewValue()), aLDT, event.getRowValue().get(4));
             if (DoctorList.contains(new Doctor(Integer.parseInt(event.getNewValue()), "", "", "", "", "", null))) {
-                if (!AppointmentList.contains(new Appointment(0,Integer.parseInt(event.getNewValue()), aLDT, ""))) {
-                this.AppointmentList.modificar(oldDAppointment, newAppointment);
-                try {
-                    util.Data.setDataFile("appointment", AppointmentList);
-                } catch (QueueException | IOException ex) {
-                    Logger.getLogger(FXMLCitasController.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                if (!AppointmentList.contains(new Appointment(0, Integer.parseInt(event.getNewValue()), aLDT, ""))) {
+                    this.AppointmentList.modificar(oldDAppointment, newAppointment);
+                    Appointment.setConsecutivo(oldDAppointment.getId());
+                    newAppointment.setId(Appointment.getConsecutivo() - 1);
+                    try {
+                        util.Data.setDataFile("appointment", AppointmentList);
+                    } catch (QueueException | IOException ex) {
+                        Logger.getLogger(FXMLCitasController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
 
-                if (this.AppointmentList != null && !this.AppointmentList.isEmpty()) {
-                    this.TableView.setItems(getData());
-                }
+                    if (this.AppointmentList != null && !this.AppointmentList.isEmpty()) {
+                        this.TableView.setItems(getData());
+                    }
                 } else {
                     alert = new Alert(Alert.AlertType.NONE);
                     alert.setAlertType(Alert.AlertType.ERROR);
                     alert.setTitle("Add Appointment");
                     alert.setHeaderText("ERROR");
                     alert.setContentText("There is already an appointment registered on that date with that doctor");
-                    alert.show();  
+                    alert.show();
                 }
             } else {
+                Appointment.setConsecutivo(oldDAppointment.getId());
+                newAppointment.setId(Appointment.getConsecutivo() - 1);
                 alert = new Alert(Alert.AlertType.NONE);
                 alert.setAlertType(Alert.AlertType.ERROR);
                 alert.setTitle("Appointment Contains");
@@ -392,8 +401,8 @@ public class FXMLCitasController implements Initializable {
     private void TimeCommit(TableColumn.CellEditEvent<List<String>, String> event) {
 
     }
-        
-     @FXML
+
+    @FXML
     private void RemarksCommit(TableColumn.CellEditEvent<List<String>, String> event) throws ListException {
         try {
             String remarks = event.getRowValue().get(4);
@@ -401,6 +410,9 @@ public class FXMLCitasController implements Initializable {
             LocalDateTime aLDT = LocalDateTime.parse(strDatewithTime);
             Appointment oldDAppointment = new Appointment(Integer.parseInt(event.getRowValue().get(1)), Integer.parseInt(event.getRowValue().get(2)), aLDT, remarks);
             Appointment newAppointment = new Appointment(Integer.parseInt(event.getRowValue().get(1)), Integer.parseInt(event.getRowValue().get(2)), aLDT, event.getNewValue());
+            this.AppointmentList.modificar(oldDAppointment, newAppointment);
+            Appointment.setConsecutivo(oldDAppointment.getId());
+            newAppointment.setId(Appointment.getConsecutivo() - 1);
             try {
                 util.Data.setDataFile("appointment", AppointmentList);
             } catch (QueueException | IOException ex) {
@@ -463,7 +475,7 @@ public class FXMLCitasController implements Initializable {
         } catch (QueueException | ListException | IOException ex) {
             Logger.getLogger(FXMLCitasController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
 
 }
