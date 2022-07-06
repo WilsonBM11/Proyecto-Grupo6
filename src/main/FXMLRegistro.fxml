@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane fx:id="bp" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="523.0" prefWidth="736.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.FXMLLoginController">
+   <bottom>
+      <AnchorPane prefHeight="522.0" prefWidth="738.0" BorderPane.alignment="CENTER">
+         <children>
+            <Pane layoutX="-6.0" layoutY="-1.0" prefHeight="62.0" prefWidth="744.0" style="-fx-background-color: #0174DF;">
+               <children>
+                  <Label layoutX="300.0" layoutY="7.0" prefHeight="49.0" prefWidth="144.0" text="Sign In">
+                     <font>
+                        <Font name="Bell MT" size="41.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            <Label layoutX="60.0" layoutY="73.0" prefHeight="35.0" prefWidth="91.0" text="Usuario:">
+               <font>
+                  <Font name="Bell MT" size="25.0" />
+               </font>
+            </Label>
+            <TextField fx:id="TF_NOMBRE" layoutX="74.0" layoutY="215.0" prefHeight="39.0" prefWidth="204.0" />
+            <Button fx:id="BTN_SIGNIN" layoutX="554.0" layoutY="438.0" mnemonicParsing="false" onAction="#LOGINCODE" prefHeight="40.0" prefWidth="151.0" text="Sign in">
+               <font>
+                  <Font name="Bell MT Bold" size="21.0" />
+               </font>
+            </Button>
+            <Button fx:id="BTN_REGRESAR" layoutX="366.0" layoutY="439.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="146.0" text="Regresar">
+               <font>
+                  <Font name="Bell MT" size="23.0" />
+               </font>
+            </Button>
+            <Label layoutX="54.0" layoutY="266.0" prefHeight="35.0" prefWidth="103.0" text="Apellido:">
+               <font>
+                  <Font name="Bell MT" size="25.0" />
+               </font>
+            </Label>
+            <Label layoutX="54.0" layoutY="171.0" prefHeight="35.0" prefWidth="91.0" text="Nombre:">
+               <font>
+                  <Font name="Bell MT" size="25.0" />
+               </font>
+            </Label>
+            <TextField fx:id="TF_APELLIDO" layoutX="73.0" layoutY="301.0" prefHeight="39.0" prefWidth="207.0" />
+            <Label layoutX="415.0" layoutY="73.0" prefHeight="35.0" prefWidth="128.0" text="Contraseña:">
+               <font>
+                  <Font name="Bell MT" size="25.0" />
+               </font>
+            </Label>
+            <Label layoutX="415.0" layoutY="171.0" prefHeight="35.0" prefWidth="246.0" text="Confirmar contraseña:">
+               <font>
+                  <Font name="Bell MT" size="25.0" />
+               </font>
+            </Label>
+            <TextField fx:id="TF_USUARIO" layoutX="74.0" layoutY="115.0" prefHeight="39.0" prefWidth="204.0" />
+            <TextField fx:id="TF_CONTRASEÑA" layoutX="467.0" layoutY="115.0" prefHeight="39.0" prefWidth="204.0" />
+            <TextField fx:id="TF_CONFIRMAR_CONTRASEÑA" layoutX="467.0" layoutY="215.0" prefHeight="39.0" prefWidth="204.0" />
+            <Label layoutX="415.0" layoutY="266.0" prefHeight="35.0" prefWidth="246.0" text="Correo electronico :">
+               <font>
+                  <Font name="Bell MT" size="25.0" />
+               </font>
+            </Label>
+            <TextField fx:id="TF_CORREO" layoutX="467.0" layoutY="301.0" prefHeight="39.0" prefWidth="204.0" />
+         </children>
+      </AnchorPane>
+   </bottom>
+</BorderPane>
