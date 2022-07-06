@@ -27,7 +27,7 @@
                </font>
             </Label>
             <TextField fx:id="TF_NOMBRE" layoutX="74.0" layoutY="215.0" prefHeight="39.0" prefWidth="204.0" />
-            <Button fx:id="BTN_SIGNIN" layoutX="554.0" layoutY="438.0" mnemonicParsing="false" onAction="#LOGINCODE" prefHeight="40.0" prefWidth="151.0" text="Sign in">
+            <Button fx:id="BTN_SIGNIN" layoutX="554.0" layoutY="438.0" mnemonicParsing="false" onAction="#SIGNINCODE" prefHeight="40.0" prefWidth="151.0" text="Sign in">
                <font>
                   <Font name="Bell MT Bold" size="21.0" />
                </font>
