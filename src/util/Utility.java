@@ -77,6 +77,8 @@ public class Utility {
         Utility.circularDoublyLinkedList = circularDoublyLinkedList;
     }
 
+    
+
     private CircularLinkedList patientsList;
 
     public static int random() {
@@ -183,6 +185,19 @@ public class Utility {
                Appointment b8 = (Appointment)b;
                return (a8.getPatientID() == b8.getPatientID() && a8.getDateTime().equals(b8.getDateTime())) 
                        || (a8.getDoctorID() == b8.getDoctorID() && a8.getDateTime().equals(b8.getDateTime())) ;
+        }
+        return false;
+    }
+    
+    public static boolean equals(Object a, Object b, String criterio) {
+        switch (instanceOf(a, b)) {
+            case "Sickness":
+                switch(criterio){
+                    case "ID":
+                        Sickness a1 = (Sickness) a;
+                        Sickness b1 = (Sickness) b;
+                        return a1.getId()==b1.getId();
+                }
         }
         return false;
     }

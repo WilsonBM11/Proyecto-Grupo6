@@ -259,17 +259,17 @@ public class SinglyLinkedList implements List {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
-    public Object getSicknessById(int index) throws ListException{
+    public Object getSicknessById(Object element) throws ListException{
         if(isEmpty())
             throw new ListException("Doubly Linked List is empty");
         Node aux = first;
         Sickness s = (Sickness) aux.data;
-        while(aux!=null&&!(s.getId()==index)){
+        while(aux!=null&&!(util.Utility.equals(aux.data, element, "ID"))){
             s = (Sickness) aux.data;
             aux = aux.next;            
         }
         //sale cuando aux==null o encontro el elemento
-        if(aux!=null&&s.getId()==index){
+        if(aux!=null&&(util.Utility.equals(aux.data, element, "ID"))){
             return s;
         }
         return null; //el elemento no existe
