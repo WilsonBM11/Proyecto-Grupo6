@@ -297,6 +297,7 @@ try {
         }
        }
     
+      @FXML
     private void FirstNameCommit(TableColumn.CellEditEvent<List<String>, String> event) throws ListException {
         try {
             String FirstName = event.getRowValue().get(1);
@@ -320,6 +321,7 @@ try {
             Logger.getLogger(FXMLMantenimientoPascientesController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+      @FXML
 
     private void LastNameCommit(TableColumn.CellEditEvent<List<String>, String> event) throws ListException {
         try {
@@ -343,6 +345,7 @@ try {
             Logger.getLogger(FXMLMantenimientoPascientesController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+      @FXML
 
     private void PhoneNumberCommit(TableColumn.CellEditEvent<List<String>, String> event) throws ListException {
 
@@ -367,7 +370,7 @@ try {
             Logger.getLogger(FXMLMantenimientoPascientesController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+  @FXML
     private void EmailCommit(TableColumn.CellEditEvent<List<String>, String> event) throws ListException {
         try {
             Pattern pattern = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
@@ -419,7 +422,7 @@ try {
             Logger.getLogger(FXMLMantenimientoPascientesController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+  @FXML
     private void AddressCommit(TableColumn.CellEditEvent<List<String>, String> event) throws ListException {
 
         try {
@@ -443,6 +446,7 @@ try {
             Logger.getLogger(FXMLMantenimientoPascientesController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    @FXML
 
     private void BirthdayCommit(TableColumn.CellEditEvent<List<String>, String> event) {
         try {
