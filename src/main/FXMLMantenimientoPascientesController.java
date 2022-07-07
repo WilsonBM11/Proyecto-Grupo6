@@ -455,7 +455,7 @@ try {
             String sDate1 = event.getRowValue().get(6);
             Date date1 = new SimpleDateFormat("dd/MM/yyyy").parse(sDate1);
             Patient oldPatient = new Patient(Integer.parseInt(event.getRowValue().get(0)), event.getRowValue().get(1), event.getRowValue().get(2), event.getRowValue().get(3), event.getRowValue().get(4), event.getRowValue().get(5), date1);
-            Patient newPatient = new Patient(Integer.parseInt(event.getRowValue().get(0)), event.getRowValue().get(1), event.getRowValue().get(2), event.getRowValue().get(3), event.getRowValue().get(4), event.getNewValue(), new SimpleDateFormat("dd/MM/yyyy").parse(event.getNewValue()));
+            Patient newPatient = new Patient(Integer.parseInt(event.getRowValue().get(0)), event.getRowValue().get(1), event.getRowValue().get(2), event.getRowValue().get(3), event.getRowValue().get(4), event.getRowValue().get(5), new SimpleDateFormat("dd/MM/yyyy").parse(event.getNewValue()));
             try {
                 this.PatientList.modificar(oldPatient, newPatient);
             } catch (ListException ex) {

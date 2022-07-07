@@ -6,3 +6,4 @@
 406481203;Fiorella;Salguero Cambronero;718392384;duranartaviamariano@hotmail.com;Turrialba;01/03/1996
 508437138;Paola;Araya Fonseca;70057438;marianoda717202@gmail.com;Esparza;09/08/1998
 108390314;Shirley;Artavia Gonzalez;70765626;ventas@biogeneticacr.com;San Rafael de Oreamuno;11/11/1972
+231274613;Mariano;Duran Artavia;70765626;marianoda717202@gmail.com;Cartago;13/08/1970
