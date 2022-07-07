@@ -26,7 +26,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
-import javax.mail.MessagingException;
 import util.Mail;
 
 /**

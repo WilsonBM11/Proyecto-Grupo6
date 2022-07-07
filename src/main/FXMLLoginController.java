@@ -27,7 +27,7 @@ import javax.swing.JOptionPane;
  * @author Duran Family
  */
 public class FXMLLoginController implements Initializable {
-    Alert alert;
+ Alert alert;
 
     @FXML
     private TextField TF_USUARIO;
@@ -39,7 +39,7 @@ public class FXMLLoginController implements Initializable {
     private Button BTN_CLEAR;
     @FXML
     private BorderPane bp;
-
+   
     /**
      * Initializes the controller class.
      */
