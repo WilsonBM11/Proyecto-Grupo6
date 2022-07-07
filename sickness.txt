@@ -1,0 +1,2 @@
+1;Trastorno Depresivo
+2;Cancer de Pulmon

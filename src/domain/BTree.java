@@ -53,7 +53,7 @@ public class BTree implements Tree {
         return binarySearch(root, element);
     }
     
-    private boolean binarySearch(BTreeNode node, Object element){
+    public boolean binarySearch(BTreeNode node, Object element){
         if(node==null){
             return false;
         }else

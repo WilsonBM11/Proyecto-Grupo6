@@ -195,6 +195,10 @@ public class Data {
             case "configuration":
                 Configurations c = new Configurations(aux.get(0), aux.get(1),aux.get(2), aux.get(3),aux.get(4));
                 return c;
+             case "Week":
+                return Integer.parseInt(aux.get(0));
+              case "Saturday":
+                return Integer.parseInt(aux.get(0));
         }
         return null;
     }
@@ -227,7 +231,10 @@ public class Data {
             case "configuration":
                 Configurations c = (Configurations) data;
                 return c.getClinicName()+";"+c.getTelefono()+";"+c.getCorreoElectronico()+";"+c.getImagen()+";"+c.getImagenCorreo();
-                
+            case "Week":
+                return String.valueOf(data);
+             case "Saturday":
+                return String.valueOf(data);
         }
         return null;
     }

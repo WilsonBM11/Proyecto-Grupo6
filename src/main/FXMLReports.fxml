@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.FXMLReportsController">
+   <center>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <Pane layoutX="-6.0" prefHeight="82.0" prefWidth="606.0" style="-fx-background-color: #0174DF;">
+               <children>
+                  <Label layoutX="249.0" layoutY="23.0" text="Reports ">
+                     <font>
+                        <Font name="Times New Roman" size="32.0" />
+                     </font>
+                  </Label>
+               </children></Pane>
+            <Button layoutX="23.0" layoutY="108.0" mnemonicParsing="false" onAction="#btnPatients" prefHeight="33.0" prefWidth="179.0" style="-fx-background-color: #0174DF;" text="Patients PDF" />
+            <Button layoutX="217.0" layoutY="108.0" mnemonicParsing="false" onAction="#btnDoctors" prefHeight="33.0" prefWidth="179.0" style="-fx-background-color: #0174DF;" text="Doctors PDF" />
+            <Button layoutX="407.0" layoutY="108.0" mnemonicParsing="false" onAction="#btnSickness" prefHeight="33.0" prefWidth="179.0" style="-fx-background-color: #0174DF;" text="Sickness PDF" />
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>

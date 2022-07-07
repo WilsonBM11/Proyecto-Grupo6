@@ -69,13 +69,13 @@
                   <Font name="Arial" size="50.0" />
                </font>
             </Text>
-            <ImageView fx:id="LogoImage" fitHeight="278.0" fitWidth="888.0" layoutX="117.0" layoutY="66.0" pickOnBounds="true" preserveRatio="true" />
-            <Label fx:id="TXTCorreo" layoutX="117.0" layoutY="457.0" prefHeight="23.0" prefWidth="464.0" textFill="WHITE">
+            <ImageView fx:id="LogoImage" fitHeight="278.0" fitWidth="888.0" layoutX="103.0" layoutY="66.0" pickOnBounds="true" preserveRatio="true" />
+            <Label fx:id="TXTCorreo" layoutX="103.0" layoutY="454.0" prefHeight="23.0" prefWidth="464.0" textFill="WHITE">
                <font>
                   <Font name="Arial" size="24.0" />
                </font>
             </Label>
-            <Label fx:id="TXTTelefono" layoutX="117.0" layoutY="500.0" prefHeight="23.0" prefWidth="464.0" textFill="WHITE">
+            <Label fx:id="TXTTelefono" layoutX="103.0" layoutY="499.0" prefHeight="23.0" prefWidth="464.0" textFill="WHITE">
                <font>
                   <Font name="Arial" size="24.0" />
                </font>

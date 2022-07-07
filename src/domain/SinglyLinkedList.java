@@ -39,16 +39,16 @@ public class SinglyLinkedList implements List {
         return first==null;
     }
 
-    @Override
+     @Override
     public boolean contains(Object element) throws ListException {
          if(isEmpty())
-            throw new ListException("Singly Linked List is empty");
+            throw new ListException("Doubly Linked List is empty");
         Node aux = first;
         while(aux!=null){
-            if(util.Utility.equals(aux.data, element)){
+            if(util.Utility.equals(aux.data, element))
                 return true;
-            }
            aux = aux.next;
+           
         }
         return false;
     }

@@ -1,2 +1,6 @@
-305483722;Gonzalez;Jimenez;73372;mariano@gmail.com;asddas;03/09/2021
-305370239;Mariano;Duran Artavia;882927372;marianoda717202@gmail.ocm;Cartago;05/08/2022
+305483722;Arturo;Jimenez Gonzalez;733727584;mariano@gmail.com;03/09/1972;03/09/1972
+305370239;Mariano;Duran Artavia;882927372;marianoda717202@gmail.ocm;05/08/1978;05/08/1978
+28462732;Sofia ;Guillen Arias;736253823;sofiaGA93@gmail.com;San Rafael;15/08/1993
+56453213;Juan;Gutierrez Guevara;743623183;JuanGG92@gmail.com;Cartago;17/01/1993
+47123371;Juan;Duran Artavia;882916381;duranJA@gmail.com;Cartago;23/08/1998
+1275513713;Sofia;Martinez Solano;746327194;sofiMS92@gmail.com;San Pedro;14/11/1992

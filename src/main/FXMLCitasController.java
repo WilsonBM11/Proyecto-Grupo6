@@ -208,7 +208,7 @@ public class FXMLCitasController implements Initializable {
                 } else {
                     alert = new Alert(Alert.AlertType.NONE);
                     alert.setAlertType(Alert.AlertType.ERROR);
-                    alert.setTitle("Doctor Remove");
+                    alert.setTitle("Appointment Remove");
                     alert.setHeaderText("The list dont have the element");
                     alert.show();
                 }
@@ -222,13 +222,13 @@ public class FXMLCitasController implements Initializable {
                     TableView.getItems().addAll(getData());
                     alert = new Alert(Alert.AlertType.NONE);
                     alert.setAlertType(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Doctor - Remove");
+                    alert.setTitle("Appointment - Remove");
                     alert.setHeaderText("The element was removed");
                     alert.show();
                 } else {
                     alert = new Alert(Alert.AlertType.NONE);
                     alert.setAlertType(Alert.AlertType.ERROR);
-                    alert.setTitle("Doctor Remove");
+                    alert.setTitle("Appointment Remove");
                     alert.setHeaderText("The list dont have the element");
                     alert.show();
 
@@ -237,7 +237,7 @@ public class FXMLCitasController implements Initializable {
         } catch (ListException ex) {
             alert = new Alert(Alert.AlertType.NONE);
             alert.setAlertType(Alert.AlertType.ERROR);
-            alert.setTitle("Doctor - Remove");
+            alert.setTitle("Appointment - Remove");
             alert.setHeaderText(ex.getMessage());
             alert.show();
         } catch (QueueException | IOException ex) {
@@ -266,7 +266,7 @@ public class FXMLCitasController implements Initializable {
             if (!id.isPresent() || id.get().compareTo("") == 0) {
                 alert = new Alert(Alert.AlertType.NONE);
                 alert.setAlertType(Alert.AlertType.ERROR);
-                alert.setTitle("Appointment Postiion Contains");
+                alert.setTitle("Appointment Position Contains");
                 alert.setHeaderText("The list doesn't contains the element");
                 alert.show();
 
@@ -275,7 +275,7 @@ public class FXMLCitasController implements Initializable {
                     Object foundElement = AppointmentList.getNodeById(appointment);
                     alert = new Alert(Alert.AlertType.NONE);
                     alert.setAlertType(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Job Position Contains");
+                    alert.setTitle("Appointment Contains");
                     alert.setHeaderText("The list contains: ");
                     alert.setContentText(foundElement.toString());
                     alert.show();

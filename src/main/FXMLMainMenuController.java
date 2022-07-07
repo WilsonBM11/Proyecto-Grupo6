@@ -68,8 +68,8 @@ public class FXMLMainMenuController implements Initializable {
         }
         this.txtMessage.setText(getClinicName());
         this.image = new Image(getClinicImage());
-        this.TXTTelefono.setText(getPhone());
-        this.TXTCorreo.setText(getMail());
+        this.TXTTelefono.setText("Phone Number: " + getPhone());
+        this.TXTCorreo.setText("Email: " + getMail());
         LogoImage.setImage(image);
     }   
     
@@ -94,9 +94,7 @@ public class FXMLMainMenuController implements Initializable {
         if (util.Data.fileExists("configuration")) {
             try {
                 tree = (BST) util.Data.getDataFile("configuration", tree);
-            } catch (QueueException ex) {
-                Logger.getLogger(FXMLMainMenuController.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
+            } catch (QueueException | IOException ex) {
                 Logger.getLogger(FXMLMainMenuController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -104,8 +102,8 @@ public class FXMLMainMenuController implements Initializable {
         this.txtMessage.setText(getClinicName());
         this.image = new Image(getClinicImage());
         LogoImage.setImage(image);
-        this.TXTTelefono.setText(getPhone());
-        this.TXTCorreo.setText(getMail());
+         this.TXTTelefono.setText("Phone Number: " + getPhone());
+        this.TXTCorreo.setText("Email:" + getMail());
     }
 
     @FXML
@@ -141,7 +139,7 @@ public class FXMLMainMenuController implements Initializable {
 
     @FXML
     private void ReportsCode(ActionEvent event) {
-        loadPage(getClass().getResource("FXMLReportes.fxml"), bp);
+        loadPage(getClass().getResource("FXMLReports.fxml"), bp);
     }
      private ObservableList<List<String>> getData() throws TreeException {
         ObservableList<List<String>> data = FXCollections.observableArrayList();

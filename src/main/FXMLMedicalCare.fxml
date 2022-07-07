@@ -27,13 +27,13 @@
             <ComboBox fx:id="doctorsComboBox" layoutX="21.0" layoutY="118.0" onAction="#selectDoctorOnAction" prefHeight="27.0" prefWidth="142.0" promptText="Select Doctor" style="-fx-background-color: #0174DF;" />
             <ComboBox fx:id="patientsComboBox" disable="true" layoutX="21.0" layoutY="159.0" onAction="#patientsOnAction" prefHeight="27.0" prefWidth="142.0" promptText="Assigned Patients" style="-fx-background-color: #0174DF;" />
             <ComboBox fx:id="sicknessComboBox" layoutX="428.0" layoutY="118.0" onAction="#sicknessComboBoxOnAction" prefHeight="27.0" prefWidth="142.0" promptText="Sickness" style="-fx-background-color: #0174DF;" visible="false" />
-            <TableView fx:id="tableViewMedicalCare" layoutX="175.0" layoutY="113.0" prefHeight="450.0" prefWidth="809.0" visible="false">
+            <TableView fx:id="tableViewMedicalCare" layoutX="175.0" layoutY="113.0" prefHeight="329.0" prefWidth="809.0" visible="false">
               <columns>
-                  <TableColumn fx:id="patientColumn" prefWidth="160.00001525878906" style="-fx-background-color: white;" text="Patient" />
-                <TableColumn fx:id="doctorColumn" prefWidth="160.00001525878906" style="-fx-background-color: white;" text="Doctor" />
-                <TableColumn fx:id="timeColumn" prefWidth="123.3333740234375" style="-fx-background-color: white;" text="Time" />
-                  <TableColumn fx:id="sicknessColumn" prefWidth="150.66671752929688" style="-fx-background-color: white;" text="Sickness" />
-                  <TableColumn fx:id="annotationsColumn" maxWidth="415.33333333333337" prefWidth="375.3333740234375" style="-fx-background-color: white;" text="Annotations" />
+                  <TableColumn fx:id="patientColumn" prefWidth="160.00001525878906" text="Patient" />
+                <TableColumn fx:id="doctorColumn" prefWidth="160.00001525878906" text="Doctor" />
+                <TableColumn fx:id="timeColumn" prefWidth="123.3333740234375" text="Time" />
+                  <TableColumn fx:id="sicknessColumn" prefWidth="150.66671752929688" text="Sickness" />
+                  <TableColumn fx:id="annotationsColumn" maxWidth="415.33333333333337" prefWidth="375.3333740234375" text="Annotations" />
               </columns>
             </TableView>
             <Label fx:id="annotationsLabel" layoutX="447.0" layoutY="161.0" text="Annotations:" textFill="#0174df" visible="false">
@@ -46,7 +46,7 @@
                   <Font name="Calibri Light" size="15.0" />
                </font>
             </TextArea>
-            <Button fx:id="addPatientInformation" disable="true" layoutX="426.0" layoutY="540.0" mnemonicParsing="false" onAction="#addPatientInformationOnAction" prefHeight="35.0" prefWidth="146.0" style="-fx-background-color: #0174DF;" text="Add Patient Information" visible="false">
+            <Button fx:id="addPatientInformation" disable="true" layoutX="361.0" layoutY="520.0" mnemonicParsing="false" onAction="#addPatientInformationOnAction" prefHeight="35.0" prefWidth="263.0" style="-fx-background-color: #0174DF;" text="Add Patient Information" visible="false">
                <font>
                   <Font name="Calibri Light" size="13.0" />
                </font>

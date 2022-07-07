@@ -231,8 +231,8 @@ public class FXMLMantenimientoEnfermedadesController implements Initializable {
             Sickness newSick = new Sickness(event.getNewValue());
             if (!SicknessList.contains(event.getNewValue())) {
                 this.SicknessList.modificar(oldSick, newSick);
-                Sickness.setConsecutivo(oldSick.getId());
-                newSick.setId(Sickness.getConsecutivo() - 1);
+                Sickness.setConsecutivo(oldSick.getId()-1);
+                newSick.setId(Sickness.getConsecutivo());
 
                 util.Data.setDataFile("sickness", SicknessList);
             } else {

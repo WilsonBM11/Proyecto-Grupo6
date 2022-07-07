@@ -12,8 +12,6 @@ public class Configurations {
     String correoElectronico;
     String imagen;
     String imagenCorreo;
-    int HoraEntrada;
-    int HoraSalida;
 
     public Configurations(String ClinicName, String telefono, String correoElectronico, String imagen, String ImagenCorreo) {
         this.ClinicName = ClinicName;
@@ -23,10 +21,7 @@ public class Configurations {
         this.imagenCorreo = ImagenCorreo;
     }
 
-    public Configurations(int HoraEntrada, int HoraSalida) {
-        this.HoraEntrada = HoraEntrada;
-        this.HoraSalida = HoraSalida;
-    }
+  
     
 
     public String getImagenCorreo() {
@@ -67,24 +62,5 @@ public class Configurations {
 
     public void setImagen(String imagen) {
         this.imagen = imagen;
-    }
-
-    public int getHoraEntrada() {
-        return HoraEntrada;
-    }
-
-    public void setHoraEntrada(int HoraEntrada) {
-        this.HoraEntrada = HoraEntrada;
-    }
-
-    public int getHoraSalida() {
-        return HoraSalida;
-    }
-
-    public void setHoraSalida(int HoraSalida) {
-        this.HoraSalida = HoraSalida;
-    }
-    
-    
-    
+    }  
 }

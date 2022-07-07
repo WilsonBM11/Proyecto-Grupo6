@@ -69,7 +69,7 @@ public class FXMLAddSickController implements Initializable {
                 try {
                     sicknesslist.add(sick);
                     sick.setId(1);
-                    Sickness.setConsecutivo(sick.getId()+1);
+                    
                     try {
                         util.Data.setDataFile("sickness", sicknesslist);
                     } catch (QueueException ex) {
@@ -111,8 +111,8 @@ public class FXMLAddSickController implements Initializable {
                             Sickness.setConsecutivo(sick.getId());
                             sick2.setId(Sickness.getConsecutivo());
                         } else {
-                            Sickness.setConsecutivo(sicknesslist.size() + 1);
-                            sick2.setId(Sickness.getConsecutivo());
+                            Sickness.setConsecutivo(sicknesslist.size());
+                            sick2.setId(Sickness.getConsecutivo() + 1);
                         }//Se agrega el elemento y esto se agrega al archivo txt
                         sicknesslist.add(sick);
                         try {

@@ -5,15 +5,22 @@
 package main;
 
 import domain.Appointment;
+import domain.BST;
+import domain.BTreeNode;
 import domain.CircularDoublyLinkedList;
 import domain.CircularLinkedList;
 import domain.Doctor;
 import domain.DoublyLinkedList;
 import domain.ListException;
+import domain.MedicalCare;
+import domain.Node;
 import domain.Patient;
 import domain.QueueException;
 import domain.Sickness;
 import domain.SinglyLinkedList;
+import domain.TreeException;
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -36,6 +43,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+import util.Data;
 
 /**
  * FXML Controller class
@@ -50,6 +58,8 @@ public class FXMLAddCITASController implements Initializable {
     CircularLinkedList PatientList;
     SinglyLinkedList SicknessList;
     SinglyLinkedList numbersList;
+    SinglyLinkedList treeHours;
+    SinglyLinkedList treeHoursS;
     Alert alert;
     @FXML
     private TextField IDPatient;
@@ -71,10 +81,11 @@ public class FXMLAddCITASController implements Initializable {
     private DatePicker CalendarChoice;
     @FXML
     private TextField TF_REMARKS;
+    private ObservableList<List<String>> tableViewData;
 
     @Override
-    @SuppressWarnings("empty-statement")
     public void initialize(URL url, ResourceBundle rb) {
+        tableViewData = FXCollections.observableArrayList();
         IDPatient.setEditable(false);
         IDDoctor.setEditable(false);
         TEXTFIELDTIME.setEditable(false);
@@ -130,13 +141,29 @@ public class FXMLAddCITASController implements Initializable {
                 Logger.getLogger(FXMLMantenimientoDoctoresController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        treeHours = new SinglyLinkedList();
+        if (util.Data.fileExists("Week")) {
+            try {
+                treeHours = (SinglyLinkedList) Data.getDataFile("Week", treeHours);
+            } catch (QueueException | IOException ex) {
+                Logger.getLogger(FXMLAddConfigurationController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        treeHoursS = new SinglyLinkedList();
+        if (util.Data.fileExists("Saturday")) {
+            try {
+                treeHoursS = (SinglyLinkedList) Data.getDataFile("Saturday", treeHoursS);
+            } catch (QueueException | IOException ex) {
+                Logger.getLogger(FXMLAddConfigurationController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 
     @FXML
     private void registerOnAction(ActionEvent event) throws ListException {
         String str = TEXTFIELDTIME.getText();
         //Se formatea la fecha para que trabaje con horas y minutos
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy H:mm");
         LocalDateTime dateTime = LocalDateTime.parse(str, formatter);
         //Se crea un objeto appointment que es el primero que se va a agregar cuando la lista este vacia
         Appointment appointment = new Appointment(Integer.parseInt(IDPatient.getText()),
@@ -159,7 +186,7 @@ public class FXMLAddCITASController implements Initializable {
                     //Se agrega el primero objeto de la lista y se hace un set del id a 1
                     AppointmentList.add(appointment);
                     appointment.setId(1);
-                    Appointment.setConsecutivo(appointment.getId()+1);
+                    Appointment.setConsecutivo(appointment.getId() + 1);
                     try {
                         //Se carga el primer dato al archivos txt
                         util.Data.setDataFile("appointment", AppointmentList);
@@ -213,18 +240,20 @@ public class FXMLAddCITASController implements Initializable {
                             Integer.parseInt(IDDoctor.getText()), dateTime, TF_REMARKS.getText());
                     //El contains verifica que no exista otra cita con el mismo doctor en esa fecha
                     if (!AppointmentList.contains(new Appointment(0, Integer.parseInt(IDDoctor.getText()), dateTime, ""))) {
-                       //El contains genera problemas en el id consecutivo y por eso se genero este if y else hacer un set
-                       //del id y que siga manteniendo los valores que debe
+                        //El contains genera problemas en el id consecutivo y por eso se genero este if y else hacer un set
+                        //del id y que siga manteniendo los valores que debe
                         if (AppointmentList.size() == 1) {
                             Appointment.setConsecutivo(appointment.getId());
                             appointment2.setId(Appointment.getConsecutivo());
                         } else {
                             Appointment.setConsecutivo(AppointmentList.size() + 1);
-                            appointment2.setId(Appointment.getConsecutivo());
+                            appointment2.setId(Appointment.getConsecutivo() + 1);
+                            System.out.println(appointment2.getId());
+                            System.out.println(Appointment.getConsecutivo());
                         }//Se agrega el elemento y esto se agrega al archivo txt
                         AppointmentList.add(appointment2);
                         try {
-                          
+
                             util.Data.setDataFile("appointment", AppointmentList);
                         } catch (QueueException | ListException | IOException ex) {
                             Logger.getLogger(FXMLAddCITASController.class.getName()).log(Level.SEVERE, null, ex);
@@ -298,10 +327,11 @@ public class FXMLAddCITASController implements Initializable {
         String date1 = format1.format(date);
         //Las horas se obtienen del combobox time y posteriomente se une con la fecha 
         String time = (String) TIMECOMBOBOX.getValue();
-        TEXTFIELDTIME.setText(date1 + " " + time);
+        TEXTFIELDTIME.setText(date1 + " " + time+":00");
     }
 //Se crea un getData de tipo Doctor list para obtener los datos del archivo txt y meterlos a un arraylist 
     //Que posteriomente ira en el combobox de doctores
+
     private ObservableList<List<String>> getDataDoctor() {
         ObservableList<List<String>> data = FXCollections.observableArrayList();
         if (this.DoctorList != null && !this.DoctorList.isEmpty()) {
@@ -342,38 +372,54 @@ public class FXMLAddCITASController implements Initializable {
         return data;
     }
 
+
+     private ObservableList<String> getComboBoxHours() throws ListException {
+        ObservableList<String> data = FXCollections.observableArrayList();
+
+      
+                for (int i = 1; i <= treeHours.size(); i++) {
+                    int horas = (int) treeHours.getNode(i).data;
+                    data.add(String.valueOf(horas));
+                }
+                return data;
+     }
+     private ObservableList<String> getComboBoxHoursS() throws ListException {
+        ObservableList<String> data = FXCollections.observableArrayList();
+
+      
+                for (int i = 1; i <= treeHoursS.size(); i++) {
+                    int horas = (int) treeHoursS.getNode(i).data;
+                    data.add(String.valueOf(horas));
+                }
+                return data;
+     }
+
     @FXML
-    private void DaySelectedCode(ActionEvent event) {
+    private void DaySelectedCode(ActionEvent event) throws ListException {
         switch (CalendarChoice.getValue().getDayOfWeek()) {
             case SATURDAY:
-                String numeros[] = {"14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00"};
-                TIMECOMBOBOX.getItems().clear();
-                TIMECOMBOBOX.getItems().addAll(numeros);
+               TIMECOMBOBOX.getItems().clear();
+                TIMECOMBOBOX.setItems(getComboBoxHoursS());
                 break;
             case MONDAY:
-                String numeros1[] = {"10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00"};
                 TIMECOMBOBOX.getItems().clear();
-                TIMECOMBOBOX.getItems().addAll(numeros1);
+                TIMECOMBOBOX.setItems(getComboBoxHours());
                 break;
             case THURSDAY:
-                String numeros2[] = {"10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00"};
-                TIMECOMBOBOX.getItems().clear();
-                TIMECOMBOBOX.getItems().addAll(numeros2);
+                 TIMECOMBOBOX.getItems().clear();
+                TIMECOMBOBOX.setItems(getComboBoxHours());
                 break;
             case TUESDAY:
-                String numeros3[] = {"10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00"};
                 TIMECOMBOBOX.getItems().clear();
-                TIMECOMBOBOX.getItems().addAll(numeros3);
+                TIMECOMBOBOX.setItems(getComboBoxHours());
                 break;
             case WEDNESDAY:
-                String numeros4[] = {"10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00"};
                 TIMECOMBOBOX.getItems().clear();
-                TIMECOMBOBOX.getItems().addAll(numeros4);
+                TIMECOMBOBOX.setItems(getComboBoxHours());
                 break;
             case FRIDAY:
-                String numeros5[] = {"10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00"};
                 TIMECOMBOBOX.getItems().clear();
-                TIMECOMBOBOX.getItems().addAll(numeros5);
+                TIMECOMBOBOX.setItems(getComboBoxHours());
                 break;
             case SUNDAY:
                 TIMECOMBOBOX.getItems().clear();

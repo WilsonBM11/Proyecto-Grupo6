@@ -6,6 +6,7 @@ package main;
 
 import domain.Appointment;
 import domain.BST;
+import domain.BTree;
 import domain.CircularDoublyLinkedList;
 import domain.Configurations;
 import domain.ListException;
@@ -23,9 +24,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
+import util.Data;
 
 /**
  * FXML Controller class
@@ -36,6 +39,7 @@ public class FXMLAddConfigurationController implements Initializable {
 
     BST tree;
     Alert alert;
+    BST treeHours;
 
     @FXML
     private TextField TF_Email;
@@ -52,10 +56,14 @@ public class FXMLAddConfigurationController implements Initializable {
     private TextField TF_image;
     @FXML
     private TextField TF_image1;
+    @FXML
+    private TextField TF_Star;
+    @FXML
+    private TextField TF_Departure;
+    @FXML
+    private ComboBox DaysCombobox;
+    String[] days = {"Monday to Friday", "Saturday"};
 
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
@@ -67,6 +75,23 @@ public class FXMLAddConfigurationController implements Initializable {
                 Logger.getLogger(FXMLAddDoctorController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        treeHours = new BST();
+        if (util.Data.fileExists("Week")) {
+            try {
+                treeHours = (BST) Data.getDataFile("Week", treeHours);
+            } catch (QueueException | IOException ex) {
+                Logger.getLogger(FXMLAddConfigurationController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        treeHours = new BST();
+        if (util.Data.fileExists("Saturday")) {
+            try {
+                treeHours = (BST) Data.getDataFile("Saturday", treeHours);
+            } catch (QueueException | IOException ex) {
+                Logger.getLogger(FXMLAddConfigurationController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        DaysCombobox.getItems().addAll(days);
     }
 
     @FXML
@@ -93,20 +118,12 @@ public class FXMLAddConfigurationController implements Initializable {
                         tree.add(configurations);
                         try {
                             util.Data.setDataFile("configuration", tree);
-                        } catch (QueueException ex) {
-                            Logger.getLogger(FXMLAddConfigurationController.class.getName()).log(Level.SEVERE, null, ex);
-                        } catch (ListException ex) {
-                            Logger.getLogger(FXMLAddConfigurationController.class.getName()).log(Level.SEVERE, null, ex);
-                        } catch (IOException ex) {
+                        } catch (QueueException | ListException | IOException ex) {
                             Logger.getLogger(FXMLAddConfigurationController.class.getName()).log(Level.SEVERE, null, ex);
                         }
                         try {
                             util.Data.setDataFile("configuration", tree);
-                        } catch (QueueException ex) {
-                            Logger.getLogger(FXMLAddCITASController.class.getName()).log(Level.SEVERE, null, ex);
-                        } catch (ListException ex) {
-                            Logger.getLogger(FXMLAddCITASController.class.getName()).log(Level.SEVERE, null, ex);
-                        } catch (IOException ex) {
+                        } catch (QueueException | ListException | IOException ex) {
                             Logger.getLogger(FXMLAddCITASController.class.getName()).log(Level.SEVERE, null, ex);
                         }
 
@@ -154,8 +171,87 @@ public class FXMLAddConfigurationController implements Initializable {
     }
 
     @FXML
-    private void ScheduleCode(ActionEvent event) {
-        
-    }
+    private void RegisterTimeCode(ActionEvent event) {
+        try {
+            if (treeHours != null) {
+                if ("".equals(TF_Departure.getText())
+                        || "".equals(TF_Star.getText())) {
+                    alert = new Alert(Alert.AlertType.NONE);
+                    alert.setAlertType(Alert.AlertType.ERROR);
+                    alert.setTitle("Configuration");
+                    alert.setHeaderText("ERROR");
+                    alert.setContentText("Fill all the spaces");
+                    alert.show();
+                } else {
 
+                    treeHours = new BST();
+                    int inicio = Integer.parseInt(TF_Star.getText());
+                    int finalH = Integer.parseInt(TF_Departure.getText());
+                    if (inicio > 24 || inicio < 0 || finalH > 24 || finalH < 0) {
+                        alert = new Alert(Alert.AlertType.NONE);
+                        alert.setAlertType(Alert.AlertType.ERROR);
+                        alert.setTitle("Configurations");
+                        alert.setHeaderText("ERROR");
+                        alert.setContentText("The hours entered have to be between 0 and 24 and the star time has to be less");
+                        alert.show();
+
+                    } else {
+                        if (DaysCombobox.getValue().equals("Monday to Friday")) {
+                            for (int i = inicio; i <= finalH; i++) {
+
+                                treeHours.add(i);
+                                try {
+                                    util.Data.setDataFile("Week", treeHours);
+
+                                } catch (QueueException | ListException | IOException ex) {
+                                    Logger.getLogger(FXMLAddConfigurationController.class.getName()).log(Level.SEVERE, null, ex);
+
+                                }
+
+                            }
+                            alert = new Alert(Alert.AlertType.NONE);
+                            alert.setAlertType(Alert.AlertType.INFORMATION);
+                            alert.setTitle("Configurations");
+                            alert.setContentText("The changes were made successfully");
+                            alert.show();
+                            TF_Star.setText("");
+                            TF_Departure.setText("");
+                            File file = new File("Week");
+                            
+
+                        } else if (DaysCombobox.getValue().equals("Saturday")) {
+                            for (int i = inicio; i <= finalH; i++) {
+
+                                treeHours.add(i);
+                                try {
+                                    util.Data.setDataFile("Saturday", treeHours);
+                                } catch (QueueException | ListException | IOException ex) {
+                                    Logger.getLogger(FXMLAddConfigurationController.class.getName()).log(Level.SEVERE, null, ex);
+
+                                }
+                            }
+                        }
+                        alert = new Alert(Alert.AlertType.NONE);
+                        alert.setAlertType(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Configurations");
+                        alert.setContentText("The changes were made successfully");
+                        alert.show();
+                        TF_Star.setText("");
+                        TF_Departure.setText("");
+
+                    }
+
+                }
+            }
+
+        } catch (NumberFormatException ex) {
+            alert = new Alert(Alert.AlertType.NONE);
+            alert.setAlertType(Alert.AlertType.ERROR);
+            alert.setTitle("Configurations");
+            alert.setHeaderText("ERROR");
+            alert.setContentText("Wrong character, fill again the space");
+            alert.show();
+
+        }
+    }
 }
