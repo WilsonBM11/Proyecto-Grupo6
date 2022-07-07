@@ -315,13 +315,15 @@ public class FXMLMedicalCareController implements Initializable {
             MedicalCare A = (MedicalCare) node.data;
             if (util.Utility.equals(A.getPatientID(), id)) {
                 List<String> arrayList = new ArrayList<>();
-                Patient p = (Patient) patientsList.getNodeById(new Patient(id, "", "", "", "", "", new Date()));
-                Doctor d = (Doctor) doctorsList.getNodeById(new Doctor(A.getDoctorID(), "", "", "", "", "", new Date()));
-                Sickness s = (Sickness) sicknessList.getSicknessById(A.getSicknessID());
-                arrayList.add(String.valueOf(p.getId()));
-                arrayList.add(String.valueOf(d.getId()));
+                int temp = Sickness.getConsecutivo();
+                Sickness aux = new Sickness("");
+                aux.setId(A.getSicknessID());
+                Sickness s = (Sickness) sicknessList.getSicknessById(aux);
+                Sickness.setConsecutivo(temp);
+                arrayList.add(String.valueOf(A.getPatientID()));
+                arrayList.add(String.valueOf(A.getDoctorID()));
                 arrayList.add(A.getDateTime().toString());
-                arrayList.add(s.getDescription());
+                arrayList.add(String.valueOf(s.getDescription()));
                 arrayList.add(A.getAnnotations());
                 tableViewData.add(arrayList);
             }

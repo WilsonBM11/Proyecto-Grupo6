@@ -8,28 +8,26 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="bp" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="605.0" prefWidth="1008.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.FXMLMantenimientoPascientesController">
+<BorderPane fx:id="bp" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="605.0" prefWidth="1008.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.FXMLPagoConsultaController">
    <center>
       <AnchorPane prefHeight="570.0" prefWidth="1008.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
          <children>
             <AnchorPane layoutY="-8.0" prefHeight="93.0" prefWidth="1008.0" style="-fx-background-color: #0174DF;">
                <children>
-                  <Label layoutX="339.0" layoutY="32.0" text=" Mantenimiento de Pacientes ">
+                  <Label layoutX="404.0" layoutY="32.0" text="Pago de Consulta">
                      <font>
                         <Font name="Arial" size="25.0" />
                      </font>
                   </Label>
                </children>
             </AnchorPane>
-            <TableView fx:id="TableView" layoutX="2.0" layoutY="100.0" prefHeight="386.0" prefWidth="1004.0">
+            <TableView fx:id="TableView" layoutX="41.0" layoutY="100.0" prefHeight="386.0" prefWidth="920.0">
               <columns>
-                <TableColumn fx:id="IDcolumn" prefWidth="109.0" text="Id" />
-                  <TableColumn fx:id="FirstNameColumn" onEditCommit="#FirstNameCommit" prefWidth="114.0" text="First Name" />
-                <TableColumn fx:id="LastNameColumn" onEditCommit="#LastNameCommit" prefWidth="148.0" text="Last Name" />
-                  <TableColumn fx:id="PhoneNumberColumn" onEditCommit="#PhoneNumberCommit" prefWidth="113.0" text="Phone Number" />
-                  <TableColumn fx:id="EmailColumn" onEditCommit="#EmailCommit" prefWidth="195.0" text="Email" />
-                  <TableColumn fx:id="AddressColumn" onEditCommit="#AddressCommit" prefWidth="187.0" text="Address" />
-                  <TableColumn fx:id="AgeColumn" onEditCommit="#BirthdayCommit" prefWidth="136.0" text="Birthday" />
+                <TableColumn fx:id="patientColumn" onEditCommit="#patientColumnOnEditCommit" prefWidth="210.00002670288086" text="Patient" />
+                  <TableColumn fx:id="paymentModeColumn" onEditCommit="#paymentModeColumnOnEditCommit" prefWidth="145.99998474121094" text="Payment Mode" />
+                <TableColumn fx:id="serviceChargeColumn" onEditCommit="#serviceChargeColumnOnEditCommit" prefWidth="168.0" text="Service Charge" />
+                  <TableColumn fx:id="billingDateColumn" onEditCommit="#billingDateColumnOnEditCommit" prefWidth="185.99993896484375" text="Billing Date" />
+                  <TableColumn fx:id="totalChargeColumn" onEditCommit="#totalChargeColumnOnEditCommit" prefWidth="207.99993896484375" text="Total Charge" />
               </columns>
             </TableView>
             <Button layoutX="33.0" layoutY="517.0" mnemonicParsing="false" onAction="#AddCode" prefHeight="50.0" prefWidth="185.0" style="-fx-background-color: #0174DF;" text="Add" />
