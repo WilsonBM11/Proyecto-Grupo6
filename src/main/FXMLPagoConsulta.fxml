@@ -27,7 +27,7 @@
                   <TableColumn fx:id="paymentModeColumn" onEditCommit="#paymentModeColumnOnEditCommit" prefWidth="145.99998474121094" text="Payment Mode" />
                 <TableColumn fx:id="serviceChargeColumn" onEditCommit="#serviceChargeColumnOnEditCommit" prefWidth="168.0" text="Service Charge" />
                   <TableColumn fx:id="billingDateColumn" prefWidth="185.99993896484375" text="Billing Date" />
-                  <TableColumn fx:id="totalChargeColumn" onEditCommit="#totalChargeColumnOnEditCommit" prefWidth="207.99993896484375" text="Total Charge" />
+                  <TableColumn fx:id="totalChargeColumn" prefWidth="207.99993896484375" text="Total Charge" />
               </columns>
             </TableView>
             <Button layoutX="33.0" layoutY="517.0" mnemonicParsing="false" onAction="#AddCode" prefHeight="50.0" prefWidth="185.0" style="-fx-background-color: #0174DF;" text="Add" />

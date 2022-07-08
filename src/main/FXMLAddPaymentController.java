@@ -118,8 +118,9 @@ public class FXMLAddPaymentController implements Initializable {
 
                 try {
                     Date date = util.Utility.stringToDate2(TF_BILLINGDATE.getText());
-
-                    Payment payment = new Payment(Integer.parseInt(TF_PATIENTID.getText()), TF_PAYMENTMODE.getText(), Double.parseDouble(TF_SERVICECHARGE.getText()), date, Double.parseDouble(TF_TOTALCHARGE.getText()));
+                    
+                    double totalCharge = Double.parseDouble(TF_SERVICECHARGE.getText()) * (1 + 0.3);
+                    Payment payment = new Payment(Integer.parseInt(TF_PATIENTID.getText()), TF_PAYMENTMODE.getText(), Double.parseDouble(TF_SERVICECHARGE.getText()), date, totalCharge);
                     try {
                         paymentqueue.enQueue(payment);
                     } catch (QueueException ex) {
@@ -166,8 +167,9 @@ public class FXMLAddPaymentController implements Initializable {
                 try {
                     String sDate1 = TF_BILLINGDATE.getText();
                     Date date1 = new SimpleDateFormat("yyyy/MM/dd").parse(sDate1);
-
-                    Payment payment = new Payment(Integer.parseInt(TF_PATIENTID.getText()), TF_PAYMENTMODE.getText(), Double.parseDouble(TF_SERVICECHARGE.getText()), date1, Double.parseDouble(TF_TOTALCHARGE.getText()));
+                    
+                    double totalCharge = Double.parseDouble(TF_SERVICECHARGE.getText()) * (1 + 0.3);
+                    Payment payment = new Payment(Integer.parseInt(TF_PATIENTID.getText()), TF_PAYMENTMODE.getText(), Double.parseDouble(TF_SERVICECHARGE.getText()), date1, totalCharge);
                     try {
                         paymentqueue.enQueue(payment);
                     } catch (QueueException ex) {

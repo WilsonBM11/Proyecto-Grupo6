@@ -207,7 +207,7 @@ public class FXMLPagoConsultaController implements Initializable {
     @FXML
     private void ContainsCode(ActionEvent event) {
     }
-
+    
     @FXML
     private void paymentModeColumnOnEditCommit(TableColumn.CellEditEvent<List<String>, String> event) throws ParseException {
         try {
@@ -226,21 +226,21 @@ public class FXMLPagoConsultaController implements Initializable {
             Logger.getLogger(FXMLPagoConsultaController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+    
     @FXML
-
     private void serviceChargeColumnOnEditCommit(TableColumn.CellEditEvent<List<String>, String> event) {
         try {
             String serviceCharge = event.getRowValue().get(2);
             String sDate1 = event.getRowValue().get(3);
             Date date1 = new SimpleDateFormat("yyyy/MM/dd").parse(sDate1);
             Payment oldPayment = new Payment(Integer.parseInt(event.getRowValue().get(0)), event.getRowValue().get(1), Double.parseDouble(serviceCharge), date1, Double.parseDouble(event.getRowValue().get(4)));
-            Payment newPayment = new Payment(Integer.parseInt(event.getRowValue().get(0)), event.getRowValue().get(1), Double.parseDouble(event.getNewValue()), date1, Double.parseDouble(event.getRowValue().get(4)));
+            double newTotalCharge = Double.parseDouble(event.getNewValue()) * (1 + 0.3);
+            Payment newPayment = new Payment(Integer.parseInt(event.getRowValue().get(0)), event.getRowValue().get(1), Double.parseDouble(event.getNewValue()), date1, newTotalCharge);
             paymentqueue.replace(paymentqueue, oldPayment, newPayment);
             System.out.println(paymentqueue.toString());
             Payment.setConsecutivo(oldPayment.getId() - 1);
             newPayment.setId(Payment.getConsecutivo());
-
+            this.TableView.setItems(getData());
             util.Data.setDataFile("payments", paymentqueue);
         } catch (ParseException | QueueException | ListException | IOException ex) {
             Logger.getLogger(FXMLPagoConsultaController.class.getName()).log(Level.SEVERE, null, ex);
@@ -278,22 +278,31 @@ public class FXMLPagoConsultaController implements Initializable {
         }
         return data;
     }
+    
+//    private void totalChargeColumnOnEditCommit(TableColumn.CellEditEvent<List<String>, String> event) {
+//        try {
+//            String totalCharge = event.getRowValue().get(4);
+//            String sDate1 = event.getRowValue().get(3);
+//            Date date1 = new SimpleDateFormat("yyyy/MM/dd").parse(sDate1);
+//            Payment oldPayment = new Payment(Integer.parseInt(event.getRowValue().get(0)), event.getRowValue().get(1), Double.parseDouble(event.getRowValue().get(2)), date1, Double.parseDouble(totalCharge));
+//            Payment newPayment = new Payment(Integer.parseInt(event.getRowValue().get(0)), event.getRowValue().get(1), Double.parseDouble(event.getNewValue()), date1, Double.parseDouble(event.getNewValue()));
+//            paymentqueue.replace(paymentqueue, oldPayment, newPayment);
+//            Payment.setConsecutivo(oldPayment.getId() - 1);
+//            newPayment.setId(Payment.getConsecutivo());
+//
+//            util.Data.setDataFile("payments", paymentqueue);
+//        } catch (ParseException | QueueException | ListException | IOException ex) {
+//            Logger.getLogger(FXMLPagoConsultaController.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//    }
 
-    @FXML
-    private void totalChargeColumnOnEditCommit(TableColumn.CellEditEvent<List<String>, String> event) {
-        try {
-            String totalCharge = event.getRowValue().get(4);
-            String sDate1 = event.getRowValue().get(3);
-            Date date1 = new SimpleDateFormat("yyyy/MM/dd").parse(sDate1);
-            Payment oldPayment = new Payment(Integer.parseInt(event.getRowValue().get(0)), event.getRowValue().get(1), Double.parseDouble(event.getRowValue().get(2)), date1, Double.parseDouble(totalCharge));
-            Payment newPayment = new Payment(Integer.parseInt(event.getRowValue().get(0)), event.getRowValue().get(1), Double.parseDouble(event.getNewValue()), date1, Double.parseDouble(event.getNewValue()));
-            paymentqueue.replace(paymentqueue, oldPayment, newPayment);
-            Payment.setConsecutivo(oldPayment.getId() - 1);
-            newPayment.setId(Payment.getConsecutivo());
+    
+    
 
-            util.Data.setDataFile("payments", paymentqueue);
-        } catch (ParseException | QueueException | ListException | IOException ex) {
-            Logger.getLogger(FXMLPagoConsultaController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+   
+    
+
+    
+
+    
 }
