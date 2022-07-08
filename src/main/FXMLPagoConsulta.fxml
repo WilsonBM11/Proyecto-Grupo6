@@ -14,7 +14,7 @@
          <children>
             <AnchorPane layoutY="-8.0" prefHeight="93.0" prefWidth="1008.0" style="-fx-background-color: #0174DF;">
                <children>
-                  <Label layoutX="404.0" layoutY="32.0" text="Pago de Consulta">
+                  <Label layoutX="455.0" layoutY="32.0" text="Payment">
                      <font>
                         <Font name="Arial" size="25.0" />
                      </font>
@@ -23,10 +23,10 @@
             </AnchorPane>
             <TableView fx:id="TableView" layoutX="41.0" layoutY="100.0" prefHeight="386.0" prefWidth="920.0">
               <columns>
-                <TableColumn fx:id="patientColumn" onEditCommit="#patientColumnOnEditCommit" prefWidth="210.00002670288086" text="Patient" />
+                <TableColumn fx:id="patientColumn" prefWidth="210.00002670288086" text="Patient" />
                   <TableColumn fx:id="paymentModeColumn" onEditCommit="#paymentModeColumnOnEditCommit" prefWidth="145.99998474121094" text="Payment Mode" />
                 <TableColumn fx:id="serviceChargeColumn" onEditCommit="#serviceChargeColumnOnEditCommit" prefWidth="168.0" text="Service Charge" />
-                  <TableColumn fx:id="billingDateColumn" onEditCommit="#billingDateColumnOnEditCommit" prefWidth="185.99993896484375" text="Billing Date" />
+                  <TableColumn fx:id="billingDateColumn" prefWidth="185.99993896484375" text="Billing Date" />
                   <TableColumn fx:id="totalChargeColumn" onEditCommit="#totalChargeColumnOnEditCommit" prefWidth="207.99993896484375" text="Total Charge" />
               </columns>
             </TableView>

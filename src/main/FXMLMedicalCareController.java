@@ -49,6 +49,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.BorderPane;
 import javafx.util.Callback;
 import util.Data;
@@ -322,6 +323,7 @@ public class FXMLMedicalCareController implements Initializable {
                 Sickness.setConsecutivo(temp);
                 arrayList.add(String.valueOf(A.getPatientID()));
                 arrayList.add(String.valueOf(A.getDoctorID()));
+                 
                 arrayList.add(A.getDateTime().toString());
                 arrayList.add(String.valueOf(s.getDescription()));
                 arrayList.add(A.getAnnotations());

@@ -10,6 +10,8 @@ import domain.BTreeNode;
 import domain.CircularDoublyLinkedList;
 import domain.Configurations;
 import domain.Doctor;
+import domain.HeaderLinkedQueue;
+import domain.LinkedQueue;
 import domain.Queue;
 import domain.List;
 import domain.ListException;
@@ -42,12 +44,12 @@ import javax.swing.JOptionPane;
  * @author Wilson Bonilla Mata
  */
 public class Data {
-    
+
     public static boolean fileExists(String fileName) {
         File file = new File(fileName + ".txt");
         return file.exists();
     }
-    
+
     private static PrintStream getPrintStream(String fileName) {
         PrintStream ps = null;
         //"operations.txt"
@@ -77,14 +79,20 @@ public class Data {
         return bfr;
     }
 
-
     public static void setDataFile(String fileName, Object TDA) throws QueueException, ListException, IOException {
         PrintStream ps = getPrintStream(fileName);
         switch (instanceOf(TDA)) {
             case "Queue":
                 Queue queue = (Queue) TDA;
+                HeaderLinkedQueue aux = new HeaderLinkedQueue();
+
                 while (!queue.isEmpty()) {
-                    ps.println(getString(fileName, queue.deQueue()));
+                    ps.println(getString(fileName, queue.front()));
+                    aux.enQueue(queue.deQueue());
+
+                }
+                while (!aux.isEmpty()) {
+                    queue.enQueue(aux.deQueue());
                 }
                 break;
             case "List":
@@ -95,13 +103,13 @@ public class Data {
                 break;
             case "Tree":
                 Tree tree = (Tree) TDA;
-                setTreeDataFile(tree.getRoot(),fileName,ps);
+                setTreeDataFile(tree.getRoot(), fileName, ps);
                 break;
         }
     }
-    
+
     private static void setTreeDataFile(BTreeNode node, String fileName, PrintStream ps) {
-        if(node != null){
+        if (node != null) {
             ps.println(getString(fileName, node.data));
             setTreeDataFile(node.left, fileName, ps);
             setTreeDataFile(node.right, fileName, ps);
@@ -144,9 +152,15 @@ public class Data {
     }
 
     private static String instanceOf(Object a) {
-        if(a instanceof List) return "List";
-        if(a instanceof Queue) return "Queue";
-        if(a instanceof Tree) return "Tree";
+        if (a instanceof List) {
+            return "List";
+        }
+        if (a instanceof Queue) {
+            return "Queue";
+        }
+        if (a instanceof Tree) {
+            return "Tree";
+        }
 
         return "unknown";
     }
@@ -166,78 +180,78 @@ public class Data {
             case "doctors":
                 return new Doctor(Integer.parseInt(aux.get(0)), aux.get(1), aux.get(2), aux.get(3),
                         aux.get(4), aux.get(5), util.Utility.stringToDate(aux.get(6)));
+               
             case "appointment":
                 Appointment a = new Appointment(Integer.parseInt(aux.get(1)),
-                            Integer.parseInt(aux.get(2)), LocalDateTime.parse(aux.get(3)), aux.get(4));
+                        Integer.parseInt(aux.get(2)), LocalDateTime.parse(aux.get(3)), aux.get(4));
                 a.setId(Integer.parseInt(aux.get(0)));
-                Appointment.setConsecutivo(a.getId()+1);
+                Appointment.setConsecutivo(a.getId() + 1);
                 return a;
             case "sickness":
                 Sickness s = new Sickness(aux.get(1));
                 s.setId(Integer.parseInt(aux.get(0)));
-                Sickness.setConsecutivo(s.getId()+1);
+                Sickness.setConsecutivo(s.getId() + 1);
                 return s;
             case "medicalcare":
                 MedicalCare mc = new MedicalCare(Integer.parseInt(aux.get(1)),
                         Integer.parseInt(aux.get(2)), LocalDate.parse(aux.get(3)), LocalTime.parse(aux.get(4)),
                         Integer.parseInt(aux.get(5)), aux.get(6));
                 mc.setId(Integer.parseInt(aux.get(0)));
-                MedicalCare.setConsecutivo(mc.getId()+1);
+                MedicalCare.setConsecutivo(mc.getId() + 1);
                 return mc;
             case "payments":
                 Payment pay = new Payment(Integer.parseInt(aux.get(1)), aux.get(2), Double.parseDouble(aux.get(3)),
-                        util.Utility.stringToDate(aux.get(4)), Double.parseDouble(aux.get(5)));
+                        util.Utility.stringToDate2(aux.get(4)), Double.parseDouble(aux.get(5)));
                 pay.setId(Integer.parseInt(aux.get(0)));
-                Payment.setConsecutivo(pay.getId()+1);
+                Payment.setConsecutivo(pay.getId() + 1);
                 return pay;
             case "numbers":
                 return Integer.parseInt(aux.get(0));
             case "configuration":
-                Configurations c = new Configurations(aux.get(0), aux.get(1),aux.get(2), aux.get(3),aux.get(4));
+                Configurations c = new Configurations(aux.get(0), aux.get(1), aux.get(2), aux.get(3), aux.get(4));
                 return c;
-             case "Week":
+            case "Week":
                 return Integer.parseInt(aux.get(0));
-              case "Saturday":
+            case "Saturday":
                 return Integer.parseInt(aux.get(0));
         }
         return null;
     }
 
     private static String getString(String fileName, Object data) {
-        
+
         switch (fileName) {
             case "patients":
                 Patient p = (Patient) data;
-                return p.getId()+";"+p.getFirstname()+";"+p.getLastname()+";"+p.getPhoneNumber()+";"+p.getEmail()+";"+p.getAddress()+";"+util.Utility.dateFormat(p.getBirthday());
+                return p.getId() + ";" + p.getFirstname() + ";" + p.getLastname() + ";" + p.getPhoneNumber() + ";" + p.getEmail() + ";" + p.getAddress() + ";" + util.Utility.dateFormat(p.getBirthday());
             case "doctors":
                 Doctor d = (Doctor) data;
-                return d.getId()+";"+d.getFirstName()+";"+d.getLastName()+";"+d.getPhoneNumber()+";"+d.getEmail()+";"+d.getAddress()+";"+util.Utility.dateFormat(d.getBirthday());
+                return d.getId() + ";" + d.getFirstName() + ";" + d.getLastName() + ";" + d.getPhoneNumber() + ";" + d.getEmail() + ";" + d.getAddress() + ";" + util.Utility.dateFormat(d.getBirthday());
             case "appointment":
                 Appointment a = (Appointment) data;
-                return a.getId()+";"+a.getPatientID()+";"+a.getDoctorID()+";"+a.getDateTime().toString()+";"+a.getRemarks();
+                return a.getId() + ";" + a.getPatientID() + ";" + a.getDoctorID() + ";" + a.getDateTime().toString() + ";" + a.getRemarks();
             case "sickness":
                 Sickness s = (Sickness) data;
-                return s.getId()+";"+s.getDescription();
+                return s.getId() + ";" + s.getDescription();
             case "medicalcare":
                 MedicalCare mc = (MedicalCare) data;
-                return mc.getId()+";"+mc.getDoctorID()+";"+mc.getPatientID()+";"+mc.getDateTime().toLocalDate().toString()+";"+
-                       mc.getDateTime().toLocalTime().toString()+";"+mc.getSicknessID()+";"+mc.getAnnotations();
+                return mc.getId() + ";" + mc.getDoctorID() + ";" + mc.getPatientID() + ";" + mc.getDateTime().toLocalDate().toString() + ";"
+                        + mc.getDateTime().toLocalTime().toString() + ";" + mc.getSicknessID() + ";" + mc.getAnnotations();
             case "payments":
                 Payment pay = (Payment) data;
-                return pay.getId()+";"+pay.getPatientID()+";"+pay.getPaymentMode()+";"+pay.getServiceCharge()+";"+
-                       util.Utility.dateFormat(pay.getBillingDate())+";"+pay.getTotalCharge();
+                return pay.getId() + ";" + pay.getPatientID() + ";" + pay.getPaymentMode() + ";" + pay.getServiceCharge() + ";"
+                        + util.Utility.dateFormat2(pay.getBillingDate()) + ";" + pay.getTotalCharge();
             case "numbers":
                 return String.valueOf(data);
             case "configuration":
                 Configurations c = (Configurations) data;
-                return c.getClinicName()+";"+c.getTelefono()+";"+c.getCorreoElectronico()+";"+c.getImagen()+";"+c.getImagenCorreo();
+                return c.getClinicName() + ";" + c.getTelefono() + ";" + c.getCorreoElectronico() + ";" + c.getImagen() + ";" + c.getImagenCorreo();
             case "Week":
                 return String.valueOf(data);
-             case "Saturday":
+            case "Saturday":
                 return String.valueOf(data);
         }
         return null;
     }
 
-    
 }

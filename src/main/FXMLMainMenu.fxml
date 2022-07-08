@@ -43,6 +43,11 @@
                   <Font name="Arial" size="40.0" />
                </font>
             </Button>
+            <Button layoutX="10.0" layoutY="385.0" mnemonicParsing="false" onAction="#PaymentCode" prefHeight="91.0" prefWidth="334.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 0px 0px 2px 0px;" text="Payment" textFill="WHITE">
+               <font>
+                  <Font name="Arial" size="40.0" />
+               </font>
+            </Button>
             <Button layoutX="10.0" layoutY="391.0" mnemonicParsing="false" onAction="#ReportsCode" prefHeight="91.0" prefWidth="334.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 0px 0px 2px 0px;" text="Reports" textFill="WHITE">
                <font>
                   <Font name="Arial" size="40.0" />

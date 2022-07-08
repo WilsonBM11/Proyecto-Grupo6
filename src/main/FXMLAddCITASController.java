@@ -5,22 +5,14 @@
 package main;
 
 import domain.Appointment;
-import domain.BST;
-import domain.BTreeNode;
 import domain.CircularDoublyLinkedList;
 import domain.CircularLinkedList;
 import domain.Doctor;
 import domain.DoublyLinkedList;
 import domain.ListException;
-import domain.MedicalCare;
-import domain.Node;
 import domain.Patient;
 import domain.QueueException;
-import domain.Sickness;
 import domain.SinglyLinkedList;
-import domain.TreeException;
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -163,7 +155,7 @@ public class FXMLAddCITASController implements Initializable {
     private void registerOnAction(ActionEvent event) throws ListException {
         String str = TEXTFIELDTIME.getText();
         //Se formatea la fecha para que trabaje con horas y minutos
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy H:mm");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy H:mm");
         LocalDateTime dateTime = LocalDateTime.parse(str, formatter);
         //Se crea un objeto appointment que es el primero que se va a agregar cuando la lista este vacia
         Appointment appointment = new Appointment(Integer.parseInt(IDPatient.getText()),
@@ -323,7 +315,7 @@ public class FXMLAddCITASController implements Initializable {
         Date date = dateCalendar.getTime();
         //Se formatea la fecha
 
-        SimpleDateFormat format1 = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat format1 = new SimpleDateFormat("dd/MM/yyyy");
         String date1 = format1.format(date);
         //Las horas se obtienen del combobox time y posteriomente se une con la fecha 
         String time = (String) TIMECOMBOBOX.getValue();

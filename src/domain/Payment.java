@@ -127,6 +127,11 @@ public class Payment {
     public void setId(int id) {
         this.id = id;
     }
+
+    @Override
+    public String toString() {
+        return "Payment" + "id = " + id + ", patientID = " + patientID + ", paymentMode = " + paymentMode + ", serviceCharge = " + serviceCharge + ", billingDate = " + billingDate + ", totalCharge = " + totalCharge;
+    }
     
     
     

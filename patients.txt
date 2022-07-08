@@ -3,7 +3,7 @@
 305380944;Wilson;Bonilla Mata;87905871;wilsonbm11@gmail.com;Tejar, El Guarco, Cartago;11/06/2002
 382748328;Gabriel;Duran;88297945;gabrieldj71@hotmail.com;Cartago;24/05/1971
 244284328;Jose;Gonzalez Angulo;882974621;duranartaviamariano@hotmail.com;Cartago;19/04/1998
-406481203;Fiorella;Salguero Cambronero;718392384;duranartaviamariano@hotmail.com;Turrialba;01/03/1996
+406481203;Fiorella;Salguero Cambronero;718392384;duranartaviamariano@hotmail.com;Turrialba;01/03/1997
 508437138;Paola;Araya Fonseca;70057438;marianoda717202@gmail.com;Esparza;09/08/1998
 108390314;Shirley;Artavia Gonzalez;70765626;ventas@biogeneticacr.com;San Rafael de Oreamuno;11/11/1972
 231274613;Mariano;Duran Artavia;70765626;marianoda717202@gmail.com;Cartago;13/08/1970

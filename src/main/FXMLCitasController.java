@@ -309,7 +309,7 @@ public class FXMLCitasController implements Initializable {
                     arrayList.add(String.valueOf(A.getId()));
                     arrayList.add(String.valueOf(A.getPatientID()));
                     arrayList.add(String.valueOf(A.getDoctorID()));
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
                     arrayList.add(String.valueOf(A.getDateTime()));
                     arrayList.add(A.getRemarks());
                     data.add(arrayList);
@@ -464,18 +464,6 @@ public class FXMLCitasController implements Initializable {
             }
         }
         return data;
-    }
-
-    @FXML
-    private void ClearCode(ActionEvent event) {
-        try {
-            AppointmentList.clear();
-            TableView.getItems().clear();
-            util.Data.setDataFile("appointment", AppointmentList);
-        } catch (QueueException | ListException | IOException ex) {
-            Logger.getLogger(FXMLCitasController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
     }
 
 }

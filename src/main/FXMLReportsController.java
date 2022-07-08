@@ -33,6 +33,7 @@ import domain.QueueException;
 import domain.Sickness;
 import domain.SinglyLinkedList;
 import domain.TreeException;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;

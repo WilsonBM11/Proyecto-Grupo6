@@ -14,7 +14,7 @@
          <children>
             <AnchorPane layoutY="-8.0" prefHeight="93.0" prefWidth="1008.0" style="-fx-background-color: #0174DF;">
                <children>
-                  <Label layoutX="221.0" layoutY="32.0" text=" Mantenimiento de Enfermedades y Padecimientos">
+                  <Label layoutX="393.0" layoutY="32.0" text="Sickness Maintance">
                      <font>
                         <Font name="Arial" size="25.0" />
                      </font>

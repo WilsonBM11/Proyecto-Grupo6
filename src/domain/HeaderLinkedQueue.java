@@ -145,5 +145,44 @@ public class HeaderLinkedQueue implements Queue{
         }
         return result;
     }
+        public void remove(Object element){
+        HeaderLinkedQueue aux = new HeaderLinkedQueue();
+        try {
+            while (!isEmpty()) {
+                if (util.Utility.equals(front(), element)) {
+                    deQueue();
+                } else {
+                    aux.enQueue(deQueue());
+                }
+            }
+            while(!aux.isEmpty()){
+                enQueue(aux.deQueue());
+            }
+        } catch (QueueException ex) {
+            Logger.getLogger(HeaderLinkedQueue.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+         public Queue replace(Queue q, Object obj1, Object obj2) throws QueueException {
+        if (q.isEmpty()) {
+            throw new QueueException("Queue is empty");
+        }
+        LinkedQueue aux = new LinkedQueue();
+        if(q.contains(obj1)){
+            while(!q.isEmpty()){
+                if(util.Utility.equals(q.front(), obj1)){
+                    q.deQueue();
+                    aux.enQueue(obj2);
+                }else
+                    aux.enQueue(q.deQueue());
+               
+            }
+            while(!aux.isEmpty()){
+                q.enQueue(aux.deQueue());
+            }
+        }
+        
+        return q;
+                    
+    }
     
 }

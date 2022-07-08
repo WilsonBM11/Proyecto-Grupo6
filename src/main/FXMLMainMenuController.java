@@ -38,6 +38,7 @@ import javafx.scene.text.Text;
 public class FXMLMainMenuController implements Initializable {
     BST tree;
     Image image;
+    
     private Label label;
     @FXML
     private BorderPane bp;
@@ -66,6 +67,7 @@ public class FXMLMainMenuController implements Initializable {
                 Logger.getLogger(FXMLAddDoctorController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        
         this.txtMessage.setText(getClinicName());
         this.image = new Image(getClinicImage());
         this.TXTTelefono.setText("Phone Number: " + getPhone());
@@ -111,6 +113,7 @@ public class FXMLMainMenuController implements Initializable {
         System.exit(0); //FORMA VALIDA
    
     }
+    
 
     @FXML
     private void PascientesCode(ActionEvent event) {
@@ -208,6 +211,11 @@ public class FXMLMainMenuController implements Initializable {
     @FXML
     private void ConfigurationCode(ActionEvent event) {
         loadPage(getClass().getResource("FXMLAddConfiguration.fxml"), bp);
+    }
+
+    @FXML
+    private void PaymentCode(ActionEvent event) {
+             loadPage(getClass().getResource("FXMLPagoConsulta.fxml"), bp);
     }
 
    

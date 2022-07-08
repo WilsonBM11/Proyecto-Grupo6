@@ -11,6 +11,7 @@ import domain.CircularLinkedList;
 import domain.Doctor;
 import domain.DoublyLinkedList;
 import domain.Patient;
+import domain.Payment;
 import domain.Sickness;
 import domain.SinglyLinkedList;
 import java.text.DecimalFormat;
@@ -150,6 +151,7 @@ public class Utility {
         if(a instanceof Sickness  && b instanceof Sickness)return "Sickness";
         if(a instanceof Patient  && b instanceof Patient)return "Patient";
         if(a instanceof Appointment  && b instanceof Appointment)return "Appointment";
+        if (a instanceof Payment  && b instanceof Payment ) return "Payment";
         return "unknown";
     }
 
@@ -185,6 +187,11 @@ public class Utility {
                Appointment b8 = (Appointment)b;
                return (a8.getPatientID() == b8.getPatientID() && a8.getDateTime().equals(b8.getDateTime())) 
                        || (a8.getDoctorID() == b8.getDoctorID() && a8.getDateTime().equals(b8.getDateTime())) ;
+           case "Payment":
+               Payment a9 = (Payment)a;
+               Payment b9 = (Payment)b;
+               return (a9.getPatientID() == b9.getPatientID() &&  a9.getBillingDate().equals(b9.getBillingDate()));
+               
         }
         return false;
     }
@@ -274,9 +281,21 @@ public class Utility {
     public static String dateFormat(Date value) {
         return new SimpleDateFormat("dd/MM/yyyy").format(value);
     }
+     public static String dateFormat2(Date value) {
+        return new SimpleDateFormat("yyyy/MM/dd").format(value);
+    }
     
     public static Date stringToDate(String value) {
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        try {
+            return format.parse(value);
+        } catch (ParseException ex) {
+            Logger.getLogger(Utility.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+     public static Date stringToDate2(String value) {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
         try {
             return format.parse(value);
         } catch (ParseException ex) {

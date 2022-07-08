@@ -434,9 +434,7 @@ try {
             this.PatientList.modificar(oldPatient, newPatient);
             try {
                 util.Data.setDataFile("patients", PatientList);
-            } catch (QueueException ex) {
-                Logger.getLogger(FXMLMantenimientoPascientesController.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
+            } catch (QueueException | IOException ex) {
                 Logger.getLogger(FXMLMantenimientoPascientesController.class.getName()).log(Level.SEVERE, null, ex);
             }
             if (this.PatientList != null && !this.PatientList.isEmpty()) {
@@ -465,9 +463,7 @@ try {
                 } catch (ListException ex) {
                     Logger.getLogger(FXMLMantenimientoPascientesController.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            } catch (QueueException ex) {
-                Logger.getLogger(FXMLMantenimientoDoctoresController.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
+            } catch (QueueException | IOException ex) {
                 Logger.getLogger(FXMLMantenimientoDoctoresController.class.getName()).log(Level.SEVERE, null, ex);
             }
             if (this.PatientList != null && !this.PatientList.isEmpty()) {
