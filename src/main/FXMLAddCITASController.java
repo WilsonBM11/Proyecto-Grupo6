@@ -385,10 +385,9 @@ public class FXMLAddCITASController implements Initializable {
                 }
                 return data;
      }
-
-    @FXML
-    private void DaySelectedCode(ActionEvent event) throws ListException {
-        switch (CalendarChoice.getValue().getDayOfWeek()) {
+    
+     private void getTimeComboBox() throws ListException{
+         switch (CalendarChoice.getValue().getDayOfWeek()) {
             case SATURDAY:
                TIMECOMBOBOX.getItems().clear();
                 TIMECOMBOBOX.setItems(getComboBoxHoursS());
@@ -417,5 +416,12 @@ public class FXMLAddCITASController implements Initializable {
                 TIMECOMBOBOX.getItems().clear();
 
         }
+     }
+
+    @FXML
+    private void CalendarChoiceOnAction(ActionEvent event) throws ListException {
+         getTimeComboBox();
+        TIMECOMBOBOX.setDisable(false);
     }
+
 }
