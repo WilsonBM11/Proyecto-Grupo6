@@ -61,7 +61,7 @@
                   <Font name="Arial" size="10.0" />
                </font>
             </Button>
-            <Button fx:id="scheduleAppoimentButton" layoutX="19.0" layoutY="575.0" mnemonicParsing="false" onAction="#scheduleAppoimentButtonOnAction" prefHeight="33.0" prefWidth="313.0" style="-fx-background-color: #0174DF;" text="Schedule New Appoiment">
+            <Button fx:id="scheduleAppoimentButton" disable="true" layoutX="19.0" layoutY="575.0" mnemonicParsing="false" onAction="#scheduleAppoimentButtonOnAction" prefHeight="33.0" prefWidth="313.0" style="-fx-background-color: #0174DF;" text="Schedule New Appoiment">
                <font>
                   <Font name="Arial" size="10.0" />
                </font>

@@ -100,6 +100,7 @@ public class FXMLMedicalCareController implements Initializable {
     private Button scheduleAppoimentButton;
     @FXML
     private BorderPane bp;
+    private MedicalCare currentMedicalCare;
 
     /**
      * Initializes the controller class.
@@ -279,8 +280,10 @@ public class FXMLMedicalCareController implements Initializable {
     @FXML
     private void addPatientInformationOnAction(ActionEvent event) {
         if (!"".equals(annotationsTextArea.getText())) {
-            medicalCareList.add(new MedicalCare(getId(String.valueOf(doctorsComboBox.getValue())), getId(String.valueOf(patientsComboBox.getValue())),
-                    LocalDate.now(), LocalTime.now(), getId(String.valueOf(sicknessComboBox.getValue())), annotationsTextArea.getText()));
+            currentMedicalCare = new MedicalCare(getId(String.valueOf(doctorsComboBox.getValue())), getId(String.valueOf(patientsComboBox.getValue())),
+                    LocalDate.now(), LocalTime.now(), getId(String.valueOf(sicknessComboBox.getValue())), annotationsTextArea.getText());
+            medicalCareList.add(currentMedicalCare);
+            scheduleAppoimentButton.setDisable(false);
             try {
                 Data.setDataFile("medicalcare", medicalCareList);
                 annotationsTextArea.setText("");
@@ -299,7 +302,8 @@ public class FXMLMedicalCareController implements Initializable {
 
     @FXML
     private void scheduleAppoimentButtonOnAction(ActionEvent event) {
-        FXMLMainMenuController.loadPage(getClass().getResource("FXMLAddCITAS.fxml"), bp);
+        util.Utility.setMedicalCare(currentMedicalCare);
+        FXMLMainMenuController.loadPage(getClass().getResource("FXMLAddDatesMedicalCare.fxml"), bp);
     }
 
     public int getId(String selectedItem) {
@@ -323,7 +327,6 @@ public class FXMLMedicalCareController implements Initializable {
                 Sickness.setConsecutivo(temp);
                 arrayList.add(String.valueOf(A.getPatientID()));
                 arrayList.add(String.valueOf(A.getDoctorID()));
-                 
                 arrayList.add(A.getDateTime().toString());
                 arrayList.add(String.valueOf(s.getDescription()));
                 arrayList.add(A.getAnnotations());

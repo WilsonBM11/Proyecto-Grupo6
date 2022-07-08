@@ -76,8 +76,8 @@ public class Mail {
             text.setContent(textEmail, "text/html");
 
             BodyPart image = new MimeBodyPart();
-            image.setDataHandler((new DataHandler(new FileDataSource(getImage()))));
-            image.setFileName("Clinica Grupo 06");
+            image.setDataHandler((new DataHandler(new FileDataSource("src/images/Logo2.jpeg"))));
+            image.setFileName(getClinicName());
 
             MimeMultipart parts = new MimeMultipart();
             parts.addBodyPart(text);

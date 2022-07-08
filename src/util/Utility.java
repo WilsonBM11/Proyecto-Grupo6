@@ -10,6 +10,7 @@ import domain.CircularDoublyLinkedList;
 import domain.CircularLinkedList;
 import domain.Doctor;
 import domain.DoublyLinkedList;
+import domain.MedicalCare;
 import domain.Patient;
 import domain.Payment;
 import domain.Sickness;
@@ -35,6 +36,7 @@ public class Utility {
     private static DoublyLinkedList doublyLinkedList = new DoublyLinkedList();
     private static CircularLinkedList circularLinkedList = new CircularLinkedList();
     private static CircularDoublyLinkedList circularDoublyLinkedList = new CircularDoublyLinkedList();
+    private static MedicalCare medicalCare;
 
     private static String criterioOrdenamiento;
 
@@ -78,7 +80,13 @@ public class Utility {
         Utility.circularDoublyLinkedList = circularDoublyLinkedList;
     }
 
-    
+    public static MedicalCare getMedicalCare() {
+        return medicalCare;
+    }
+
+    public static void setMedicalCare(MedicalCare medicalCare) {
+        Utility.medicalCare = medicalCare;
+    }
 
     private CircularLinkedList patientsList;
 
