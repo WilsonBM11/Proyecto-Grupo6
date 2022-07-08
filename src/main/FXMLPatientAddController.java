@@ -9,6 +9,8 @@ import domain.Doctor;
 import domain.ListException;
 import domain.Patient;
 import domain.QueueException;
+import domain.Security;
+import domain.SinglyLinkedList;
 import java.io.IOException;
 import java.net.URL;
 import java.text.ParseException;
@@ -37,6 +39,7 @@ import util.Mail;
 public class FXMLPatientAddController implements Initializable {
 
     private CircularLinkedList patientList;
+    private SinglyLinkedList securityList;
     private Alert alert;
     Mail m = new Mail();
     private BorderPane bp;
@@ -62,14 +65,19 @@ public class FXMLPatientAddController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        patientList = new CircularLinkedList();
-        if (util.Data.fileExists("patients")) {
-            try {
+        try {
+            patientList = new CircularLinkedList();
+            if (util.Data.fileExists("patients")) {
                 patientList = (CircularLinkedList) util.Data.getDataFile("patients", patientList);
-            } catch (QueueException | IOException ex) {
-                Logger.getLogger(FXMLPatientAddController.class.getName()).log(Level.SEVERE, null, ex);
             }
+            securityList = new SinglyLinkedList();
+            if (util.Data.fileExists("security")) {
+                securityList = (SinglyLinkedList) util.Data.getDataFile("security", securityList);
+            }
+        } catch (QueueException | IOException ex) {
+            Logger.getLogger(FXMLPatientAddController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
     }
 
     @FXML
@@ -98,6 +106,9 @@ public class FXMLPatientAddController implements Initializable {
                                     lastNTextField.getText(), PhoneTextField.getText(), TF_Email.getText(), TF_Address.getText(), date.getTime());
                             patientList.add(patient);
                             util.Data.setDataFile("patients", patientList);
+                            int contraseña = util.Utility.random(0, 10000);
+                            securityList.add(new Security(idTextField.getText(), String.valueOf(contraseña), "patient"));
+                            util.Data.setDataFile("security", securityList);
                             m.sendEmail(TF_Email.getText(), "Registro de Usuario - " + m.getClinicName(),
                                     "¡Se registro con exito su usario!<br><br>"
                                     + "A continuación se muestran los datos de su registro:<br><br>"
@@ -107,7 +118,7 @@ public class FXMLPatientAddController implements Initializable {
                                     + "Dirección: " + TF_Address.getText() + "<br><br>"
                                     + "Email: " + TF_Email.getText() + "<br><br>"
                                     + "Su usuario de ingreso al sistema es: " + idTextField.getText() + "<br><br>"
-                                    + "Su contraseña temporal de ingreso al sistema es: " + util.Utility.random(0, 10000) + "<br><br>"
+                                    + "Su contraseña temporal de ingreso al sistema es: " + contraseña + "<br><br>"
                                     + "¡Gracias por poner su salud en nuestras manos!");
 
                             idTextField.setText("");
@@ -168,6 +179,9 @@ public class FXMLPatientAddController implements Initializable {
                                     lastNTextField.getText(), PhoneTextField.getText(), TF_Email.getText(), TF_Address.getText(), date.getTime());
                             patientList.add(patient);
                             util.Data.setDataFile("patients", patientList);
+                            int contraseña = util.Utility.random(0, 10000);
+                            securityList.add(new Security(idTextField.getText(), String.valueOf(contraseña), "patient"));
+                            util.Data.setDataFile("security", securityList);
                             m.sendEmail(TF_Email.getText(), "Registro de Usuario - " + m.getClinicName(),
                                     "¡Se registro con exito su usario!<br><br>"
                                     + "A continuación se muestran los datos de su registro:<br><br>"
@@ -177,7 +191,7 @@ public class FXMLPatientAddController implements Initializable {
                                     + "Dirección: " + TF_Address.getText() + "<br><br>"
                                     + "Email: " + TF_Email.getText() + "<br><br>"
                                     + "Su usuario de ingreso al sistema es: " + idTextField.getText() + "<br><br>"
-                                    + "Su contraseña temporal de ingreso al sistema es: " + util.Utility.random(0, 10000) + "<br><br>"
+                                    + "Su contraseña temporal de ingreso al sistema es: " + contraseña + "<br><br>"
                                     + "¡Gracias por poner su salud en nuestras manos!");
 
                             idTextField.setText("");

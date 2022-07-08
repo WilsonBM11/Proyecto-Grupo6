@@ -279,30 +279,5 @@ public class FXMLPagoConsultaController implements Initializable {
         return data;
     }
     
-//    private void totalChargeColumnOnEditCommit(TableColumn.CellEditEvent<List<String>, String> event) {
-//        try {
-//            String totalCharge = event.getRowValue().get(4);
-//            String sDate1 = event.getRowValue().get(3);
-//            Date date1 = new SimpleDateFormat("yyyy/MM/dd").parse(sDate1);
-//            Payment oldPayment = new Payment(Integer.parseInt(event.getRowValue().get(0)), event.getRowValue().get(1), Double.parseDouble(event.getRowValue().get(2)), date1, Double.parseDouble(totalCharge));
-//            Payment newPayment = new Payment(Integer.parseInt(event.getRowValue().get(0)), event.getRowValue().get(1), Double.parseDouble(event.getNewValue()), date1, Double.parseDouble(event.getNewValue()));
-//            paymentqueue.replace(paymentqueue, oldPayment, newPayment);
-//            Payment.setConsecutivo(oldPayment.getId() - 1);
-//            newPayment.setId(Payment.getConsecutivo());
-//
-//            util.Data.setDataFile("payments", paymentqueue);
-//        } catch (ParseException | QueueException | ListException | IOException ex) {
-//            Logger.getLogger(FXMLPagoConsultaController.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//    }
 
-    
-    
-
-   
-    
-
-    
-
-    
 }

@@ -1,1 +1,1 @@
-Clinic Mental Health;27464351;clinic@gmail.com;file:/C:/Users/Duran%20Family/Downloads/Imagenes/photo1656624254.jpeg;C:\Users\Duran Family\Downloads\Imagenes\photo1656624254.jpeg
+Clinic Mental Health;88888888;clinic@gmail.com;file:/C:/Users/wilso/Desktop/Proyectos%20Univerisad/Proyectos%20NetBeans/Algoritmos%20y%20Estruc.%20de%20Datos/Proyecto-Grupo6/src/images/Logo2.jpeg;C:\Users\wilso\Desktop\Proyectos Univerisad\Proyectos NetBeans\Algoritmos y Estruc. de Datos\Proyecto-Grupo6\src\images\Logo2.jpeg

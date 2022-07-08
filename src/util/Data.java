@@ -19,6 +19,7 @@ import domain.MedicalCare;
 import domain.Patient;
 import domain.Payment;
 import domain.QueueException;
+import domain.Security;
 import domain.Sickness;
 import domain.Tree;
 import java.io.BufferedReader;
@@ -214,6 +215,8 @@ public class Data {
                 return Integer.parseInt(aux.get(0));
             case "Saturday":
                 return Integer.parseInt(aux.get(0));
+            case "security":
+                return new Security(aux.get(0), aux.get(1), aux.get(2));
         }
         return null;
     }
@@ -250,6 +253,9 @@ public class Data {
                 return String.valueOf(data);
             case "Saturday":
                 return String.valueOf(data);
+            case "security":
+                Security sec = (Security) data;
+                return sec.getUser()+";"+sec.getPassword()+";"+sec.getType();
         }
         return null;
     }
