@@ -58,9 +58,9 @@ public class FXMLLoginController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         user = new SinglyLinkedList();
-        if (util.Data.fileExists("users")) {
+        if (util.Data.fileExists("security")) {
             try {
-                user = (SinglyLinkedList) util.Data.getDataFile("users", user);
+                user = (SinglyLinkedList) util.Data.getDataFile("security", user);
             } catch (QueueException | IOException ex) {
                 Logger.getLogger(FXMLMantenimientoEnfermedadesController.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -71,29 +71,35 @@ public class FXMLLoginController implements Initializable {
     @FXML
     private void registerOnAction(ActionEvent event) throws IOException {
         if (!TF_PASSWORD.equals("") || !TF_USER.equals("")) {
-            if (TF_USER.getText().equals("hola") && TF_PASSWORD.getText().equals("124")) {
-                Parent root = FXMLLoader.load(getClass().getResource("FXMLMainMenu.fxml"));
-                Node source = (Node) event.getSource();
-                Stage stage = (Stage) source.getScene().getWindow();
-                stage.close();
-
-                Scene scene = new Scene(root);
-                Stage stage2 = new Stage();
-
-                String css = mainFX.class.getResource("MyStyle.css").toExternalForm();
-                scene.getStylesheets().add(css);
-                stage2.setScene(scene);
-                stage.setTitle("Proyecto Clinica Salud Mental");
-                stage.setResizable(false);
-                stage.show();
-                stage2.show();
-            } else {
-                alert = new Alert(Alert.AlertType.NONE);
-                alert.setAlertType(Alert.AlertType.ERROR);
-                alert.setTitle("Login");
-                alert.setHeaderText("Username or password incorrect");
-                alert.setContentText("Please correct it or fill in all the blanks");
-                alert.show();
+            try {
+                System.out.println(user.toString());
+                if (user.contains(new Security(TF_USER.getText(), TF_PASSWORD.getText(), ""))) {
+                    Parent root = FXMLLoader.load(getClass().getResource("FXMLMainMenu.fxml"));
+                    Node source = (Node) event.getSource();
+                    Stage stage = (Stage) source.getScene().getWindow();
+                    stage.close();
+                    
+                    Scene scene = new Scene(root);
+                    
+                    stage.setScene(scene);
+                    String css = mainFX.class.getResource("MyStyle.css").toExternalForm();
+                    scene.getStylesheets().add(css);
+                    stage.setResizable(false);
+                    stage.setMaxWidth(1000);
+                    stage.setMaxWidth(1000);
+                    stage.setMinHeight(750);
+                    stage.setMaxHeight(750);
+                    stage.show();
+                } else {
+                    alert = new Alert(Alert.AlertType.NONE);
+                    alert.setAlertType(Alert.AlertType.ERROR);
+                    alert.setTitle("Login");
+                    alert.setHeaderText("Username or password incorrect");
+                    alert.setContentText("Please correct it or fill in all the blanks");
+                    alert.show();
+                }
+            } catch (ListException ex) {
+                Logger.getLogger(FXMLLoginController.class.getName()).log(Level.SEVERE, null, ex);
             }
 
         }

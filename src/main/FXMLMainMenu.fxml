@@ -13,17 +13,17 @@
    <left>
       <VBox prefHeight="594.0" prefWidth="334.0" style="-fx-background-color: #0D1824;" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="btnHome" mnemonicParsing="false" onMouseClicked="#Home" prefHeight="91.0" prefWidth="334.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 0px 0px 2px 0px;" text="Home" textFill="WHITE">
+            <Button fx:id="btnHome" mnemonicParsing="false" onMouseClicked="#Home" prefHeight="70.0" prefWidth="334.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 0px 0px 2px 0px;" text="Home" textFill="WHITE">
                <font>
                   <Font name="Arial" size="40.0" />
                </font>
             </Button>
-            <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#PascientesCode" prefHeight="91.0" prefWidth="334.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 0px 0px 2px 0px;" text="Patient" textFill="WHITE">
+            <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#PascientesCode" prefHeight="70.0" prefWidth="334.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 0px 0px 2px 0px;" text="Patient" textFill="WHITE">
                <font>
                   <Font name="Arial" size="40.0" />
                </font>
             </Button>
-            <Button layoutX="10.0" layoutY="101.0" mnemonicParsing="false" onAction="#DoctoresCode" prefHeight="91.0" prefWidth="334.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 0px 0px 2px 0px;" text="Doctor" textFill="WHITE">
+            <Button layoutX="10.0" layoutY="101.0" mnemonicParsing="false" onAction="#DoctoresCode" prefHeight="70.0" prefWidth="334.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 0px 0px 2px 0px;" text="Doctor" textFill="WHITE">
                <font>
                   <Font name="Arial" size="40.0" />
                </font>
@@ -33,32 +33,32 @@
                   <Font name="Arial" size="40.0" />
                </font>
             </Button>
-            <Button layoutX="10.0" layoutY="283.0" mnemonicParsing="false" onAction="#CitasCode" prefHeight="91.0" prefWidth="334.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 0px 0px 2px 0px;" text="Appointment" textFill="WHITE">
+            <Button layoutX="10.0" layoutY="283.0" mnemonicParsing="false" onAction="#CitasCode" prefHeight="70.0" prefWidth="334.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 0px 0px 2px 0px;" text="Appointment" textFill="WHITE">
                <font>
                   <Font name="Arial" size="40.0" />
                </font>
             </Button>
-            <Button layoutX="10.0" layoutY="314.0" mnemonicParsing="false" onAction="#MedicalCareCode" prefHeight="91.0" prefWidth="334.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 0px 0px 2px 0px;" text="Medical Care" textFill="WHITE">
+            <Button layoutX="10.0" layoutY="314.0" mnemonicParsing="false" onAction="#MedicalCareCode" prefHeight="70.0" prefWidth="334.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 0px 0px 2px 0px;" text="Medical Care" textFill="WHITE">
                <font>
                   <Font name="Arial" size="40.0" />
                </font>
             </Button>
-            <Button layoutX="10.0" layoutY="385.0" mnemonicParsing="false" onAction="#PaymentCode" prefHeight="91.0" prefWidth="334.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 0px 0px 2px 0px;" text="Payment" textFill="WHITE">
+            <Button layoutX="10.0" layoutY="385.0" mnemonicParsing="false" onAction="#PaymentCode" prefHeight="70.0" prefWidth="334.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 0px 0px 2px 0px;" text="Payment" textFill="WHITE">
                <font>
                   <Font name="Arial" size="40.0" />
                </font>
             </Button>
-            <Button layoutX="10.0" layoutY="391.0" mnemonicParsing="false" onAction="#ReportsCode" prefHeight="91.0" prefWidth="334.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 0px 0px 2px 0px;" text="Reports" textFill="WHITE">
+            <Button layoutX="10.0" layoutY="391.0" mnemonicParsing="false" onAction="#ReportsCode" prefHeight="70.0" prefWidth="334.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 0px 0px 2px 0px;" text="Reports" textFill="WHITE">
                <font>
                   <Font name="Arial" size="40.0" />
                </font>
             </Button>
-            <Button layoutX="10.0" layoutY="468.0" mnemonicParsing="false" onAction="#ConfigurationCode" prefHeight="91.0" prefWidth="334.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 0px 0px 2px 0px;" text="Configuration" textFill="WHITE">
+            <Button layoutX="10.0" layoutY="468.0" mnemonicParsing="false" onAction="#ConfigurationCode" prefHeight="70.0" prefWidth="334.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 0px 0px 2px 0px;" text="Configuration" textFill="WHITE">
                <font>
                   <Font name="Arial" size="40.0" />
                </font>
             </Button>
-            <Button fx:id="btnExit" layoutX="10.0" layoutY="465.0" mnemonicParsing="false" onMouseClicked="#Exit" prefHeight="91.0" prefWidth="335.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 0px 0px 2px 0px;" text="Exit" textFill="WHITE">
+            <Button fx:id="btnExit" layoutX="10.0" layoutY="465.0" mnemonicParsing="false" onMouseClicked="#Exit" prefHeight="70.0" prefWidth="335.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 0px 0px 2px 0px;" text="Exit" textFill="WHITE">
                <font>
                   <Font name="Arial" size="40.0" />
                </font>

@@ -13,6 +13,7 @@ import domain.DoublyLinkedList;
 import domain.MedicalCare;
 import domain.Patient;
 import domain.Payment;
+import domain.Security;
 import domain.Sickness;
 import domain.SinglyLinkedList;
 import java.text.DecimalFormat;
@@ -160,6 +161,7 @@ public class Utility {
         if(a instanceof Patient  && b instanceof Patient)return "Patient";
         if(a instanceof Appointment  && b instanceof Appointment)return "Appointment";
         if (a instanceof Payment  && b instanceof Payment ) return "Payment";
+        if (a instanceof Security  && b instanceof Security) return "Security";
         return "unknown";
     }
 
@@ -199,7 +201,11 @@ public class Utility {
                Payment a9 = (Payment)a;
                Payment b9 = (Payment)b;
                return (a9.getPatientID() == b9.getPatientID() &&  a9.getBillingDate().equals(b9.getBillingDate()));
-               
+           case "Security":
+           Security a10 = (Security)a;
+           Security b10 = (Security)b;
+           return (a10.getUser().equals(b10.getUser())&&a10.getUser().equals(b10.getUser()));
+           
         }
         return false;
     }
