@@ -19,7 +19,7 @@ public class mainFX extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-       Parent root = FXMLLoader.load(getClass().getResource("FXMLMainMenu.fxml"));
+       Parent root = FXMLLoader.load(getClass().getResource("FXMLWelcome.fxml"));
         
         Scene scene = new Scene(root);
         String css = mainFX.class.getResource("MyStyle.css").toExternalForm();
@@ -28,6 +28,9 @@ public class mainFX extends Application {
         stage.setTitle("Proyecto Clinica Salud Mental");
         stage.setResizable(false);
         stage.show();
+        
+        
+    
     }
     
 

@@ -4,6 +4,8 @@
  */
 package main;
 
+import domain.SinglyLinkedList;
+import domain.Usuario;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -26,8 +28,12 @@ import javax.swing.JOptionPane;
  *
  * @author Duran Family
  */
-public class FXMLLoginController implements Initializable {
- Alert alert;
+public class FXMLLoginAdminController implements Initializable {
+    
+
+   
+    Alert alert;
+    
 
     @FXML
     private TextField TF_USUARIO;
@@ -39,6 +45,8 @@ public class FXMLLoginController implements Initializable {
     private Button BTN_CLEAR;
     @FXML
     private BorderPane bp;
+    @FXML
+    private Button BTN_SIGNIN;
    
     /**
      * Initializes the controller class.
@@ -83,7 +91,7 @@ public class FXMLLoginController implements Initializable {
         String part1 = "";
         try {
 
-            FileInputStream fis = new FileInputStream(contra); //Se crea un input Stream que recibe los datos del archivo
+            FileInputStream fis = new FileInputStream(contra); //Se crea un input String que recibe los datos del archivo
             InputStreamReader isr = new InputStreamReader(fis); //Este metodo se encargaa de leerlo 
             BufferedReader br = new BufferedReader(isr); //Este metodo se encarga de transformar de idioma maquina a normal  
             //Mientras sea diferente de null va a reccorer el archivo
@@ -137,4 +145,5 @@ public class FXMLLoginController implements Initializable {
         }
         return part2;
     }
+
 }

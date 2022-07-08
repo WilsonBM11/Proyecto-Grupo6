@@ -14,7 +14,7 @@
          <children>
             <Pane layoutX="-6.0" prefHeight="75.0" prefWidth="608.0" style="-fx-background-color: #0174DF;">
                <children>
-                  <Label layoutX="244.0" layoutY="8.0" text="Login">
+                  <Label layoutX="170.0" layoutY="8.0" text="Login Patient">
                      <font>
                         <Font name="Bell MT" size="49.0" />
                      </font>
@@ -38,7 +38,7 @@
                   <Font name="Arial Bold Italic" size="12.0" />
                </font>
             </Button>
-            <Button fx:id="BTN_CLEAR" layoutX="492.0" layoutY="357.0" mnemonicParsing="false" onAction="#CLEARCODE" prefHeight="25.0" prefWidth="92.0" text="Clear">
+            <Button fx:id="BTN_REGRESAR" layoutX="492.0" layoutY="357.0" mnemonicParsing="false" onAction="#REGRESARCODE" prefHeight="25.0" prefWidth="92.0" text="Regresar">
                <font>
                   <Font name="System Bold Italic" size="12.0" />
                </font>

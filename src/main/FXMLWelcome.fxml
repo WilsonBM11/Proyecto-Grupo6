@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.FXMLWelcomeController">
+   <center>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: beige;" BorderPane.alignment="CENTER">
+         <children>
+            <Text fill="#251e1e" layoutX="14.0" layoutY="63.0" stroke="#111010" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome to  Clinical Mental Health" wrappingWidth="266.4296875">
+               <font>
+                  <Font name="Bell MT" size="46.0" />
+               </font>
+            </Text>
+            <ImageView fitHeight="98.0" fitWidth="170.0" layoutX="403.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/Logo2.jpeg" />
+               </image></ImageView>
+            <Button fx:id="BTN_ADMIN" layoutX="233.0" layoutY="333.0" mnemonicParsing="false" onAction="#ADMINCODE" prefHeight="35.0" prefWidth="134.0" style="-fx-background-color: black;" text="Admin" textFill="#f8f4f4">
+               <font>
+                  <Font name="Bell MT" size="25.0" />
+               </font>
+            </Button>
+            <Button fx:id="BTN_PATIENT" layoutX="390.0" layoutY="333.0" mnemonicParsing="false" onAction="#PATIENTCODE" prefHeight="35.0" prefWidth="134.0" style="-fx-background-color: black;" text="Patient" textFill="#f8f4f4">
+               <font>
+                  <Font name="Bell MT" size="24.0" />
+               </font>
+            </Button>
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>
