@@ -17,7 +17,7 @@ and open the template in the editor.
     
     .button {
         -fx-font-family: "Arial";
-        -fx-font-size: 20px;
+        -fx-font-size: 15px;
         -fx-font-weight: bold;
         -fx-background-color: lightskyblue;
     }

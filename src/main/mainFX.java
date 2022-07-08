@@ -19,7 +19,7 @@ public class mainFX extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-       Parent root = FXMLLoader.load(getClass().getResource("FXMLWelcome.fxml"));
+       Parent root = FXMLLoader.load(getClass().getResource("FXMLLogin.fxml"));
         
         Scene scene = new Scene(root);
         String css = mainFX.class.getResource("MyStyle.css").toExternalForm();

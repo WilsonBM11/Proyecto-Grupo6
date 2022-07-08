@@ -4,9 +4,7 @@
  */
 package main;
 
-import domain.CircularDoublyLinkedList;
 import domain.CircularLinkedList;
-import domain.Doctor;
 import domain.ListException;
 import domain.Patient;
 import domain.QueueException;
@@ -422,7 +420,7 @@ try {
             Logger.getLogger(FXMLMantenimientoPascientesController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-  @FXML
+    @FXML
     private void AddressCommit(TableColumn.CellEditEvent<List<String>, String> event) throws ListException {
 
         try {
@@ -473,6 +471,8 @@ try {
             Logger.getLogger(FXMLMantenimientoDoctoresController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+
 
     
 }

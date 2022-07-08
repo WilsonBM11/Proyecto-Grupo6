@@ -10,57 +10,39 @@ package domain;
  */
 public class Security {
     
-    private String userAdmin;
-    private String userPatient;
-    private String passwordAdmin;
-    private String passwordPatient;
+   private String user; 
+   private String password;
+   private String type;
 
-    public Security(String userAdmin, String userPatient, String passwordAdmin, String passwordPatient) {
-        this.userAdmin = userAdmin;
-        this.userPatient = userPatient;
-        this.passwordAdmin = passwordAdmin;
-        this.passwordPatient = passwordPatient;
+    public Security(String user, String password, String type) {
+        this.user = user;
+        this.password = password;
+        this.type = type;
     }
 
-    public String getUserAdmin() {
-        return userAdmin;
+    public String getUser() {
+        return user;
     }
 
-    public void setUserAdmin(String userAdmin) {
-        this.userAdmin = userAdmin;
+    public void setUser(String user) {
+        this.user = user;
     }
 
-    public String getUserPatient() {
-        return userPatient;
+    public String getPassword() {
+        return password;
     }
 
-    public void setUserPatient(String userPatient) {
-        this.userPatient = userPatient;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    public String getPasswordAdmin() {
-        return passwordAdmin;
+    public String getType() {
+        return type;
     }
 
-    public void setPasswordAdmin(String passwordAdmin) {
-        this.passwordAdmin = passwordAdmin;
+    public void setType(String type) {
+        this.type = type;
     }
-
-    public String getPasswordPatient() {
-        return passwordPatient;
-    }
-
-    public void setPasswordPatient(String passwordPatient) {
-        this.passwordPatient = passwordPatient;
-    }
-
-    @Override
-    public String toString() {
-        return "Security{" + "userAdmin=" + userAdmin + ", userPatient=" + userPatient + ", passwordAdmin=" + passwordAdmin + ", passwordPatient=" + passwordPatient + '}';
-    }
-
-   
-    
     
     
 }
