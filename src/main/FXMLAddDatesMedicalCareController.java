@@ -336,40 +336,7 @@ public class FXMLAddDatesMedicalCareController implements Initializable {
         String time = (String) TIMECOMBOBOX.getValue();
         TEXTFIELDTIME.setText(date1 + " " + time+":00");
     }
-
-    @FXML
-    private void DaySelectedCode(ActionEvent event) throws ListException {
-        switch (CalendarChoice.getValue().getDayOfWeek()) {
-            case SATURDAY:
-               TIMECOMBOBOX.getItems().clear();
-                TIMECOMBOBOX.setItems(getComboBoxHoursS());
-                break;
-            case MONDAY:
-                TIMECOMBOBOX.getItems().clear();
-                TIMECOMBOBOX.setItems(getComboBoxHours());
-                break;
-            case THURSDAY:
-                 TIMECOMBOBOX.getItems().clear();
-                TIMECOMBOBOX.setItems(getComboBoxHours());
-                break;
-            case TUESDAY:
-                TIMECOMBOBOX.getItems().clear();
-                TIMECOMBOBOX.setItems(getComboBoxHours());
-                break;
-            case WEDNESDAY:
-                TIMECOMBOBOX.getItems().clear();
-                TIMECOMBOBOX.setItems(getComboBoxHours());
-                break;
-            case FRIDAY:
-                TIMECOMBOBOX.getItems().clear();
-                TIMECOMBOBOX.setItems(getComboBoxHours());
-                break;
-            case SUNDAY:
-                TIMECOMBOBOX.getItems().clear();
-
-        }
-    }
-
+    
     @FXML
     private void sendEmailOnAction(ActionEvent event) throws ListException, MessagingException {
         MedicalCare mc = util.Utility.getMedicalCare();
@@ -453,5 +420,46 @@ public class FXMLAddDatesMedicalCareController implements Initializable {
                 }
                 return data;
      }
+     
+     
+     private void getTimeComboBox() throws ListException{
+         switch (CalendarChoice.getValue().getDayOfWeek()) {
+            case SATURDAY:
+               TIMECOMBOBOX.getItems().clear();
+                TIMECOMBOBOX.setItems(getComboBoxHoursS());
+                break;
+            case MONDAY:
+                TIMECOMBOBOX.getItems().clear();
+                TIMECOMBOBOX.setItems(getComboBoxHours());
+                break;
+            case THURSDAY:
+                 TIMECOMBOBOX.getItems().clear();
+                TIMECOMBOBOX.setItems(getComboBoxHours());
+                break;
+            case TUESDAY:
+                TIMECOMBOBOX.getItems().clear();
+                TIMECOMBOBOX.setItems(getComboBoxHours());
+                break;
+            case WEDNESDAY:
+                TIMECOMBOBOX.getItems().clear();
+                TIMECOMBOBOX.setItems(getComboBoxHours());
+                break;
+            case FRIDAY:
+                TIMECOMBOBOX.getItems().clear();
+                TIMECOMBOBOX.setItems(getComboBoxHours());
+                break;
+            case SUNDAY:
+                TIMECOMBOBOX.getItems().clear();
+
+        }
+     }
+
+    @FXML
+    private void CalendarChoiceOnAction(ActionEvent event) throws ListException {
+        getTimeComboBox();
+        TIMECOMBOBOX.setDisable(false);
+    }
+
+
     
 }
