@@ -14,6 +14,7 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.activation.DataHandler;
+import javax.activation.DataSource;
 import javax.activation.FileDataSource;
 import javax.mail.Authenticator;
 import javax.mail.BodyPart;
@@ -37,9 +38,8 @@ public class Mail {
 
     private final String username = "proyectogrupo06.algoritmos@gmail.com";
     private final String password = "jbxcziuoiyefyodc";
-
-    public void sendEmail(String destinationEmail, String subjectEmail, String textEmail) throws AddressException, MessagingException {
-
+    
+    private Properties getMailProperties(){
         final String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
         // Get a Properties object
         Properties props = System.getProperties();
@@ -53,16 +53,20 @@ public class Mail {
         props.put("mail.debug", "true");
         props.put("mail.store.protocol", "pop3");
         props.put("mail.transport.protocol", "smtp");
+        return props;
+    }
+
+    public void sendEmail(String destinationEmail, String subjectEmail, String textEmail) throws AddressException, MessagingException {
 
         try {
-            Session session = Session.getDefaultInstance(props,
+            Session session = Session.getDefaultInstance(getMailProperties(),
                     new Authenticator() {
                 @Override
                 protected PasswordAuthentication getPasswordAuthentication() {
                     return new PasswordAuthentication(username, password);
                 }
             });
-
+            
             // -- Create a new message --
             Message msg = new MimeMessage(session);
 
@@ -82,6 +86,54 @@ public class Mail {
             MimeMultipart parts = new MimeMultipart();
             parts.addBodyPart(text);
             parts.addBodyPart(image);
+
+            //msg.setText(textEmail);
+            msg.setContent(parts);
+            msg.setSentDate(new Date());
+            Transport.send(msg);
+            System.out.println("Message sent");
+        } catch (MessagingException e) {
+            System.out.println("Error sending mail. Reason: " + e);
+        }
+
+    }
+    
+    public void sendEmail(String destinationEmail, String subjectEmail, String textEmail, String filePath) throws AddressException, MessagingException {
+
+        try {
+            Session session = Session.getDefaultInstance(getMailProperties(),
+                    new Authenticator() {
+                @Override
+                protected PasswordAuthentication getPasswordAuthentication() {
+                    return new PasswordAuthentication(username, password);
+                }
+            });
+            
+            // -- Create a new message --
+            Message msg = new MimeMessage(session);
+
+            // -- Set the FROM and TO fields --
+            msg.setFrom(new InternetAddress(username));
+            msg.setRecipients(Message.RecipientType.TO,
+                    InternetAddress.parse(destinationEmail, false));
+            msg.setSubject(subjectEmail);
+
+            BodyPart text = new MimeBodyPart();
+            text.setContent(textEmail, "text/html");
+
+            BodyPart image = new MimeBodyPart();
+            image.setDataHandler((new DataHandler(new FileDataSource("src/images/Logo2.jpeg"))));
+            image.setFileName(getClinicName());
+            
+            BodyPart file = new MimeBodyPart();
+            DataSource source = new FileDataSource(filePath);
+            file.setDataHandler((new DataHandler(source)));
+            file.setFileName("Factura - "+getClinicName()+".pdf");
+            
+            MimeMultipart parts = new MimeMultipart();
+            parts.addBodyPart(text);
+            parts.addBodyPart(image);
+            parts.addBodyPart(file);
 
             //msg.setText(textEmail);
             msg.setContent(parts);

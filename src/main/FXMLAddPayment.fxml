@@ -22,27 +22,38 @@
                   </Label>
                </children>
             </Pane>
-            <Label layoutX="193.0" layoutY="87.0" prefHeight="23.0" prefWidth="259.0" text="Enter the information requested">
+            <Label layoutX="208.0" layoutY="87.0" prefHeight="23.0" prefWidth="259.0" text="Enter the information requested">
                <font>
                   <Font name="Times New Roman" size="20.0" />
                </font>
             </Label>
-            <Button fx:id="registerButton" layoutX="237.0" layoutY="413.0" mnemonicParsing="false" onAction="#registerOnAction" prefHeight="31.0" prefWidth="172.0" style="-fx-background-color: #0174DF;" text="Register">
+            <Button fx:id="registerButton" layoutX="66.0" layoutY="410.0" mnemonicParsing="false" onAction="#registerOnAction" prefHeight="31.0" prefWidth="172.0" style="-fx-background-color: #0174DF;" text="Register">
                <font>
                   <Font name="Times New Roman" size="12.0" />
                </font>
             </Button>
-            <ComboBox fx:id="PatientComboBox" layoutX="25.0" layoutY="135.0" prefHeight="25.0" prefWidth="145.0" promptText="Patients" />
-            <Button fx:id="GETDATABUTTON" layoutX="518.0" layoutY="129.0" mnemonicParsing="false" onAction="#GETDATAOnAction" prefHeight="25.0" prefWidth="117.0" style="-fx-background-color: #0174DF;" text="Get Data">
+            <ComboBox fx:id="PatientComboBox" layoutX="67.0" layoutY="134.0" prefHeight="25.0" prefWidth="169.0" promptText="Patients" style="-fx-background-color: #0174DF;" />
+            <Button fx:id="GETDATABUTTON" layoutX="93.0" layoutY="270.0" mnemonicParsing="false" onAction="#GETDATAOnAction" prefHeight="25.0" prefWidth="117.0" style="-fx-background-color: #0174DF;" text="Get Data">
                <font>
                   <Font name="Times New Roman" size="12.0" />
                </font>
             </Button>
-            <TextField fx:id="TF_PATIENTID" layoutX="193.0" layoutY="135.0" prefHeight="25.0" prefWidth="145.0" promptText="Patient ID" />
-            <TextField fx:id="TF_BILLINGDATE" layoutX="357.0" layoutY="135.0" promptText="Billing Date" />
-            <TextField fx:id="TF_PAYMENTMODE" layoutX="25.0" layoutY="217.0" prefHeight="25.0" prefWidth="145.0" promptText="Payment Mode" />
-            <TextField fx:id="TF_SERVICECHARGE" layoutX="196.0" layoutY="217.0" prefHeight="25.0" prefWidth="191.0" promptText="Service Charge" />
-            <TextField fx:id="TF_TOTALCHARGE" layoutX="405.0" layoutY="217.0" prefHeight="25.0" prefWidth="225.0" promptText="Total Charge" />
+            <TextField fx:id="TF_PATIENTID" editable="false" layoutX="67.0" layoutY="177.0" prefHeight="25.0" prefWidth="169.0" promptText="Patient ID" />
+            <TextField fx:id="TF_BILLINGDATE" editable="false" layoutX="67.0" layoutY="217.0" prefHeight="25.0" prefWidth="169.0" promptText="Billing Date" />
+            <TextField fx:id="TF_PAYMENTMODE" layoutX="382.0" layoutY="189.0" prefHeight="25.0" prefWidth="169.0" promptText="Payment Mode" />
+            <TextField fx:id="TF_SERVICECHARGE" layoutX="382.0" layoutY="270.0" onAction="#TF_SERVICECHARGEOnAction" prefHeight="25.0" prefWidth="169.0" promptText="Service Charge" />
+            <TextField fx:id="TF_TOTALCHARGE" editable="false" layoutX="382.0" layoutY="312.0" prefHeight="25.0" prefWidth="169.0" promptText="Total Charge" />
+            <TextField fx:id="TF_ReceivedService" layoutX="356.0" layoutY="146.0" prefHeight="25.0" prefWidth="221.0" promptText="Received Service" />
+            <Label layoutX="349.0" layoutY="230.0" prefHeight="23.0" prefWidth="235.0" text="Type the service charge and press the enter key">
+               <font>
+                  <Font name="Times New Roman" size="12.0" />
+               </font>
+            </Label>
+            <Button fx:id="sendBillMail" disable="true" layoutX="366.0" layoutY="410.0" mnemonicParsing="false" onAction="#sendBillMailOnAction" prefHeight="31.0" prefWidth="202.0" style="-fx-background-color: #0174DF;" text="Send Bill by Email">
+               <font>
+                  <Font name="Times New Roman" size="12.0" />
+               </font>
+            </Button>
          </children>
       </AnchorPane>
    </center>
