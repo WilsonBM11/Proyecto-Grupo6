@@ -22,6 +22,7 @@
             <Button layoutX="23.0" layoutY="108.0" mnemonicParsing="false" onAction="#btnPatients" prefHeight="33.0" prefWidth="179.0" style="-fx-background-color: #0174DF;" text="Patients PDF" />
             <Button layoutX="217.0" layoutY="108.0" mnemonicParsing="false" onAction="#btnDoctors" prefHeight="33.0" prefWidth="179.0" style="-fx-background-color: #0174DF;" text="Doctors PDF" />
             <Button layoutX="407.0" layoutY="108.0" mnemonicParsing="false" onAction="#btnSickness" prefHeight="33.0" prefWidth="179.0" style="-fx-background-color: #0174DF;" text="Sickness PDF" />
+            <Button layoutX="208.0" layoutY="174.0" mnemonicParsing="false" onAction="#medicalHistory" prefHeight="33.0" prefWidth="179.0" style="-fx-background-color: #0174DF;" text="Medical History" />
          </children>
       </AnchorPane>
    </center>

@@ -23,11 +23,14 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import domain.BST;
+import domain.BTree;
+import domain.BTreeNode;
 import domain.CircularDoublyLinkedList;
 import domain.CircularLinkedList;
 import domain.Configurations;
 import domain.Doctor;
 import domain.ListException;
+import domain.MedicalCare;
 import domain.Patient;
 import domain.QueueException;
 import domain.Sickness;
@@ -58,6 +61,7 @@ public class FXMLReportsController implements Initializable {
     CircularLinkedList patientList;
     CircularDoublyLinkedList DoctorList;
     SinglyLinkedList sicknesslist;
+    BTree medicalCareList;
     PdfPCell id = new PdfPCell(new Phrase("ID"));
     PdfPCell firstName = new PdfPCell(new Phrase("First Name"));
     PdfPCell lastName = new PdfPCell(new Phrase("Last Name"));
@@ -96,6 +100,14 @@ public class FXMLReportsController implements Initializable {
         if (util.Data.fileExists("sickness")) {
             try {
                 sicknesslist = (SinglyLinkedList) util.Data.getDataFile("sickness", sicknesslist);
+            } catch (QueueException | IOException ex) {
+                Logger.getLogger(FXMLMantenimientoDoctoresController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+          medicalCareList = new BTree();
+        if (util.Data.fileExists("medicalcare")) {
+            try {
+                medicalCareList = (BTree) util.Data.getDataFile("medicalcare", medicalCareList);
             } catch (QueueException | IOException ex) {
                 Logger.getLogger(FXMLMantenimientoDoctoresController.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -294,5 +306,71 @@ public class FXMLReportsController implements Initializable {
             data.add(arrayList);
         }
         return data;
+    }
+   PdfPTable tabla = new PdfPTable(5);
+    @FXML
+    private void medicalHistory(ActionEvent event) throws FileNotFoundException, ListException {
+      Document documento = new Document();
+        Paragraph titulo = new Paragraph(getClinicName());
+
+        FileOutputStream archivo = new FileOutputStream("Patient History Clinic.pdf");
+
+        try {
+            PdfWriter.getInstance(documento, archivo);
+            documento.open();
+            titulo.setAlignment(1);
+            Image image;
+            image = Image.getInstance(getClinicImage());
+            image.scaleAbsolute(150, 100);
+            image.setAbsolutePosition(415, 750);
+            documento.add(image);
+            documento.add(titulo);
+            documento.add(new Paragraph("Patients History"));
+            documento.add(Chunk.NEWLINE);
+            tabla.setWidthPercentage(100);
+            PdfPCell idPatient = new PdfPCell(new Phrase("ID Patient"));
+            idPatient.setBackgroundColor(BaseColor.CYAN);
+            tabla.addCell(idPatient);
+            PdfPCell idDoctor = new PdfPCell(new Phrase("ID Doctor"));
+            idDoctor.setBackgroundColor(BaseColor.CYAN);
+            tabla.addCell(idDoctor);
+            PdfPCell idTime = new PdfPCell(new Phrase("TIME"));
+             idTime.setBackgroundColor(BaseColor.CYAN);
+            tabla.addCell(idTime);
+            PdfPCell idSickness = new PdfPCell(new Phrase("Sickness"));
+            idSickness.setBackgroundColor(BaseColor.CYAN);
+            tabla.addCell(idSickness);
+            PdfPCell Annotations = new PdfPCell(new Phrase("Annotations"));
+            Annotations.setBackgroundColor(BaseColor.CYAN);
+            tabla.addCell(Annotations);
+            addTreeData(medicalCareList.getRoot(),tabla);
+            documento.add(tabla);
+            documento.close();
+
+        } catch (IOException | DocumentException ex) {
+            Logger.getLogger(FXMLReportsController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    private void addTreeData(BTreeNode node, PdfPTable tabla) throws ListException {
+        if(node!=null){
+            MedicalCare M = (MedicalCare) node.data;
+            
+            int temp = Sickness.getConsecutivo();
+                Sickness aux = new Sickness("");
+                aux.setId(M.getSicknessID());
+                Sickness s = (Sickness) sicknesslist.getSicknessById(aux);
+                Sickness.setConsecutivo(temp);
+               tabla.addCell(String.valueOf(M.getPatientID()));
+              tabla.addCell(String.valueOf(M.getDoctorID()));
+              tabla.addCell(M.getDateTime().toString());
+              tabla.addCell(String.valueOf(s.getDescription()));
+            tabla.addCell(M.getAnnotations());
+        
+            addTreeData(node.right, tabla);
+            addTreeData(node.left, tabla);
+            
+        }
     }
 }
