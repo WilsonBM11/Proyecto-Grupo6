@@ -187,6 +187,7 @@ public class FXMLMantenimientoDoctoresController implements Initializable {
                 alert.setTitle("Doctor Remove");
                 alert.setHeaderText("The list dont have the element");
                 alert.show();
+                
 
             }
             if (DoctorList.size() == 1) {

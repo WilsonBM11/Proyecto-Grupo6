@@ -6,6 +6,7 @@ package main;
 
 import domain.CircularLinkedList;
 import domain.Doctor;
+import domain.Encoder;
 import domain.ListException;
 import domain.Patient;
 import domain.QueueException;
@@ -39,6 +40,7 @@ import util.Mail;
 public class FXMLPatientAddController implements Initializable {
 
     private CircularLinkedList patientList;
+    private Encoder e;
     private SinglyLinkedList securityList;
     private Alert alert;
     Mail m = new Mail();
@@ -65,7 +67,11 @@ public class FXMLPatientAddController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
+        
         try {
+            
+            
             patientList = new CircularLinkedList();
             if (util.Data.fileExists("patients")) {
                 patientList = (CircularLinkedList) util.Data.getDataFile("patients", patientList);
@@ -108,6 +114,8 @@ public class FXMLPatientAddController implements Initializable {
                             util.Data.setDataFile("patients", patientList);
                             int contraseña = util.Utility.random(0, 10000);
                             securityList.add(new Security(idTextField.getText(), String.valueOf(contraseña), "patient"));
+                             e = new Encoder();
+                            contraseña = Encoder.e (contraseña.getText().trim());
                             util.Data.setDataFile("security", securityList);
                             m.sendEmail(TF_Email.getText(), "Registro de Usuario - " + m.getClinicName(),
                                     "¡Se registro con exito su usario!<br><br>"

@@ -33,6 +33,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -50,7 +51,7 @@ public class FXMLLoginController implements Initializable {
     @FXML
     private TextField TF_USER;
     @FXML
-    private TextField TF_PASSWORD;
+    private PasswordField PF_PASSWORD;
 
     /**
      * Initializes the controller class.
@@ -70,10 +71,10 @@ public class FXMLLoginController implements Initializable {
 
     @FXML
     private void registerOnAction(ActionEvent event) throws IOException {
-        if (!TF_PASSWORD.equals("") || !TF_USER.equals("")) {
+        if (!PF_PASSWORD.equals("") || !TF_USER.equals("")) {// Validar que el field de password y contraseña no esten vacios 
             try {
                 System.out.println(user.toString());
-                if (user.contains(new Security(TF_USER.getText(), TF_PASSWORD.getText(), ""))) {
+                if (user.contains(new Security(TF_USER.getText(), PF_PASSWORD.getText(), ""))) {    //El contenido es correcto entonces entra al menu 
                     Parent root = FXMLLoader.load(getClass().getResource("FXMLMainMenu.fxml"));
                     Node source = (Node) event.getSource();
                     Stage stage = (Stage) source.getScene().getWindow();
@@ -90,7 +91,7 @@ public class FXMLLoginController implements Initializable {
                     stage.setMinHeight(750);
                     stage.setMaxHeight(750);
                     stage.show();
-                } else {
+                } else {//En caso de que la informacion sea incorrecta muestra la alerta 
                     alert = new Alert(Alert.AlertType.NONE);
                     alert.setAlertType(Alert.AlertType.ERROR);
                     alert.setTitle("Login");
@@ -125,7 +126,7 @@ public class FXMLLoginController implements Initializable {
         return data;
     }
 
-    private String getUser() {
+    private String getUser() { //Se recibe la informacion del usuario desde security 
         String name1 = "";
         String name = String.valueOf(getData());
         String[] parts = name.split(",");
@@ -134,7 +135,7 @@ public class FXMLLoginController implements Initializable {
         return name1;
     }
 
-    private String getPassword() {
+    private String getPassword() { //Se recibe la informacion de la contraseña  desde security 
         String name1 = "";
         String name = String.valueOf(getData());
         String[] parts = name.split(",");
@@ -143,7 +144,7 @@ public class FXMLLoginController implements Initializable {
         return name1;
     }
 
-    private String getType() {
+    private String getType() { //Se recibe la informacion del tipo de dato desde security 
         String name1 = "";
         String name = String.valueOf(getData());
         String[] parts = name.split(",");
