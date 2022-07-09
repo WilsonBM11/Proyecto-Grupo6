@@ -30,7 +30,7 @@
             </Button>
             <TextField fx:id="TF_USER" layoutX="248.0" layoutY="124.0" promptText="User" />
             <PasswordField fx:id="PF_PASSWORD" layoutX="249.0" layoutY="194.0" promptText="Password" />
-            <ComboBox fx:id="ComboboxAdmin" layoutX="249.0" layoutY="268.0" prefWidth="150.0" />
+            <ComboBox fx:id="ComboboxAdmin" layoutX="249.0" layoutY="268.0" prefWidth="150.0" style="-fx-background-color: #0174DF;" />
          </children>
       </AnchorPane>
    </center>
