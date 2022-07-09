@@ -115,7 +115,7 @@ public class FXMLPatientAddController implements Initializable {
                             int contraseña = util.Utility.random(0, 10000);
                             securityList.add(new Security(idTextField.getText(), String.valueOf(contraseña), "patient"));
                              e = new Encoder();
-                            contraseña = Encoder.e (contraseña.getText().trim());
+//                            contraseña = Encoder.e (contraseña.getText().trim());
                             util.Data.setDataFile("security", securityList);
                             m.sendEmail(TF_Email.getText(), "Registro de Usuario - " + m.getClinicName(),
                                     "¡Se registro con exito su usario!<br><br>"

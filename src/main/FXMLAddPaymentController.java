@@ -17,13 +17,17 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import static com.sun.org.apache.xalan.internal.lib.ExsltDatetime.date;
 import domain.Appointment;
+import domain.BTree;
+import domain.BTreeNode;
 import domain.CircularLinkedList;
 import domain.DoublyLinkedList;
 import domain.HeaderLinkedQueue;
 import domain.ListException;
+import domain.MedicalCare;
 import domain.Patient;
 import domain.Payment;
 import domain.QueueException;
+import domain.Sickness;
 import domain.TreeException;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -52,6 +56,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.input.InputMethodEvent;
 import javax.mail.MessagingException;
+import util.Data;
 import util.Mail;
 
 /**
@@ -63,10 +68,10 @@ public class FXMLAddPaymentController implements Initializable {
 
     HeaderLinkedQueue paymentqueue;
     Alert alert;
-    DoublyLinkedList AppointmentList;
+    BTree medicalCareList;
     @FXML
     private Button registerButton;
-    @FXML
+    
     private ComboBox PatientComboBox;
     @FXML
     private Button GETDATABUTTON;
@@ -87,50 +92,41 @@ public class FXMLAddPaymentController implements Initializable {
     private Button sendBillMail;
     private Payment currentPayment;
     private CircularLinkedList PatientList;
+    private ObservableList<List<String>> MedicalCareComboBoxData = FXCollections.observableArrayList();
+    @FXML
+    private ComboBox MedicalCareComboBox;
 
     /**
      * Initializes the controller class.
      */
     @Override
-
     public void initialize(URL url, ResourceBundle rb) {
         try {
-            AppointmentList = new DoublyLinkedList();
-
-            if (util.Data.fileExists("appointment")) {
-                try {
-                    AppointmentList = (DoublyLinkedList) util.Data.getDataFile("appointment", AppointmentList);
-                } catch (QueueException | IOException ex) {
-                    Logger.getLogger(FXMLMantenimientoDoctoresController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-
+            MedicalCareComboBoxData = FXCollections.observableArrayList();
+            medicalCareList = new BTree();
+            if (util.Data.fileExists("medicalcare")) {
+                medicalCareList = (BTree) Data.getDataFile("medicalcare", medicalCareList);
             }
+            
             paymentqueue = new HeaderLinkedQueue();
-
             if (util.Data.fileExists("payments")) {
-                try {
                     paymentqueue = (HeaderLinkedQueue) util.Data.getDataFile("payments", paymentqueue);
-                } catch (QueueException | IOException ex) {
-                    Logger.getLogger(FXMLMantenimientoDoctoresController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-
             }
             
             PatientList = new CircularLinkedList();
             if (util.Data.fileExists("patients")) {
-                try {
-                    PatientList = (CircularLinkedList) util.Data.getDataFile("patients", PatientList);
-                } catch (QueueException | IOException ex) {
-                    Logger.getLogger(FXMLMantenimientoDoctoresController.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                PatientList = (CircularLinkedList) util.Data.getDataFile("patients", PatientList);
             }
-
-            for (int i = 1; i <= AppointmentList.size(); i++) {
-                this.PatientComboBox.setItems(getDataAppointment());
+//            
+            this.MedicalCareComboBox.getItems().clear();
+            if (medicalCareList != null && !medicalCareList.isEmpty()) {
+                getComboBoxData(medicalCareList.getRoot());
+                this.MedicalCareComboBox.setItems(MedicalCareComboBoxData);
             }
-        } catch (ListException ex) {
+            
+        } catch (QueueException | IOException   ex) {
             Logger.getLogger(FXMLAddPaymentController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }     
 
     }
 
@@ -169,7 +165,7 @@ public class FXMLAddPaymentController implements Initializable {
                     TF_PAYMENTMODE.setText("");
                     TF_SERVICECHARGE.setText("");
                     TF_TOTALCHARGE.setText("");
-                    PatientComboBox.setValue("Patient");
+                    MedicalCareComboBox.setValue("Medical Care");
                     TF_ReceivedService.setText("");
 
                     alert = new Alert(Alert.AlertType.NONE);
@@ -221,7 +217,7 @@ public class FXMLAddPaymentController implements Initializable {
                     TF_PAYMENTMODE.setText("");
                     TF_SERVICECHARGE.setText("");
                     TF_TOTALCHARGE.setText("");
-                    PatientComboBox.setValue("Patient");
+                    MedicalCareComboBox.setValue("Medical Care");
 
                     alert = new Alert(Alert.AlertType.NONE);
                     alert.setAlertType(Alert.AlertType.INFORMATION);
@@ -242,39 +238,34 @@ public class FXMLAddPaymentController implements Initializable {
 
     @FXML
     private void GETDATAOnAction(ActionEvent event) {
-        String choicePatient = String.valueOf(PatientComboBox.getValue());
+        String choicePatient = String.valueOf(MedicalCareComboBox.getValue());
         String[] parts = choicePatient.split(",");
         String IdPatient = parts[0];
         TF_PATIENTID.setText(IdPatient.substring(1, IdPatient.length()));
-        String choiceBilling = String.valueOf(PatientComboBox.getValue());
+        String choiceBilling = String.valueOf(MedicalCareComboBox.getValue());
         String[] parts1 = choiceBilling.split(",");
         String billing = parts1[2];
-        String date = billing.substring(0, billing.length() - 6);
+        String date = billing.substring(0, billing.length() - 14);
         String replace = date.replace('-', '/');
         TF_BILLINGDATE.setText(replace);
     }
 
-    private ObservableList<List<String>> getDataAppointment() {
-        ObservableList<List<String>> data = FXCollections.observableArrayList();
-        if (this.AppointmentList != null && !this.AppointmentList.isEmpty()) {
-            try {
-                for (int i = 1; i <= this.AppointmentList.size(); i++) {
-                    Appointment A = (Appointment) this.AppointmentList.getNode(i).data;
-                    List<String> arrayList = new ArrayList<>();
-                    arrayList.add(String.valueOf(A.getPatientID()));
-                    arrayList.add(String.valueOf(A.getDoctorID()));
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-                    arrayList.add(String.valueOf(A.getDateTime()));
-                    arrayList.add(A.getRemarks());
-                    data.add(arrayList);
-                }
-            } catch (ListException ex) {
 
-            }
-        }
-        return data;
-    }
-
+    
+     private void getComboBoxData(BTreeNode node){
+         if(node != null){
+             MedicalCare mc = (MedicalCare) node.data;
+             List<String> arrayList = new ArrayList<>();
+             arrayList.add(String.valueOf(mc.getPatientID()));
+             arrayList.add(String.valueOf(mc.getDoctorID()));
+             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+             arrayList.add(String.valueOf(mc.getDateTime()));
+             MedicalCareComboBoxData.add(arrayList);
+             getComboBoxData(node.left);
+             getComboBoxData(node.right);
+         }
+     }
+    
     @FXML
     private void TF_SERVICECHARGEOnAction(ActionEvent event) {
         if (!"".equals(TF_SERVICECHARGE.getText())) {

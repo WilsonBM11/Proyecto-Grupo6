@@ -32,7 +32,7 @@
                   <Font name="Times New Roman" size="12.0" />
                </font>
             </Button>
-            <ComboBox fx:id="PatientComboBox" layoutX="67.0" layoutY="134.0" prefHeight="25.0" prefWidth="169.0" promptText="Patients" style="-fx-background-color: #0174DF;" />
+            <ComboBox fx:id="MedicalCareComboBox" layoutX="67.0" layoutY="134.0" prefHeight="25.0" prefWidth="169.0" promptText="Medical Care" style="-fx-background-color: #0174DF;" />
             <Button fx:id="GETDATABUTTON" layoutX="93.0" layoutY="270.0" mnemonicParsing="false" onAction="#GETDATAOnAction" prefHeight="25.0" prefWidth="117.0" style="-fx-background-color: #0174DF;" text="Get Data">
                <font>
                   <Font name="Times New Roman" size="12.0" />
