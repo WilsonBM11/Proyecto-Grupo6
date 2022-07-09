@@ -106,10 +106,6 @@ public class FXMLLoginController implements Initializable {
                     String css = mainFX.class.getResource("MyStyle.css").toExternalForm();
                     scene.getStylesheets().add(css);
                     stage.setResizable(true);
-                    stage.setMaxWidth(750);
-                    stage.setMaxWidth(750);
-                    stage.setMinHeight(750);
-                    stage.setMaxHeight(750);
                     stage.show();
                 } else {//En caso de que la informacion sea incorrecta muestra la alerta 
                     alert = new Alert(Alert.AlertType.NONE);
