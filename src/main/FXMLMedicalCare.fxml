@@ -29,11 +29,11 @@
             <ComboBox fx:id="sicknessComboBox" layoutX="428.0" layoutY="118.0" onAction="#sicknessComboBoxOnAction" prefHeight="27.0" prefWidth="142.0" promptText="Sickness" style="-fx-background-color: #0174DF;" visible="false" />
             <TableView fx:id="tableViewMedicalCare" layoutX="175.0" layoutY="113.0" prefHeight="329.0" prefWidth="809.0" visible="false">
               <columns>
-                  <TableColumn fx:id="patientColumn" prefWidth="160.00001525878906" text="Patient" />
-                <TableColumn fx:id="doctorColumn" prefWidth="160.00001525878906" text="Doctor" />
-                <TableColumn fx:id="timeColumn" prefWidth="123.3333740234375" text="Time" />
-                  <TableColumn fx:id="sicknessColumn" prefWidth="150.66671752929688" text="Sickness" />
-                  <TableColumn fx:id="annotationsColumn" maxWidth="415.33333333333337" prefWidth="375.3333740234375" text="Annotations" />
+                  <TableColumn fx:id="patientColumn" prefWidth="151.33338928222656" text="Patient" />
+                <TableColumn fx:id="doctorColumn" prefWidth="156.66668701171875" text="Doctor" />
+                <TableColumn fx:id="timeColumn" prefWidth="118.00003051757812" text="Time" />
+                  <TableColumn fx:id="sicknessColumn" prefWidth="124.66668701171875" text="Sickness" />
+                  <TableColumn fx:id="annotationsColumn" maxWidth="500.0" minWidth="100.0" prefWidth="252.66668701171875" text="Annotations" />
               </columns>
             </TableView>
             <Label fx:id="annotationsLabel" layoutX="447.0" layoutY="161.0" text="Annotations:" textFill="#0174df" visible="false">
@@ -56,7 +56,7 @@
                   <Font name="Calibri Light" size="10.0" />
                </font>
             </Button>
-            <Button fx:id="showPatientRecordButton" disable="true" layoutX="647.0" layoutY="575.0" mnemonicParsing="false" onAction="#showPatientRecordOnAction" prefHeight="33.0" prefWidth="270.0" style="-fx-background-color: #0174DF;" text="Show Patient's Record">
+            <Button fx:id="showPatientRecordButton" disable="true" layoutX="647.0" layoutY="575.0" mnemonicParsing="false" onAction="#showPatientRecordOnAction" prefHeight="33.0" prefWidth="270.0" style="-fx-background-color: #0174DF;" text="Show Patient Record">
                <font>
                   <Font name="Arial" size="10.0" />
                </font>

@@ -91,10 +91,10 @@ public class FXMLMainMenuController implements Initializable {
         
                 
         try {
-            if(getType1().equals("patient")){//Se desabilitan los botones a los que el paciente no puede ingresar
+            if(getType1().equals("Patient")){//Se desabilitan los botones a los que el paciente no puede ingresar
                 btnDoctor.setVisible(false);
                 btnConfiguration.setVisible(false);
-                btnPayment.setVisible(false);
+                btnPatient.setVisible(false);
                 btnReports.setVisible(false);
                 btnSickness.setVisible(false);
             }
@@ -271,19 +271,19 @@ public class FXMLMainMenuController implements Initializable {
        private ObservableList<String> getType() throws ListException {
         ObservableList<String> data = FXCollections.observableArrayList();
 
-      
-                for (int i = 1; i <= type.size(); i++) {
-                    String Administrador = (String) type.getNode(i).data;
-                    data.add(Administrador);
-                }
-                return data;
-           }
-        private String getType1() throws ListException {
+        for (int i = 1; i <= type.size(); i++) {
+            String Administrador = (String) type.getNode(i).data;
+            data.add(Administrador);
+        }
+        return data;
+    }
+
+    private String getType1() throws ListException {
         String name1 = "";
         String ClinicName = String.valueOf(getType());
         String[] parts = ClinicName.split(",");
         String name = parts[0];
-        name1 = name.substring(1, name.length()-1);
+        name1 = name.substring(1, name.length() - 1);
         return name1;
     }
            

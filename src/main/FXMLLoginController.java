@@ -56,7 +56,7 @@ public class FXMLLoginController implements Initializable {
     private PasswordField PF_PASSWORD;
     @FXML
     private ComboBox ComboboxAdmin;
-    String[] Type = {"Administrador", "patient"};
+    String[] Type = {"Administrador", "Patient"};
 
     /**
      * Initializes the controller class.
@@ -74,7 +74,7 @@ public class FXMLLoginController implements Initializable {
             }
         }
         opcion = util.Utility.getAdmin();
- ComboboxAdmin.getItems().addAll(Type);
+        ComboboxAdmin.getItems().addAll(Type);
         }
     
 
@@ -84,13 +84,14 @@ public class FXMLLoginController implements Initializable {
             try {
                 String valor = (String) ComboboxAdmin.getValue();
                 if (user.contains(new Security(TF_USER.getText(), PF_PASSWORD.getText(), valor))) {    //El contenido es correcto entonces entra al menu 
+                    util.Utility.setCurrectUser(new Security(TF_USER.getText(), PF_PASSWORD.getText(), valor));
                     if (valor.equals("Administrador")) {
 
                         opcion.add("Administrador");
                        util.Utility.setAdmin(opcion);
 
-                    } else if (valor.equals("patient")) {
-                        opcion.add("patient");
+                    } else if (valor.equals("Patient")) {
+                        opcion.add("Patient");
                        util.Utility.setAdmin(opcion);
 
                     }
@@ -104,9 +105,9 @@ public class FXMLLoginController implements Initializable {
                     stage.setScene(scene);
                     String css = mainFX.class.getResource("MyStyle.css").toExternalForm();
                     scene.getStylesheets().add(css);
-                    stage.setResizable(false);
-                    stage.setMaxWidth(1000);
-                    stage.setMaxWidth(1000);
+                    stage.setResizable(true);
+                    stage.setMaxWidth(750);
+                    stage.setMaxWidth(750);
                     stage.setMinHeight(750);
                     stage.setMaxHeight(750);
                     stage.show();

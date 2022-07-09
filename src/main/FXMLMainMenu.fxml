@@ -18,11 +18,6 @@
                   <Font name="Arial" size="40.0" />
                </font>
             </Button>
-            <Button fx:id="btnPatient" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#PascientesCode" prefHeight="70.0" prefWidth="334.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 0px 0px 2px 0px;" text="Patient" textFill="WHITE">
-               <font>
-                  <Font name="Arial" size="40.0" />
-               </font>
-            </Button>
             <Button fx:id="btnAppointment" layoutX="10.0" layoutY="283.0" mnemonicParsing="false" onAction="#CitasCode" prefHeight="70.0" prefWidth="334.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 0px 0px 2px 0px;" text="Appointment" textFill="WHITE">
                <font>
                   <Font name="Arial" size="40.0" />
@@ -33,17 +28,22 @@
                   <Font name="Arial" size="40.0" />
                </font>
             </Button>
+            <Button fx:id="btnPayment" layoutX="10.0" layoutY="385.0" mnemonicParsing="false" onAction="#PaymentCode" prefHeight="70.0" prefWidth="334.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 0px 0px 2px 0px;" text="Payment" textFill="WHITE">
+               <font>
+                  <Font name="Arial" size="40.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnPatient" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#PascientesCode" prefHeight="70.0" prefWidth="334.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 0px 0px 2px 0px;" text="Patient" textFill="WHITE">
+               <font>
+                  <Font name="Arial" size="40.0" />
+               </font>
+            </Button>
             <Button fx:id="btnDoctor" layoutX="10.0" layoutY="101.0" mnemonicParsing="false" onAction="#DoctoresCode" prefHeight="70.0" prefWidth="334.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 0px 0px 2px 0px;" text="Doctor" textFill="WHITE">
                <font>
                   <Font name="Arial" size="40.0" />
                </font>
             </Button>
             <Button fx:id="btnSickness" layoutX="10.0" layoutY="192.0" mnemonicParsing="false" onAction="#EnfermedadesCode" prefHeight="91.0" prefWidth="334.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 0px 0px 2px 0px;" text="Sickness" textFill="WHITE">
-               <font>
-                  <Font name="Arial" size="40.0" />
-               </font>
-            </Button>
-            <Button fx:id="btnPayment" layoutX="10.0" layoutY="385.0" mnemonicParsing="false" onAction="#PaymentCode" prefHeight="70.0" prefWidth="334.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 0px 0px 2px 0px;" text="Payment" textFill="WHITE">
                <font>
                   <Font name="Arial" size="40.0" />
                </font>

@@ -39,6 +39,7 @@ public class Utility {
     private static CircularDoublyLinkedList circularDoublyLinkedList = new CircularDoublyLinkedList();
     private static MedicalCare medicalCare;
     private static SinglyLinkedList admin = new SinglyLinkedList();
+    private static Security currentUser;
 
     public static SinglyLinkedList getAdmin() {
         return admin;
@@ -98,6 +99,14 @@ public class Utility {
 
     public static void setMedicalCare(MedicalCare medicalCare) {
         Utility.medicalCare = medicalCare;
+    }
+
+    public static void setCurrectUser(Security security) {
+        Utility.currentUser = security;
+    }
+
+    public static Security getCurrentUser() {
+        return currentUser;
     }
 
     private CircularLinkedList patientsList;
@@ -215,7 +224,7 @@ public class Utility {
            case "Security":
            Security a10 = (Security)a;
            Security b10 = (Security)b;
-           return (a10.getUser().equals(b10.getUser())&&a10.getUser().equals(b10.getUser())&& a10.getType().equals(b10.getType()));
+           return (a10.getUser().equals(b10.getUser())&&a10.getPassword().equals(b10.getPassword())&& a10.getType().equalsIgnoreCase(b10.getType()));
            
         }
         return false;

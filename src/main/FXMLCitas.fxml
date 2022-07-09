@@ -34,8 +34,8 @@
             <Button layoutX="14.0" layoutY="475.0" mnemonicParsing="false" onAction="#AddCode" prefHeight="50.0" prefWidth="185.0" style="-fx-background-color: #0174DF;" text="Add" />
             <Button layoutX="412.0" layoutY="475.0" mnemonicParsing="false" onAction="#DeleteCode" prefHeight="50.0" prefWidth="185.0" style="-fx-background-color: #0174DF;" text="Delete" />
             <Button layoutX="795.0" layoutY="475.0" mnemonicParsing="false" onAction="#ContainsCode" prefHeight="50.0" prefWidth="185.0" style="-fx-background-color: #0174DF;" text="Contains" />
-            <ComboBox fx:id="DcotorCombobox" layoutX="24.0" layoutY="100.0" prefWidth="150.0" promptText="Doctor" />
-            <ComboBox fx:id="PatientCombobox" layoutX="199.0" layoutY="100.0" prefWidth="150.0" promptText="Patient" />
+            <ComboBox fx:id="DcotorCombobox" layoutX="24.0" layoutY="100.0" prefWidth="150.0" promptText="Doctor" style="-fx-background-color: #0174DF;" />
+            <ComboBox fx:id="PatientCombobox" layoutX="199.0" layoutY="100.0" prefWidth="150.0" promptText="Patient" style="-fx-background-color: #0174DF;" />
          </children>
       </AnchorPane>
    </center>

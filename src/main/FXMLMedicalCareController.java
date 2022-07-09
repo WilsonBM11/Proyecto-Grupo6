@@ -16,6 +16,7 @@ import domain.ListException;
 import domain.MedicalCare;
 import domain.Patient;
 import domain.QueueException;
+import domain.Security;
 import domain.Sickness;
 import domain.SinglyLinkedList;
 import domain.TreeException;
@@ -101,13 +102,24 @@ public class FXMLMedicalCareController implements Initializable {
     @FXML
     private BorderPane bp;
     private MedicalCare currentMedicalCare;
+    private Security currentUser;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
+        
+        currentUser = util.Utility.getCurrentUser();
+        if(currentUser.getType().equalsIgnoreCase("Patient")){
+            addMedicalAttentionButton.setVisible(false);
+            scheduleAppoimentButton.setVisible(false);
+            doctorsComboBox.setVisible(false);
+            patientsComboBox.setVisible(false);
+            showPatientRecordButton.setDisable(false);
+            tableViewMedicalCare.setVisible(true);
+            
+        }
 //        LocalTime time = LocalTime.of(10, 50);
         medicalCareList = new BTree();
         doctorsList = new CircularDoublyLinkedList();
@@ -240,22 +252,27 @@ public class FXMLMedicalCareController implements Initializable {
 
     @FXML
     private void showPatientRecordOnAction(ActionEvent event) throws ListException {
-
-        int patientID = getId(String.valueOf(patientsComboBox.getValue()));
-        this.tableViewMedicalCare.getItems().clear();
-        if (medicalCareList != null && !medicalCareList.isEmpty()) {
-            try {
-                getTreeData(medicalCareList.getRoot(), patientID);
-                this.tableViewMedicalCare.setItems(tableViewData);
-            } catch (ListException ex) {
-                Logger.getLogger(FXMLMedicalCareController.class.getName()).log(Level.SEVERE, null, ex);
+        try {
+            this.tableViewMedicalCare.getItems().clear();
+            if (medicalCareList != null && !medicalCareList.isEmpty()) {
+                if(currentUser.getType().equalsIgnoreCase("Patient")){
+                    getTreeData(medicalCareList.getRoot(), Integer.parseInt(currentUser.getUser()));
+                    this.tableViewMedicalCare.setItems(tableViewData);
+                }else{
+                    int patientID = getId(String.valueOf(patientsComboBox.getValue()));
+                    getTreeData(medicalCareList.getRoot(), patientID);
+                    this.tableViewMedicalCare.setItems(tableViewData);
+                    sicknessComboBox.setVisible(false);
+                    annotationsLabel.setVisible(false);
+                    annotationsTextArea.setVisible(false);
+                    addPatientInformation.setVisible(false);
+                    tableViewMedicalCare.setVisible(true);
+                }
             }
+
+        } catch (ListException ex) {
+            Logger.getLogger(FXMLMedicalCareController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        sicknessComboBox.setVisible(false);
-        annotationsLabel.setVisible(false);
-        annotationsTextArea.setVisible(false);
-        addPatientInformation.setVisible(false);
-        tableViewMedicalCare.setVisible(true);
     }
 
     @FXML

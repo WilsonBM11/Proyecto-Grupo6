@@ -12,6 +12,7 @@ import domain.DoublyLinkedList;
 import domain.ListException;
 import domain.Patient;
 import domain.QueueException;
+import domain.Security;
 import domain.Sickness;
 import java.io.IOException;
 import java.net.URL;
@@ -69,12 +70,19 @@ public class FXMLCitasController implements Initializable {
     private ComboBox DcotorCombobox;
     @FXML
     private ComboBox PatientCombobox;
+    private Security currentUser;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
+        currentUser = util.Utility.getCurrentUser();
+        if(currentUser.getType().equalsIgnoreCase("Patient")){
+            PatientCombobox.setVisible(false);
+            PatientCombobox.setDisable(true);
+        }
         
         //Se inicializan las listas que se van a utilizar con los archivos txt 
         AppointmentList = new DoublyLinkedList();
@@ -326,14 +334,27 @@ public class FXMLCitasController implements Initializable {
             try {
                 for (int i = 1; i <= this.AppointmentList.size(); i++) {
                     Appointment A = (Appointment) this.AppointmentList.getNode(i).data;
-                    List<String> arrayList = new ArrayList<>();
-                    arrayList.add(String.valueOf(A.getId()));
-                    arrayList.add(String.valueOf(A.getPatientID()));
-                    arrayList.add(String.valueOf(A.getDoctorID()));
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
-                    arrayList.add(String.valueOf(A.getDateTime()));
-                    arrayList.add(A.getRemarks());
-                    data.add(arrayList);
+                    if (currentUser.getType().equalsIgnoreCase("Patient")) {
+                        if (currentUser.getUser().equals(String.valueOf(A.getPatientID()))) {
+                            List<String> arrayList = new ArrayList<>();
+                            arrayList.add(String.valueOf(A.getId()));
+                            arrayList.add(String.valueOf(A.getPatientID()));
+                            arrayList.add(String.valueOf(A.getDoctorID()));
+                            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+                            arrayList.add(String.valueOf(A.getDateTime()));
+                            arrayList.add(A.getRemarks());
+                            data.add(arrayList);
+                        }
+                    } else {
+                        List<String> arrayList = new ArrayList<>();
+                        arrayList.add(String.valueOf(A.getId()));
+                        arrayList.add(String.valueOf(A.getPatientID()));
+                        arrayList.add(String.valueOf(A.getDoctorID()));
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+                        arrayList.add(String.valueOf(A.getDateTime()));
+                        arrayList.add(A.getRemarks());
+                        data.add(arrayList);
+                    }
                 }
             } catch (ListException ex) {
 
@@ -422,7 +443,6 @@ public class FXMLCitasController implements Initializable {
 
     @FXML
     private void TimeCommit(TableColumn.CellEditEvent<List<String>, String> event) {
-
     }
 
     @FXML
