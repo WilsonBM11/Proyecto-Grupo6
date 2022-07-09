@@ -80,7 +80,7 @@ public class FXMLPagoConsultaController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+        System.out.println("");
         currentUser = util.Utility.getCurrentUser();
         if(currentUser.getType().equalsIgnoreCase("Patient")){
             addBTN.setVisible(false);
