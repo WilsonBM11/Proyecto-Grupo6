@@ -12,7 +12,7 @@ public class BTreeNode {
     public Object data;
     public BTreeNode left, right;
     public String label; //representa la ruta donde agrego el elemento
-    private String sequence;
+    public String sequence;
     
     //Constructor
     public BTreeNode(Object data){

@@ -212,6 +212,8 @@ public class Data {
                 return Integer.parseInt(aux.get(0));
             case "security":
                 return new Security(aux.get(0), aux.get(1), aux.get(2));
+            case "bitacora":
+                return lineRegister;
         }
         return null;
     }
@@ -251,6 +253,9 @@ public class Data {
             case "security":
                 Security sec = (Security) data;
                 return sec.getUser()+";"+sec.getPassword()+";"+sec.getType();
+            case "bitacora":
+                String text = (String) data;
+                return text;
         }
         return null;
     }
