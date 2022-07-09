@@ -92,12 +92,11 @@ public class FXMLMainMenuController implements Initializable {
                 
         try {
             if(getType1().equals("patient")){//Se desabilitan los botones a los que el paciente no puede ingresar
-                btnDoctor.setDisable(true);
-                btnConfiguration.setDisable(true);
-                btnPayment.setDisable(true);
-                btnReports.setDisable(true);
-                btnMedicalCare.setDisable(true);
-                btnSickness.setDisable(true);
+                btnDoctor.setVisible(false);
+                btnConfiguration.setVisible(false);
+                btnPayment.setVisible(false);
+                btnReports.setVisible(false);
+                btnSickness.setVisible(false);
             }
         } catch (ListException ex) {
             Logger.getLogger(FXMLMainMenuController.class.getName()).log(Level.SEVERE, null, ex);
