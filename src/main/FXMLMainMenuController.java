@@ -52,6 +52,8 @@ public class FXMLMainMenuController implements Initializable {
     @FXML
     private Button btnExit;
     @FXML
+    private Button btnDoctor;
+    @FXML
     private Text txtMessage;
     @FXML
     private ImageView LogoImage;
@@ -59,6 +61,20 @@ public class FXMLMainMenuController implements Initializable {
     private Label TXTCorreo;
     @FXML
     private Label TXTTelefono;
+    @FXML
+    private Button btnPatient;
+    @FXML
+    private Button btnSickness;
+    @FXML
+    private Button btnAppointment;
+    @FXML
+    private Button btnMedicalCare;
+    @FXML
+    private Button btnPayment;
+    @FXML
+    private Button btnReports;
+    @FXML
+    private Button btnConfiguration;
     
     @Override
     //Se inicializa un arbol que trae informacion del archivo de configuration
@@ -75,8 +91,13 @@ public class FXMLMainMenuController implements Initializable {
         
                 
         try {
-            if(getType1().equals("patient")){
-                
+            if(getType1().equals("patient")){//Se desabilitan los botones a los que el paciente no puede ingresar
+                btnDoctor.setDisable(true);
+                btnConfiguration.setDisable(true);
+                btnPayment.setDisable(true);
+                btnReports.setDisable(true);
+                btnMedicalCare.setDisable(true);
+                btnSickness.setDisable(true);
             }
         } catch (ListException ex) {
             Logger.getLogger(FXMLMainMenuController.class.getName()).log(Level.SEVERE, null, ex);

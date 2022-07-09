@@ -20,6 +20,10 @@ public class Security {
         this.type = type;
     }
 
+    public Security(String text, String contraseñaDesencriptada) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     public String getUser() {
         return user;
     }
