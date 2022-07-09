@@ -14,9 +14,9 @@
          <children>
             <AnchorPane layoutY="-8.0" prefHeight="93.0" prefWidth="1008.0" style="-fx-background-color: #0174DF;">
                <children>
-                  <Label layoutX="455.0" layoutY="32.0" text="Payment">
+                  <Label layoutX="391.0" layoutY="31.0" text="Payments Section">
                      <font>
-                        <Font name="Arial" size="25.0" />
+                        <Font name="Arial" size="28.0" />
                      </font>
                   </Label>
                </children>
@@ -30,9 +30,9 @@
                   <TableColumn fx:id="totalChargeColumn" prefWidth="207.99993896484375" text="Total Charge" />
               </columns>
             </TableView>
-            <Button layoutX="33.0" layoutY="517.0" mnemonicParsing="false" onAction="#AddCode" prefHeight="50.0" prefWidth="185.0" style="-fx-background-color: #0174DF;" text="Add" />
-            <Button layoutX="412.0" layoutY="517.0" mnemonicParsing="false" onAction="#DeleteCode" prefHeight="50.0" prefWidth="185.0" style="-fx-background-color: #0174DF;" text="Delete" />
-            <Button layoutX="793.0" layoutY="517.0" mnemonicParsing="false" onAction="#ContainsCode" prefHeight="50.0" prefWidth="185.0" style="-fx-background-color: #0174DF;" text="Contains" />
+            <Button fx:id="addBTN" layoutX="33.0" layoutY="517.0" mnemonicParsing="false" onAction="#AddCode" prefHeight="50.0" prefWidth="185.0" style="-fx-background-color: #0174DF;" text="Add" />
+            <Button fx:id="deleteBTN" layoutX="412.0" layoutY="517.0" mnemonicParsing="false" onAction="#DeleteCode" prefHeight="50.0" prefWidth="185.0" style="-fx-background-color: #0174DF;" text="Delete" />
+            <Button fx:id="containsBTN" layoutX="793.0" layoutY="517.0" mnemonicParsing="false" onAction="#ContainsCode" prefHeight="50.0" prefWidth="185.0" style="-fx-background-color: #0174DF;" text="Contains" />
          </children>
       </AnchorPane>
    </center>

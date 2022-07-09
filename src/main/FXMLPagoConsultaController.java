@@ -13,6 +13,7 @@ import domain.ListException;
 import domain.Payment;
 import domain.PriorityLinkedQueue;
 import domain.QueueException;
+import domain.Security;
 import domain.Sickness;
 import java.io.IOException;
 import java.net.URL;
@@ -35,6 +36,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextInputDialog;
@@ -66,14 +68,26 @@ public class FXMLPagoConsultaController implements Initializable {
     private TableColumn<List<String>, String> billingDateColumn;
     @FXML
     private TableColumn<List<String>, String> totalChargeColumn;
-
+    private Security currentUser;
+    @FXML
+    private Button addBTN;
+    @FXML
+    private Button deleteBTN;
+    @FXML
+    private Button containsBTN;
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
+        currentUser = util.Utility.getCurrentUser();
+        if(currentUser.getType().equalsIgnoreCase("Patient")){
+            addBTN.setVisible(false);
+            deleteBTN.setVisible(false);
+            containsBTN.setVisible(false);
+        }
         paymentqueue = new HeaderLinkedQueue();
-
         if (util.Data.fileExists("payments")) {
             try {
                 paymentqueue = (HeaderLinkedQueue) util.Data.getDataFile("payments", paymentqueue);
@@ -254,18 +268,30 @@ public class FXMLPagoConsultaController implements Initializable {
                 HeaderLinkedQueue aux = new HeaderLinkedQueue();
                 while (!paymentqueue.isEmpty()) {
                     Payment P = (Payment) paymentqueue.front();
-
-                    List<String> arrayList = new ArrayList<>();
-
-                    arrayList.add(String.valueOf(P.getPatientID()));
-                    arrayList.add(P.getPaymentMode());
-                    arrayList.add(String.valueOf(P.getServiceCharge()));
-                    SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
-                    arrayList.add(String.valueOf(format.format(P.getBillingDate())));
-                    arrayList.add(String.valueOf(P.getTotalCharge()));
-                    data.add(arrayList);
-
-                    aux.enQueue(paymentqueue.deQueue());
+                    if (currentUser.getType().equalsIgnoreCase("Patient")) {
+                        if (currentUser.getUser().equals(String.valueOf(P.getPatientID()))) {
+                            List<String> arrayList = new ArrayList<>();
+                            arrayList.add(String.valueOf(P.getPatientID()));
+                            arrayList.add(P.getPaymentMode());
+                            arrayList.add(String.valueOf(P.getServiceCharge()));
+                            SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
+                            arrayList.add(String.valueOf(format.format(P.getBillingDate())));
+                            arrayList.add(String.valueOf(P.getTotalCharge()));
+                            data.add(arrayList);
+                            aux.enQueue(paymentqueue.deQueue());
+                        }
+                    }else{
+                        List<String> arrayList = new ArrayList<>();
+                        arrayList.add(String.valueOf(P.getPatientID()));
+                        arrayList.add(P.getPaymentMode());
+                        arrayList.add(String.valueOf(P.getServiceCharge()));
+                        SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
+                        arrayList.add(String.valueOf(format.format(P.getBillingDate())));
+                        arrayList.add(String.valueOf(P.getTotalCharge()));
+                        data.add(arrayList);
+                        aux.enQueue(paymentqueue.deQueue());
+                    }
+                    
                 }
                 //al final dejamos la cola en su estado original
                 while (!aux.isEmpty()) {
@@ -278,6 +304,8 @@ public class FXMLPagoConsultaController implements Initializable {
         }
         return data;
     }
+
+   
     
 
 }
