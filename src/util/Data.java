@@ -7,11 +7,9 @@ package util;
 
 import domain.Appointment;
 import domain.BTreeNode;
-import domain.CircularDoublyLinkedList;
 import domain.Configurations;
 import domain.Doctor;
 import domain.HeaderLinkedQueue;
-import domain.LinkedQueue;
 import domain.Queue;
 import domain.List;
 import domain.ListException;
@@ -30,14 +28,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
-import java.util.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**

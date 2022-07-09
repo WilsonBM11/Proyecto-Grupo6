@@ -75,6 +75,8 @@ public class FXMLCitasController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
+        //Se inicializan las listas que se van a utilizar con los archivos txt 
         AppointmentList = new DoublyLinkedList();
 
         if (util.Data.fileExists("appointment")) {
@@ -92,6 +94,7 @@ public class FXMLCitasController implements Initializable {
                 Logger.getLogger(FXMLMantenimientoDoctoresController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        //Se cargan los elementos de la lista doctores a su combobox 
         if (this.DoctorList != null && !this.DoctorList.isEmpty()) {
             try {
                 for (int i = 1; i <= DoctorList.size(); i++) {
@@ -111,11 +114,13 @@ public class FXMLCitasController implements Initializable {
                 Logger.getLogger(FXMLMantenimientoDoctoresController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+         //Se cargan los elementos de la lista de pascientes a su combobox 
+       
         if (this.PatientList != null && !this.PatientList.isEmpty()) {
             try {
                 for (int i = 1; i <= PatientList.size(); i++) {
                     this.PatientCombobox.setItems(getDataPatient());
-
+//Se inicializan los valores de las columnas del table view 
                 }
 
                 this.IDCOLUMN.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<List<String>, String>, ObservableValue<String>>() {
@@ -152,12 +157,13 @@ public class FXMLCitasController implements Initializable {
                         return new ReadOnlyObjectWrapper<>(data.getValue().get(4));
                     }
                 });
+                //Se hace la tabla editable para las siguientes columnas 
                 this.TableView.setEditable(true);
                 RemarksCOLUMN.setCellFactory(TextFieldTableCell.forTableColumn());
                 PATIENTIDCOLUMN.setCellFactory(TextFieldTableCell.forTableColumn());
                 DOCTORIDCOLUMN.setCellFactory(TextFieldTableCell.forTableColumn());
                 APPOINTMENTCOLUMN.setCellFactory(TextFieldTableCell.forTableColumn());
-
+//Se agregan los elementos de la listq al table view
                 try {
                     if (this.AppointmentList != null && !this.AppointmentList.isEmpty()) {
                         for (int i = 1; i <= AppointmentList.size(); i++) {
@@ -171,15 +177,18 @@ public class FXMLCitasController implements Initializable {
             }
         }
     }
-
+//Llama a la interfaz add citas para agregar mas 
     @FXML
     private void AddCode(ActionEvent event) {
         FXMLMainMenuController.loadPage(getClass().getResource("FXMLAddCITAS.fxml"), bp);
     }
 
     @FXML
+    
     private void DeleteCode(ActionEvent event) {
         try {
+            //Para eliminar un elemento recibe dos parametros el id del pasciente y la fecha de su cita 
+            //Esto a traves de input dialog 
             TextInputDialog dialog = new TextInputDialog();
             dialog.setTitle("Appointment Remove");
             dialog.setHeaderText("Enter the ID Patient:");
@@ -188,7 +197,7 @@ public class FXMLCitasController implements Initializable {
             dialog2.setTitle("Appointment Remove");
             dialog2.setHeaderText("Enter the Date of the appointment:");
             Optional<String> id2 = dialog2.showAndWait();
-
+//Si no estan presentes entonces dice que no existen los elementos en la lista 
             if ((!id.isPresent() || id.get().compareTo("") == 0 && !id2.isPresent() || id2.get().compareTo("") == 0)) {
                 alert = new Alert(Alert.AlertType.NONE);
                 alert.setAlertType(Alert.AlertType.ERROR);
@@ -197,10 +206,11 @@ public class FXMLCitasController implements Initializable {
                 alert.show();
 
             }
+            //Si la lista es de un elemento limpia toda la lista y limpia el table view
             if (AppointmentList.size() == 1) {
                 String strDatewithTime = id2.get();
                 LocalDateTime aLDT = LocalDateTime.parse(strDatewithTime);
-
+//Aqui se fija si el elmento se encutre solo con el contains y los dos parametros anteriores 
                 if (AppointmentList.contains(new Appointment(Integer.parseInt(id.get()), 0, aLDT, ""))) {
                     AppointmentList.clear();
                     TableView.getItems().clear();
@@ -213,10 +223,13 @@ public class FXMLCitasController implements Initializable {
                     alert.show();
                 }
             } else {
+                //Si no esta vacia entonces se fija si el elemento esta dentro de la lista 
+                //Si lo contiene remueve solo ese elemento 
                 String strDatewithTime = id2.get();
                 LocalDateTime aLDT = LocalDateTime.parse(strDatewithTime);
                 if (AppointmentList.contains(new Appointment(Integer.parseInt(id.get()), 0, aLDT, ""))) {
                     AppointmentList.remove(new Appointment(Integer.parseInt(id.get()), 0, aLDT, ""));
+                 //Luego actualiza el archivo txt 
                     util.Data.setDataFile("appointment", AppointmentList);
                     TableView.getItems().clear();
                     TableView.getItems().addAll(getData());
@@ -250,6 +263,7 @@ public class FXMLCitasController implements Initializable {
     @FXML
     private void ContainsCode(ActionEvent event) {
         try {
+             //Al igual que el remove recibe dos parametros 
             TextInputDialog dialog = new TextInputDialog();
             dialog.setTitle("Appointment Contains");
             dialog.setHeaderText("Enter the Patient id: ");
@@ -260,6 +274,7 @@ public class FXMLCitasController implements Initializable {
             Optional<String> id2 = dialog2.showAndWait();
             String strDatewithTime = id2.get();
             LocalDateTime aLDT = LocalDateTime.parse(strDatewithTime);
+            //Estos parametros se introducen en el objeto 
 
             Appointment appointment = new Appointment(Integer.parseInt(id.get()), 0, aLDT, "");
 
@@ -271,7 +286,10 @@ public class FXMLCitasController implements Initializable {
                 alert.show();
 
             } else {
+                //Si lo contiene en la lista 
                 if (AppointmentList.contains(appointment)) {
+                    //Crea un objeto, utiliza el metodo getNodeById que devuelve toda la informacion del objeto 
+                    //Y la muestra en una alerta 
                     Object foundElement = AppointmentList.getNodeById(appointment);
                     alert = new Alert(Alert.AlertType.NONE);
                     alert.setAlertType(Alert.AlertType.INFORMATION);
@@ -298,9 +316,12 @@ public class FXMLCitasController implements Initializable {
             System.err.println("ERROR " + ex);
         }
     }
+    //Metodo get Data para poder meter los valores de la lista en un arraylist
+    //Este se utiliza para cargarlo en elementos como el tableView o el combobox 
 
     private ObservableList<List<String>> getData() {
         ObservableList<List<String>> data = FXCollections.observableArrayList();
+       //Recorre la lista y obtiene nodo por nodo asi como su data y este se agrega al array list 
         if (this.AppointmentList != null && !this.AppointmentList.isEmpty()) {
             try {
                 for (int i = 1; i <= this.AppointmentList.size(); i++) {
@@ -320,7 +341,9 @@ public class FXMLCitasController implements Initializable {
         }
         return data;
     }
-
+     //Se utilizan commit que reciben valores del table view antes de realizar un cambio
+    //Se introducen en un objeto y luego se realiza lo mismo pero con el nuevo valor que se quiere cambiar 
+   //con el metodo event.getNewValue, luego se llama al metodo modificar que se encarga de modificar este elemento en la lista
     @FXML
     private void PatientCommit(TableColumn.CellEditEvent<List<String>, String> event) throws ListException {
         int PatientId = Integer.parseInt(event.getRowValue().get(1));

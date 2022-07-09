@@ -33,6 +33,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -44,6 +45,7 @@ import javafx.stage.Stage;
  */
 public class FXMLLoginController implements Initializable {
 
+    SinglyLinkedList opcion;
     Alert alert;
     SinglyLinkedList user;
     @FXML
@@ -52,12 +54,17 @@ public class FXMLLoginController implements Initializable {
     private TextField TF_USER;
     @FXML
     private PasswordField PF_PASSWORD;
+    @FXML
+    private ComboBox ComboboxAdmin;
+    String[] Type = {"Administrador", "patient"};
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
+        
         user = new SinglyLinkedList();
         if (util.Data.fileExists("security")) {
             try {
@@ -66,22 +73,34 @@ public class FXMLLoginController implements Initializable {
                 Logger.getLogger(FXMLMantenimientoEnfermedadesController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-
-    }
+        opcion = util.Utility.getAdmin();
+ ComboboxAdmin.getItems().addAll(Type);
+        }
+    
 
     @FXML
-    private void registerOnAction(ActionEvent event) throws IOException {
-        if (!PF_PASSWORD.equals("") || !TF_USER.equals("")) {// Validar que el field de password y contraseña no esten vacios 
+    private void registerOnAction(ActionEvent event) throws IOException, QueueException {
+        if (!PF_PASSWORD.equals("") || !TF_USER.equals("") ) {// Validar que el field de password y contraseña no esten vacios 
             try {
-                System.out.println(user.toString());
-                if (user.contains(new Security(TF_USER.getText(), PF_PASSWORD.getText(), ""))) {    //El contenido es correcto entonces entra al menu 
+                String valor = (String) ComboboxAdmin.getValue();
+                if (user.contains(new Security(TF_USER.getText(), PF_PASSWORD.getText(), valor))) {    //El contenido es correcto entonces entra al menu 
+                    if (valor.equals("Administrador")) {
+
+                        opcion.add("Administrador");
+                       util.Utility.setAdmin(opcion);
+
+                    } else if (valor.equals("patient")) {
+                        opcion.add("patient");
+                       util.Utility.setAdmin(opcion);
+
+                    }
                     Parent root = FXMLLoader.load(getClass().getResource("FXMLMainMenu.fxml"));
                     Node source = (Node) event.getSource();
                     Stage stage = (Stage) source.getScene().getWindow();
                     stage.close();
-                    
+
                     Scene scene = new Scene(root);
-                    
+
                     stage.setScene(scene);
                     String css = mainFX.class.getResource("MyStyle.css").toExternalForm();
                     scene.getStylesheets().add(css);

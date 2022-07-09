@@ -38,6 +38,17 @@ public class Utility {
     private static CircularLinkedList circularLinkedList = new CircularLinkedList();
     private static CircularDoublyLinkedList circularDoublyLinkedList = new CircularDoublyLinkedList();
     private static MedicalCare medicalCare;
+    private static SinglyLinkedList admin = new SinglyLinkedList();
+
+    public static SinglyLinkedList getAdmin() {
+        return admin;
+    }
+    
+
+    public static void setAdmin(SinglyLinkedList admin) {
+        Utility.admin = admin;
+    }
+    
 
     private static String criterioOrdenamiento;
 
@@ -204,7 +215,7 @@ public class Utility {
            case "Security":
            Security a10 = (Security)a;
            Security b10 = (Security)b;
-           return (a10.getUser().equals(b10.getUser())&&a10.getUser().equals(b10.getUser()));
+           return (a10.getUser().equals(b10.getUser())&&a10.getUser().equals(b10.getUser())&& a10.getType().equals(b10.getType()));
            
         }
         return false;
